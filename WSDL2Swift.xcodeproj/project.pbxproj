@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6AA9B01661501F78A68771CC /* Pods_WSDL2Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */; };
+		B0637813C517C34A60F736B6 /* Pods_iOSWSDL2Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9B576430854A95CF84C2D9 /* Pods_iOSWSDL2Swift.framework */; };
 		EA1F09AB1DE4376C00414030 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09AA1DE4376C00414030 /* main.swift */; };
 		EA1F09B51DE438EE00414030 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09B11DE438EE00414030 /* Core.swift */; };
 		EA1F09BA1DE4394C00414030 /* Preamble.stencil in Copy Resources */ = {isa = PBXBuildFile; fileRef = EA1F09B21DE438EE00414030 /* Preamble.stencil */; };
@@ -17,7 +18,20 @@
 		EA1F09C71DE43B3900414030 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09C61DE43B3900414030 /* ViewController.swift */; };
 		EA1F09CC1DE43B3900414030 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09CB1DE43B3900414030 /* Assets.xcassets */; };
 		EA1F09CF1DE43B3900414030 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09CD1DE43B3900414030 /* LaunchScreen.storyboard */; };
+		EA1F09D51DE43C0700414030 /* exampleWSDLs in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09D41DE43C0700414030 /* exampleWSDLs */; };
+		EA1F09DC1DE43D6000414030 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09DA1DE43D6000414030 /* .gitkeep */; };
+		EA1F09DD1DE43D6000414030 /* WSDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09DB1DE43D6000414030 /* WSDL.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EA1F09D61DE43C6600414030 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA1F099F1DE4376C00414030 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA1F09A61DE4376C00414030;
+			remoteInfo = WSDL2Swift;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		EA1F09B61DE4392100414030 /* Copy Resources */ = {
@@ -37,8 +51,11 @@
 
 /* Begin PBXFileReference section */
 		1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WSDL2Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		245448084A01A8ECE465E13C /* Pods-iOSWSDL2Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2Swift/Pods-iOSWSDL2Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		54E07700FFB14F5BC9DE3247 /* Pods-WSDL2Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WSDL2Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift.release.xcconfig"; sourceTree = "<group>"; };
 		7C2849B258EEA5B658C2CD2E /* Pods-WSDL2Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WSDL2Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift.debug.xcconfig"; sourceTree = "<group>"; };
+		7F9B576430854A95CF84C2D9 /* Pods_iOSWSDL2Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSWSDL2Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80BB6D87374F9006AA53BBD0 /* Pods-iOSWSDL2Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2Swift/Pods-iOSWSDL2Swift.release.xcconfig"; sourceTree = "<group>"; };
 		EA1F09A71DE4376C00414030 /* WSDL2Swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WSDL2Swift; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1F09AA1DE4376C00414030 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		EA1F09B11DE438EE00414030 /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
@@ -51,6 +68,9 @@
 		EA1F09CB1DE43B3900414030 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA1F09CE1DE43B3900414030 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA1F09D01DE43B3900414030 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA1F09D41DE43C0700414030 /* exampleWSDLs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = exampleWSDLs; sourceTree = "<group>"; };
+		EA1F09DA1DE43D6000414030 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		EA1F09DB1DE43D6000414030 /* WSDL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSDL.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0637813C517C34A60F736B6 /* Pods_iOSWSDL2Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */,
+				7F9B576430854A95CF84C2D9 /* Pods_iOSWSDL2Swift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -85,6 +107,8 @@
 			children = (
 				7C2849B258EEA5B658C2CD2E /* Pods-WSDL2Swift.debug.xcconfig */,
 				54E07700FFB14F5BC9DE3247 /* Pods-WSDL2Swift.release.xcconfig */,
+				245448084A01A8ECE465E13C /* Pods-iOSWSDL2Swift.debug.xcconfig */,
+				80BB6D87374F9006AA53BBD0 /* Pods-iOSWSDL2Swift.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -124,6 +148,8 @@
 		EA1F09C31DE43B3900414030 /* iOSWSDL2Swift */ = {
 			isa = PBXGroup;
 			children = (
+				EA1F09D41DE43C0700414030 /* exampleWSDLs */,
+				EA1F09D91DE43D6000414030 /* generated */,
 				EA1F09C41DE43B3900414030 /* AppDelegate.swift */,
 				EA1F09C61DE43B3900414030 /* ViewController.swift */,
 				EA1F09CB1DE43B3900414030 /* Assets.xcassets */,
@@ -131,6 +157,16 @@
 				EA1F09D01DE43B3900414030 /* Info.plist */,
 			);
 			path = iOSWSDL2Swift;
+			sourceTree = "<group>";
+		};
+		EA1F09D91DE43D6000414030 /* generated */ = {
+			isa = PBXGroup;
+			children = (
+				EA1F09DA1DE43D6000414030 /* .gitkeep */,
+				EA1F09DB1DE43D6000414030 /* WSDL.swift */,
+			);
+			name = generated;
+			path = exampleWSDLs/generated;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,13 +196,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA1F09D11DE43B3900414030 /* Build configuration list for PBXNativeTarget "iOSWSDL2Swift" */;
 			buildPhases = (
+				F9C5B1F57D7EB7F49456204D /* [CP] Check Pods Manifest.lock */,
+				EA1F09D81DE43C6B00414030 /* WSDL2Swift */,
 				EA1F09BE1DE43B3900414030 /* Sources */,
 				EA1F09BF1DE43B3900414030 /* Frameworks */,
 				EA1F09C01DE43B3900414030 /* Resources */,
+				FF20626B390E120C89964A2C /* [CP] Embed Pods Frameworks */,
+				456A33790DC2010FE7DF03D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EA1F09D71DE43C6600414030 /* PBXTargetDependency */,
 			);
 			name = iOSWSDL2Swift;
 			productName = iOSWSDL2Swift;
@@ -219,13 +260,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA1F09CF1DE43B3900414030 /* LaunchScreen.storyboard in Resources */,
+				EA1F09D51DE43C0700414030 /* exampleWSDLs in Resources */,
 				EA1F09CC1DE43B3900414030 /* Assets.xcassets in Resources */,
+				EA1F09DC1DE43D6000414030 /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		456A33790DC2010FE7DF03D2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2Swift/Pods-iOSWSDL2Swift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7910F7EBD06772F6446C6560 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -271,6 +329,51 @@
 			shellScript = "# magic by https://gist.github.com/banjun/166045c994d07b9e67df9357ff6418f3\n\nFRAMEWORK_ARG=$(for f in $(echo \"${FRAMEWORK_SEARCH_PATHS}\"); do echo -n \"-F$f \"; done)\nRUNPATH_ARG=$(for p in $(echo $LD_RUNPATH_SEARCH_PATHS); do echo -n \"-Xlinker -rpath -Xlinker $p \"; done)\nLD=\"${DT_TOOLCHAIN_DIR}/usr/bin/clang -arch ${arch} -isysroot ${SDKROOT} -L${CONFIGURATION_BUILD_DIR} ${FRAMEWORK_ARG} -filelist ${LINK_FILE_LIST_normal_x86_64} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET} ${RUNPATH_ARG} -fobjc-link-runtime -L${DT_TOOLCHAIN_DIR}/usr/lib/swift/macosx -lc++ -framework Foundation -Xlinker -add_ast_path -Xlinker ${OBJECT_FILE_DIR_normal}/${arch}/${EXECUTABLE_NAME}.swiftmodule -Xlinker -dependency_info -Xlinker ${LD_DEPENDENCY_INFO_FILE} -o ${CONFIGURATION_BUILD_DIR}/${EXECUTABLE_NAME}\"\necho \"$LD\"\nzsh -c \"$LD\"\n\nmkdir -p \"${CONFIGURATION_BUILD_DIR}/Frameworks\"\nfor f in ${CONFIGURATION_BUILD_DIR}/*/*.framework; do\n    cp -r \"$f\" \"${CONFIGURATION_BUILD_DIR}/Frameworks/\"\ndone\n\nxcrun swift-stdlib-tool --copy --platform macosx --scan-folder ${CONFIGURATION_BUILD_DIR} --destination ${CONFIGURATION_BUILD_DIR}/Frameworks/";
 			showEnvVarsInLog = 0;
 		};
+		EA1F09D81DE43C6B00414030 /* WSDL2Swift */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = WSDL2Swift;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "${SYMROOT}/${CONFIGURATION}/WSDL2Swift --out ${SRCROOT}/iOSWSDL2Swift/exampleWSDLS/generated/WSDL.swift ${SRCROOT}/iOSWSDL2Swift/exampleWSDLS/*.xml || echo \"error: place wsdl and xsd xml files into exampleWSDLS.\"";
+			showEnvVarsInLog = 0;
+		};
+		F9C5B1F57D7EB7F49456204D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FF20626B390E120C89964A2C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2Swift/Pods-iOSWSDL2Swift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -288,11 +391,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA1F09C71DE43B3900414030 /* ViewController.swift in Sources */,
+				EA1F09DD1DE43D6000414030 /* WSDL.swift in Sources */,
 				EA1F09C51DE43B3900414030 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EA1F09D71DE43C6600414030 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA1F09A61DE4376C00414030 /* WSDL2Swift */;
+			targetProxy = EA1F09D61DE43C6600414030 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		EA1F09CD1DE43B3900414030 /* LaunchScreen.storyboard */ = {
@@ -416,6 +528,7 @@
 		};
 		EA1F09D21DE43B3900414030 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 245448084A01A8ECE465E13C /* Pods-iOSWSDL2Swift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -434,6 +547,7 @@
 		};
 		EA1F09D31DE43B3900414030 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80BB6D87374F9006AA53BBD0 /* Pods-iOSWSDL2Swift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -479,6 +593,7 @@
 				EA1F09D31DE43B3900414030 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
