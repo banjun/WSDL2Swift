@@ -13,6 +13,10 @@
 		EA1F09BA1DE4394C00414030 /* Preamble.stencil in Copy Resources */ = {isa = PBXBuildFile; fileRef = EA1F09B21DE438EE00414030 /* Preamble.stencil */; };
 		EA1F09BB1DE4394C00414030 /* WSDLService.stencil in Copy Resources */ = {isa = PBXBuildFile; fileRef = EA1F09B31DE438EE00414030 /* WSDLService.stencil */; };
 		EA1F09BC1DE4394C00414030 /* XSDType.stencil in Copy Resources */ = {isa = PBXBuildFile; fileRef = EA1F09B41DE438EE00414030 /* XSDType.stencil */; };
+		EA1F09C51DE43B3900414030 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09C41DE43B3900414030 /* AppDelegate.swift */; };
+		EA1F09C71DE43B3900414030 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09C61DE43B3900414030 /* ViewController.swift */; };
+		EA1F09CC1DE43B3900414030 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09CB1DE43B3900414030 /* Assets.xcassets */; };
+		EA1F09CF1DE43B3900414030 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09CD1DE43B3900414030 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +45,12 @@
 		EA1F09B21DE438EE00414030 /* Preamble.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Preamble.stencil; sourceTree = "<group>"; };
 		EA1F09B31DE438EE00414030 /* WSDLService.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WSDLService.stencil; sourceTree = "<group>"; };
 		EA1F09B41DE438EE00414030 /* XSDType.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XSDType.stencil; sourceTree = "<group>"; };
+		EA1F09C21DE43B3900414030 /* iOSWSDL2Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSWSDL2Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA1F09C41DE43B3900414030 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EA1F09C61DE43B3900414030 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EA1F09CB1DE43B3900414030 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EA1F09CE1DE43B3900414030 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EA1F09D01DE43B3900414030 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +59,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6AA9B01661501F78A68771CC /* Pods_WSDL2Swift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA1F09BF1DE43B3900414030 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				EA1F09A91DE4376C00414030 /* WSDL2Swift */,
+				EA1F09C31DE43B3900414030 /* iOSWSDL2Swift */,
 				EA1F09A81DE4376C00414030 /* Products */,
 				D9946EE807EAFF0EF0D0CEE5 /* Pods */,
 				45D177451753CA0314486137 /* Frameworks */,
@@ -86,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				EA1F09A71DE4376C00414030 /* WSDL2Swift */,
+				EA1F09C21DE43B3900414030 /* iOSWSDL2Swift.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,6 +119,18 @@
 				EA1F09B41DE438EE00414030 /* XSDType.stencil */,
 			);
 			path = WSDL2Swift;
+			sourceTree = "<group>";
+		};
+		EA1F09C31DE43B3900414030 /* iOSWSDL2Swift */ = {
+			isa = PBXGroup;
+			children = (
+				EA1F09C41DE43B3900414030 /* AppDelegate.swift */,
+				EA1F09C61DE43B3900414030 /* ViewController.swift */,
+				EA1F09CB1DE43B3900414030 /* Assets.xcassets */,
+				EA1F09CD1DE43B3900414030 /* LaunchScreen.storyboard */,
+				EA1F09D01DE43B3900414030 /* Info.plist */,
+			);
+			path = iOSWSDL2Swift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +156,23 @@
 			productReference = EA1F09A71DE4376C00414030 /* WSDL2Swift */;
 			productType = "com.apple.product-type.tool";
 		};
+		EA1F09C11DE43B3900414030 /* iOSWSDL2Swift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA1F09D11DE43B3900414030 /* Build configuration list for PBXNativeTarget "iOSWSDL2Swift" */;
+			buildPhases = (
+				EA1F09BE1DE43B3900414030 /* Sources */,
+				EA1F09BF1DE43B3900414030 /* Frameworks */,
+				EA1F09C01DE43B3900414030 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iOSWSDL2Swift;
+			productName = iOSWSDL2Swift;
+			productReference = EA1F09C21DE43B3900414030 /* iOSWSDL2Swift.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -139,6 +187,11 @@
 						DevelopmentTeam = FPZK4WRGW7;
 						ProvisioningStyle = Automatic;
 					};
+					EA1F09C11DE43B3900414030 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = FPZK4WRGW7;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = EA1F09A21DE4376C00414030 /* Build configuration list for PBXProject "WSDL2Swift" */;
@@ -147,6 +200,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = EA1F099E1DE4376C00414030;
 			productRefGroup = EA1F09A81DE4376C00414030 /* Products */;
@@ -154,9 +208,22 @@
 			projectRoot = "";
 			targets = (
 				EA1F09A61DE4376C00414030 /* WSDL2Swift */,
+				EA1F09C11DE43B3900414030 /* iOSWSDL2Swift */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EA1F09C01DE43B3900414030 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA1F09CF1DE43B3900414030 /* LaunchScreen.storyboard in Resources */,
+				EA1F09CC1DE43B3900414030 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		7910F7EBD06772F6446C6560 /* [CP] Check Pods Manifest.lock */ = {
@@ -216,7 +283,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EA1F09BE1DE43B3900414030 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA1F09C71DE43B3900414030 /* ViewController.swift in Sources */,
+				EA1F09C51DE43B3900414030 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		EA1F09CD1DE43B3900414030 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA1F09CE1DE43B3900414030 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		EA1F09AC1DE4376C00414030 /* Debug */ = {
@@ -313,7 +400,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = FPZK4WRGW7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Debug;
 		};
@@ -323,7 +410,44 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = FPZK4WRGW7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
+			};
+			name = Release;
+		};
+		EA1F09D21DE43B3900414030 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = FPZK4WRGW7;
+				INFOPLIST_FILE = iOSWSDL2Swift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.iOSWSDL2Swift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EA1F09D31DE43B3900414030 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = FPZK4WRGW7;
+				INFOPLIST_FILE = iOSWSDL2Swift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.iOSWSDL2Swift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -347,6 +471,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		EA1F09D11DE43B3900414030 /* Build configuration list for PBXNativeTarget "iOSWSDL2Swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA1F09D21DE43B3900414030 /* Debug */,
+				EA1F09D31DE43B3900414030 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
