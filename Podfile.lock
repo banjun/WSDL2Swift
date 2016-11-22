@@ -1,0 +1,31 @@
+PODS:
+  - AEXML (4.0.1)
+  - Commander (0.4.1)
+  - PathKit (0.7.0)
+  - Stencil (0.6.0):
+    - PathKit (~> 0.7.0)
+
+DEPENDENCIES:
+  - AEXML
+  - Commander (from `https://github.com/kylef/Commander.git`, branch `kylef/swift-3.0`)
+  - Stencil
+
+EXTERNAL SOURCES:
+  Commander:
+    :branch: kylef/swift-3.0
+    :git: https://github.com/kylef/Commander.git
+
+CHECKOUT OPTIONS:
+  Commander:
+    :commit: 34f88a820b5936e12c4a42d2b434aa12ea9da831
+    :git: https://github.com/kylef/Commander.git
+
+SPEC CHECKSUMS:
+  AEXML: 905e50474c0a261d335aa8be4ee32d22d69b6fd5
+  Commander: 106cb704180eee0a5f9df2e9dbc090808b564636
+  PathKit: f8260c3e41bf4d552f3603853e32a5b325a176d4
+  Stencil: c665353046bca0279f3503f88293f2eff5fc67a6
+
+PODFILE CHECKSUM: 649d37951d1f47963efc21f1cada4476674bfb09
+
+COCOAPODS: 1.1.1

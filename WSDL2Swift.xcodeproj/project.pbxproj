@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6AA9B01661501F78A68771CC /* Pods_WSDL2Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */; };
 		EA1F09AB1DE4376C00414030 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09AA1DE4376C00414030 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WSDL2Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		54E07700FFB14F5BC9DE3247 /* Pods-WSDL2Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WSDL2Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift.release.xcconfig"; sourceTree = "<group>"; };
+		7C2849B258EEA5B658C2CD2E /* Pods-WSDL2Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WSDL2Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		EA1F09A71DE4376C00414030 /* WSDL2Swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WSDL2Swift; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1F09AA1DE4376C00414030 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -32,17 +36,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AA9B01661501F78A68771CC /* Pods_WSDL2Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45D177451753CA0314486137 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D9946EE807EAFF0EF0D0CEE5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7C2849B258EEA5B658C2CD2E /* Pods-WSDL2Swift.debug.xcconfig */,
+				54E07700FFB14F5BC9DE3247 /* Pods-WSDL2Swift.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		EA1F099E1DE4376C00414030 = {
 			isa = PBXGroup;
 			children = (
 				EA1F09A91DE4376C00414030 /* WSDL2Swift */,
 				EA1F09A81DE4376C00414030 /* Products */,
+				D9946EE807EAFF0EF0D0CEE5 /* Pods */,
+				45D177451753CA0314486137 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -69,9 +93,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA1F09AE1DE4376C00414030 /* Build configuration list for PBXNativeTarget "WSDL2Swift" */;
 			buildPhases = (
+				7910F7EBD06772F6446C6560 /* [CP] Check Pods Manifest.lock */,
 				EA1F09A31DE4376C00414030 /* Sources */,
 				EA1F09A41DE4376C00414030 /* Frameworks */,
 				EA1F09A51DE4376C00414030 /* CopyFiles */,
+				D25BDD841BAE9DA09042A6D9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -114,6 +140,39 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7910F7EBD06772F6446C6560 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D25BDD841BAE9DA09042A6D9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EA1F09A31DE4376C00414030 /* Sources */ = {
@@ -217,6 +276,7 @@
 		};
 		EA1F09AF1DE4376C00414030 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C2849B258EEA5B658C2CD2E /* Pods-WSDL2Swift.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = FPZK4WRGW7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -226,6 +286,7 @@
 		};
 		EA1F09B01DE4376C00414030 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54E07700FFB14F5BC9DE3247 /* Pods-WSDL2Swift.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = FPZK4WRGW7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
