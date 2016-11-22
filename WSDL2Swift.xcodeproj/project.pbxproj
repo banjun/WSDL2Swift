@@ -9,17 +9,25 @@
 /* Begin PBXBuildFile section */
 		6AA9B01661501F78A68771CC /* Pods_WSDL2Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */; };
 		EA1F09AB1DE4376C00414030 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09AA1DE4376C00414030 /* main.swift */; };
+		EA1F09B51DE438EE00414030 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09B11DE438EE00414030 /* Core.swift */; };
+		EA1F09BA1DE4394C00414030 /* Preamble.stencil in Copy Resources */ = {isa = PBXBuildFile; fileRef = EA1F09B21DE438EE00414030 /* Preamble.stencil */; };
+		EA1F09BB1DE4394C00414030 /* WSDLService.stencil in Copy Resources */ = {isa = PBXBuildFile; fileRef = EA1F09B31DE438EE00414030 /* WSDLService.stencil */; };
+		EA1F09BC1DE4394C00414030 /* XSDType.stencil in Copy Resources */ = {isa = PBXBuildFile; fileRef = EA1F09B41DE438EE00414030 /* XSDType.stencil */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		EA1F09A51DE4376C00414030 /* CopyFiles */ = {
+		EA1F09B61DE4392100414030 /* Copy Resources */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			dstPath = Stencils;
+			dstSubfolderSpec = 16;
 			files = (
+				EA1F09BA1DE4394C00414030 /* Preamble.stencil in Copy Resources */,
+				EA1F09BB1DE4394C00414030 /* WSDLService.stencil in Copy Resources */,
+				EA1F09BC1DE4394C00414030 /* XSDType.stencil in Copy Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			name = "Copy Resources";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -29,6 +37,10 @@
 		7C2849B258EEA5B658C2CD2E /* Pods-WSDL2Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WSDL2Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		EA1F09A71DE4376C00414030 /* WSDL2Swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WSDL2Swift; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1F09AA1DE4376C00414030 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		EA1F09B11DE438EE00414030 /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+		EA1F09B21DE438EE00414030 /* Preamble.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Preamble.stencil; sourceTree = "<group>"; };
+		EA1F09B31DE438EE00414030 /* WSDLService.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WSDLService.stencil; sourceTree = "<group>"; };
+		EA1F09B41DE438EE00414030 /* XSDType.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XSDType.stencil; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +94,10 @@
 			isa = PBXGroup;
 			children = (
 				EA1F09AA1DE4376C00414030 /* main.swift */,
+				EA1F09B11DE438EE00414030 /* Core.swift */,
+				EA1F09B21DE438EE00414030 /* Preamble.stencil */,
+				EA1F09B31DE438EE00414030 /* WSDLService.stencil */,
+				EA1F09B41DE438EE00414030 /* XSDType.stencil */,
 			);
 			path = WSDL2Swift;
 			sourceTree = "<group>";
@@ -96,8 +112,8 @@
 				7910F7EBD06772F6446C6560 /* [CP] Check Pods Manifest.lock */,
 				EA1F09A31DE4376C00414030 /* Sources */,
 				EA1F09A41DE4376C00414030 /* Frameworks */,
-				EA1F09A51DE4376C00414030 /* CopyFiles */,
 				D25BDD841BAE9DA09042A6D9 /* [CP] Copy Pods Resources */,
+				EA1F09B61DE4392100414030 /* Copy Resources */,
 			);
 			buildRules = (
 			);
@@ -179,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA1F09B51DE438EE00414030 /* Core.swift in Sources */,
 				EA1F09AB1DE4376C00414030 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,6 +330,7 @@
 				EA1F09B01DE4376C00414030 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

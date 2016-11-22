@@ -1,0 +1,186 @@
+import Foundation
+import AEXML
+import Result
+import BrightFutures
+
+
+public protocol SOAPParamConvertible {
+    // returns:
+    //  * Self: parse succeeded to an value
+    //  * nil: parse succeeded to nil
+    //  * SOAPParamError.unknown: parse failed
+    init?(xml: AEXMLElement) throws // SOAPParamError
+    init?(xmlValue: String) throws // SOAPParamError
+}
+
+extension SOAPParamConvertible {
+    // default implementation for primitive values
+    // element nil check and text value empty check
+    public init?(xml: AEXMLElement) throws {
+        guard let value = xml.value else { return nil }
+        guard !value.isEmpty else { return nil }
+        try self.init(xmlValue: value)
+    }
+}
+
+extension String: SOAPParamConvertible {
+    public init?(xmlValue: String) {
+        self.init(xmlValue)
+    }
+}
+extension Bool: SOAPParamConvertible {
+    public init?(xmlValue: String) throws {
+        switch xmlValue.lowercased() {
+        case "true": self = true
+        case "false": self = false
+        default: throw SOAPParamError.unknown
+        }
+    }
+}
+extension Int32: SOAPParamConvertible {
+    public init?(xmlValue: String) throws {
+        guard let v = Int32(xmlValue) else { throw SOAPParamError.unknown }
+        self = v
+    }
+}
+extension Int64: SOAPParamConvertible {
+    public init?(xmlValue: String) throws {
+        guard let v = Int64(xmlValue) else { throw SOAPParamError.unknown }
+        self = v
+    }
+}
+extension Date: SOAPParamConvertible {
+    public init?(xmlValue: String) {
+        return nil // TODO: self.init(value)
+    }
+}
+extension Data: SOAPParamConvertible {
+    public init?(xmlValue: String) {
+        return nil // TODO: self.init(value)
+    }
+}
+
+
+public protocol XSDType: SOAPParamConvertible {
+    var xmlParams: [(String, Any?)] { get }
+}
+extension XSDType {
+    public func soapRequest(_ tns: String) -> AEXMLDocument {
+        let action = "\(String(describing: type(of: self)))".components(separatedBy: "_").last!
+        let soapRequest = AEXMLDocument()
+        let envelope = soapRequest.addChild(name: "S:Envelope", attributes: [
+            "xmlns:S": "http://schemas.xmlsoap.org/soap/envelope/",
+            "xmlns:tns": tns,
+            ])
+        let _ = envelope.addChild(name: "S:Header")
+        let body = envelope.addChild(name: "S:Body")
+        let request = body.addChild(name: "tns:" + action)
+        for case let (k, v?) in xmlParams {
+            request.addChild(name: k, value: String(describing: v).xmlEscaped)
+        }
+
+        return soapRequest
+    }
+
+    public init?(xmlValue: String) {
+        return nil // TODO: self.init(value)
+    }
+}
+
+
+public protocol WSDLService {
+    var endpoint: String { get set }
+    var path: String { get }
+}
+
+
+public protocol WSDLOperation {
+    associatedtype Response
+    func request() -> Result<Response, WSDLOperationError>
+}
+
+public enum WSDLOperationError: Error {
+    case unknown
+    case urlSession(Error)
+    case invalidXML
+    case invalidXMLContent
+    case soapFault(SOAPMessage.Fault)
+}
+
+
+public struct SOAPMessage {
+    var header: Header?
+    var body: Body
+
+    private let soapNameSpace: String
+    private let targetNamespace: String
+
+    public init?(xml: AEXMLDocument, targetNamespace: String) {
+        guard let soapNameSpace = (xml.root.attributes.first {$0.key.hasPrefix("xmlns:") && $0.value == "http://schemas.xmlsoap.org/soap/envelope/"}?.key.components(separatedBy: ":").last),
+            let body = Body(xml: xml[soapNameSpace + ":Envelope"][soapNameSpace + ":Body"], soapNameSpace: soapNameSpace, targetNamespace: targetNamespace) else {
+            return nil // invalid soap message
+        }
+        self.targetNamespace = targetNamespace
+        self.soapNameSpace = soapNameSpace
+        self.body = body
+    }
+
+    public struct Header {
+        // TODO
+    }
+
+    public struct Body {
+        var output: AEXMLElement? // first <(ns2):(name) xmlns:(ns2)="(targetNamespace)">...</...>
+        var fault: Fault?
+
+        public var xml: AEXMLElement // for now, raw XML
+
+        public init?(xml: AEXMLElement, soapNameSpace: String, targetNamespace: String) {
+            self.xml = xml
+
+            self.output = xml.children.first { e in
+                // find <(ns2):(name) xmlns:(ns2)="(targetNamespace)">...</...>
+                guard let ns = (e.attributes.first {$0.key.hasPrefix("xmlns:") && $0.value == targetNamespace}?.key.components(separatedBy: ":").last) else { return false }
+                return e.name.hasPrefix(ns + ":") // e.name == ns + ":" + name
+            }
+
+            self.fault = Fault(xml: xml[soapNameSpace + ":Fault"])
+        }
+    }
+
+    public struct Fault {
+        // supports soap 1.1 (S:Fault xmlns:S="http://schemas.xmlsoap.org/soap/envelope/")
+        var faultCode: String
+        var faultString: String
+        var faultActor: String?
+        var detail: String?
+
+        public init?(xml: AEXMLElement) {
+            guard let faultCode = xml["faultcode"].value else { return nil } // faultcode MUST be present in a SOAP Fault element
+            guard let faultString = xml["faultstring"].value else { return nil } // faultString MUST be present in a SOAP Fault element
+            self.faultCode = faultCode
+            self.faultString = faultString
+            self.faultActor = xml["faultactor"].value
+            self.detail = xml["detail"].value
+        }
+    }
+}
+
+enum SOAPParamError: Error { case unknown }
+
+// ex. let x: Bool = parseXSDType(v), success only if T(v) is succeeded
+func parseXSDType<T: SOAPParamConvertible>(_ element: AEXMLElement) throws -> T {
+    guard let v = try T(xml: element) else { throw SOAPParamError.unknown }
+    return v
+}
+
+// ex. let x: Bool? = parseXSDType(v), failure only if T(v) is failed
+func parseXSDType<T: SOAPParamConvertible>(_ element: AEXMLElement) throws -> T? {
+    return try T(xml: element)
+}
+
+// ex. let x: [String] = parseXSDType(v), failure only if any T(v.children) is failed
+func parseXSDType<T: SOAPParamConvertible>(_ element: AEXMLElement) throws -> [T] {
+    return try (element.all ?? []).map(parseXSDType)
+}
+
