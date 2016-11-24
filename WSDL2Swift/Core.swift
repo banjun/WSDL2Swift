@@ -32,13 +32,35 @@ private func replaceTargetNameSpace(_ name: String, prefix: String) -> String {
 
 
 struct Core {
-    static func main(out: URL, in files: [(wsdlPath: String, xsdPath: String)]) throws {
+    static func main(out: URL, in files: [String]) throws {
         let preamble = try template(named: "Preamble").render()
+        var wsdls: [WSDL] = []
+        var types: [(prefix: String, type: XSDType)] = []
 
-        let wsdls = files.map {WSDL(path: $0.wsdlPath)!}
-        let xsds = zip(files, wsdls).map {try! parseXSD($0.0.xsdPath, prefix: $0.1.prefix)}
+        // each file can be either WSDL or XSD file
+        for f in files {
+            if let wsdl = WSDL(path: f) {
+                wsdls.append(wsdl)
+                continue
+            }
 
-        let types = xsds.joined()
+            guard let wsdl = wsdls.last else {
+                print("error: files.first should be WSDL xml file: \(f)")
+                return
+            }
+
+            guard let xsd = parseXSD(f, prefix:wsdl.prefix) else {
+                print("error: file is not WSDL nor XSD: \(f)")
+                return
+            }
+            types.append(contentsOf: xsd)
+        }
+
+        guard !wsdls.isEmpty else {
+            print("error: no WSDLs found in: \(files)")
+            return
+        }
+        
         try (preamble
             + types.map {compact($0.type.swift(types.map {$0.type}, prefix: $0.prefix))}.joined(separator: "\n\n")
             + "\n\n"
@@ -46,8 +68,9 @@ struct Core {
             .write(to: out, atomically: true, encoding: .utf8)
     }
 
-    fileprivate static func parseXSD(_ path: String, prefix: String) throws -> [(prefix: String, type: XSDType)] {
-        let xsd = try AEXMLDocument(xml: Data(contentsOf: URL(fileURLWithPath: path)))
+    fileprivate static func parseXSD(_ path: String, prefix: String) -> [(prefix: String, type: XSDType)]? {
+        guard let xsd = try? AEXMLDocument(xml: Data(contentsOf: URL(fileURLWithPath: path))) else { return nil }
+        guard xsd.root.name == "xs:schema" else { return nil }
         let types = (xsd.root["xs:complexType"].all ?? [])
             .flatMap {XSDType.deserialize($0, prefix: prefix)}
             .map {(prefix, $0)}
@@ -71,6 +94,7 @@ struct WSDL {
 
     init?(path: String) {
         guard let wsdl = try? AEXMLDocument(xml: Data(contentsOf: URL(fileURLWithPath: path))) else { return nil }
+        guard wsdl.root.name == "definitions" else { return nil }
         targetNamespace = wsdl.root.attributes["targetNamespace"]!
         messages = (wsdl.root["message"].all ?? []).flatMap(WSDLMessage.deserialize)
         portType = (wsdl.root["portType"].all ?? []).flatMap(WSDLPortType.deserialize).first!

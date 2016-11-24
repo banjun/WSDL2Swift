@@ -2,7 +2,7 @@ PODS:
   - AEXML (4.0.1)
   - BrightFutures (5.1.0):
     - Result (~> 3.0)
-  - Commander (0.4.1)
+  - Commander (0.5.0)
   - PathKit (0.7.0)
   - Result (3.0.0)
   - Stencil (0.6.0):
@@ -11,27 +11,17 @@ PODS:
 DEPENDENCIES:
   - AEXML
   - BrightFutures
-  - Commander (from `https://github.com/kylef/Commander.git`, branch `kylef/swift-3.0`)
+  - Commander
   - Stencil
-
-EXTERNAL SOURCES:
-  Commander:
-    :branch: kylef/swift-3.0
-    :git: https://github.com/kylef/Commander.git
-
-CHECKOUT OPTIONS:
-  Commander:
-    :commit: 34f88a820b5936e12c4a42d2b434aa12ea9da831
-    :git: https://github.com/kylef/Commander.git
 
 SPEC CHECKSUMS:
   AEXML: 905e50474c0a261d335aa8be4ee32d22d69b6fd5
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
-  Commander: 106cb704180eee0a5f9df2e9dbc090808b564636
+  Commander: 632982cd24e742e08e530859b33a246c90062201
   PathKit: f8260c3e41bf4d552f3603853e32a5b325a176d4
   Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
   Stencil: c665353046bca0279f3503f88293f2eff5fc67a6
 
-PODFILE CHECKSUM: 538b241fb7fbbd333a9ca93be73b20e9335d1219
+PODFILE CHECKSUM: 9b66a7991fcdad7c4c74dc3f0b5434f03f697db9
 
 COCOAPODS: 1.1.1
