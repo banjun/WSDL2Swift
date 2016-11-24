@@ -7,10 +7,11 @@ class ViewController: UIViewController {
         view.backgroundColor = .white
 
         // codes depend on exampleWSDLs you place
-        let auth = AuthenticationServiceService(endpoint: "https://examle.com")
-        let login = auth.request(AuthenticationServiceService_login(arg0: "alice@example.com", arg1: "password"))
-        login.onComplete { r in
-            NSLog("%@", "result = \(r)")
+        // this example use tempconvert.asmx.xml on http://www.w3schools.com/xml/tempconvert.asmx
+
+        let service = TempConvert(endpoint: "http://www.w3schools.com")
+        service.request(TempConvert_CelsiusToFahrenheit(Celsius: "23.4")).onComplete { r in
+            NSLog("%@", "TempConvert_CelsiusToFahrenheit(Celsius: \"23.4\") = \(r)")
         }
     }
 }

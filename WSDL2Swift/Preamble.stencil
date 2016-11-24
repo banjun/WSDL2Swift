@@ -70,11 +70,13 @@ extension XSDType {
         let soapRequest = AEXMLDocument()
         let envelope = soapRequest.addChild(name: "S:Envelope", attributes: [
             "xmlns:S": "http://schemas.xmlsoap.org/soap/envelope/",
-            "xmlns:tns": tns,
+            // "xmlns:tns": tns, // FIXME: JAX-WS requires prefixed name, but www.w3schools.com/webservices requires non-prefixed name
+            "xmlns": tns, // ^
             ])
         let _ = envelope.addChild(name: "S:Header")
         let body = envelope.addChild(name: "S:Body")
-        let request = body.addChild(name: "tns:" + action)
+        let request = body.addChild(name: "" + action) // FIXME: JAX-WS requires prefixed name, but www.w3schools.com/webservices requires
+        // let request = body.addChild(name: "tns:" + action) // ^
         for case let (k, v?) in xmlParams {
             request.addChild(name: k, value: String(describing: v).xmlEscaped)
         }
@@ -140,8 +142,9 @@ public struct SOAPMessage {
 
             self.output = xml.children.first { e in
                 // find <(ns2):(name) xmlns:(ns2)="(targetNamespace)">...</...>
-                guard let ns = (e.attributes.first {$0.key.hasPrefix("xmlns:") && $0.value == targetNamespace}?.key.components(separatedBy: ":").last) else { return false }
-                return e.name.hasPrefix(ns + ":") // e.name == ns + ":" + name
+                // or <(name) xmlns="(targetNamespace)">...</...>
+                guard let key = (e.attributes.first {$0.key.hasPrefix("xmlns") && $0.value == targetNamespace}?.key) else { return false }
+                return key.hasPrefix("xmlns:") ? e.name.hasPrefix(key.components(separatedBy: ":").last! + ":") : true
             }
 
             self.fault = Fault(xml: xml[soapNameSpace + ":Fault"])

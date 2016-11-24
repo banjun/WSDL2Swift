@@ -9,12 +9,12 @@ private func template(named name: String) -> Template {
 
 
 private let typeMap: [String: String] = [
-    "xs:string": "\(String.self)",
-    "xs:boolean": "\(Bool.self)",
-    "xs:int": "\(Int32.self)",
-    "xs:long": "\(Int64.self)",
-    "xs:dateTime": "\(Date.self)",
-    "xs:base64Binary": "\(Data.self)",
+    "string": "\(String.self)", // xs:string
+    "boolean": "\(Bool.self)", // xs:boolean
+    "int": "\(Int32.self)",
+    "long": "\(Int64.self)",
+    "dateTime": "\(Date.self)",
+    "base64Binary": "\(Data.self)",
 ]
 
 private let swiftKeywords: [String] = [
@@ -41,6 +41,17 @@ struct Core {
         for f in files {
             if let wsdl = WSDL(path: f) {
                 wsdls.append(wsdl)
+
+                (wsdl.types?["schema"].all ?? []).forEach { s in
+                    var options = AEXMLOptions()
+                    options.parserSettings.shouldProcessNamespaces = true // ignore namespace
+                    options.parserSettings.shouldReportNamespacePrefixes = false // ignore namespace
+                    let xml = AEXMLDocument(root: s, options: options)
+                    if let xsd = parseXSD(xml, prefix: wsdl.prefix) {
+                        types.append(contentsOf: xsd)
+                    }
+                }
+
                 continue
             }
 
@@ -49,7 +60,7 @@ struct Core {
                 return
             }
 
-            guard let xsd = parseXSD(f, prefix:wsdl.prefix) else {
+            guard let xsd = parseXSD(f, prefix: wsdl.prefix) else {
                 print("error: file is not WSDL nor XSD: \(f)")
                 return
             }
@@ -69,9 +80,20 @@ struct Core {
     }
 
     fileprivate static func parseXSD(_ path: String, prefix: String) -> [(prefix: String, type: XSDType)]? {
-        guard let xsd = try? AEXMLDocument(xml: Data(contentsOf: URL(fileURLWithPath: path))) else { return nil }
-        guard xsd.root.name == "xs:schema" else { return nil }
-        let types = (xsd.root["xs:complexType"].all ?? [])
+        var options = AEXMLOptions()
+        options.parserSettings.shouldProcessNamespaces = true // ignore namespace
+        options.parserSettings.shouldReportNamespacePrefixes = false // ignore namespace
+        guard let xsd = try? AEXMLDocument(xml: Data(contentsOf: URL(fileURLWithPath: path)), options: options) else { return nil }
+        return parseXSD(xsd, prefix: prefix)
+    }
+
+    fileprivate static func parseXSD(_ xsd: AEXMLDocument, prefix: String) -> [(prefix: String, type: XSDType)]? {
+        // * top-level <complexType name="...">... use the name as type name
+        // * child of element <complexType>... use the enclosing element name as type name
+        guard xsd.root.name == "schema" else { return nil }
+        let complexTypes: [AEXMLElement] = (xsd.root["complexType"].all ?? [])
+            + ((xsd.root["element"].all ?? []).flatMap {$0["complexType"].all}.joined())
+        let types = complexTypes
             .flatMap {XSDType.deserialize($0, prefix: prefix)}
             .map {(prefix, $0)}
         return types
@@ -86,6 +108,7 @@ struct Core {
 
 struct WSDL {
     var targetNamespace: String
+    var types: AEXMLElement?
     var messages: [WSDLMessage]
     var portType: WSDLPortType
     var binding: WSDLBinding
@@ -100,6 +123,7 @@ struct WSDL {
 
         guard wsdl.root.name == "definitions" else { return nil }
         targetNamespace = wsdl.root.attributes["targetNamespace"]!
+        types = (wsdl.root["types"])
         messages = (wsdl.root["message"].all ?? []).flatMap(WSDLMessage.deserialize)
         portType = (wsdl.root["portType"].all ?? []).flatMap(WSDLPortType.deserialize).first!
         binding = (wsdl.root["binding"].all ?? []).flatMap(WSDLBinding.deserialize).first!
@@ -111,11 +135,13 @@ struct WSDL {
             "targetNamespace": targetNamespace,
             "name": service.name,
             "path": URL(string: service.port.location)?.path ?? (service.port.location as NSString).lastPathComponent,
-            "operations": portType.operations.map { op in
+            "operations": portType.operations.map { op -> [String: String] in
+                let inputMessage = messages.first {$0.name == replaceTargetNameSpace(op.inputMessage, prefix: "")}!
+                let outputMessage = messages.first {$0.name == replaceTargetNameSpace(op.outputMessage, prefix: "")}!
                 return [
                     "name": swiftKeywordsAvoidedName(op.name),
-                    "inParam": replaceTargetNameSpace(op.inputMessage, prefix: prefix),
-                    "outParam": replaceTargetNameSpace(op.outputMessage, prefix: prefix),
+                    "inParam": replaceTargetNameSpace(inputMessage.parameterName, prefix: prefix),
+                    "outParam": replaceTargetNameSpace(outputMessage.parameterName, prefix: prefix),
                 ]}]))
     }
 }
@@ -123,14 +149,15 @@ struct WSDL {
 
 struct WSDLMessage {
     var name: String
-    // var part
+    var part: AEXMLElement
+    var parameterName: String {return part.attributes["element"]!}
 
     static func deserialize(_ node: AEXMLElement) -> WSDLMessage? {
         guard let name = node.attributes["name"] else {
             NSLog("%@", "cannot deserialize \(self) from node \(node.xmlCompact)")
             return nil
         }
-        return self.init(name: name)
+        return self.init(name: name, part: node["part"].first!)
     }
 }
 
@@ -217,7 +244,12 @@ struct XSDType {
     var base: String?
 
     static func deserialize(_ node: AEXMLElement, prefix: String = "") -> XSDType? {
-        guard let name = node.attributes["name"] else {
+        func resolveName() -> String? {
+            if let name = node.attributes["name"] { return name }
+            if let name = node.parent?.attributes["name"], node.parent?.name == "element" { return name }
+            return nil
+        }
+        guard let name = resolveName() else {
             NSLog("%@", "cannot deserialize \(self) from node \(node.xmlCompact)")
             return nil
         }
@@ -234,7 +266,7 @@ struct XSDType {
         func parseChildElements(_ sequence: AEXMLElement) {
             for sn in sequence.children {
                 switch sn.name {
-                case "xs:element":
+                case "element":
                     if let e = XSDElement.deserialize(sn, prefix: prefix) {
                         elements.append(e)
                     }
@@ -245,17 +277,17 @@ struct XSDType {
         }
 
         switch n.name {
-        case "xs:sequence":
+        case "sequence":
             base = nil
             parseChildElements(n)
-        case "xs:complexContent":
-            guard n["xs:extension"].count == 1,
-                let ext = n["xs:extension"].first,
+        case "complexContent":
+            guard n["extension"].count == 1,
+                let ext = n["extension"].first,
                 let b = ext.attributes["base"] else {
                     NSLog("%@", "Warning: extension missing for complexContent: \(n.xmlCompact)")
                     return nil
             }
-            parseChildElements(ext["xs:sequence"])
+            parseChildElements(ext["sequence"])
             base = b.hasPrefix("tns:") ? b.substring(from: b.characters.index(b.characters.startIndex, offsetBy: "tns:".characters.count)) : b
         default:
             NSLog("%@", "Warning: unsupported node as type.*: \(n.xmlCompact)")
@@ -327,11 +359,11 @@ struct XSDElement {
 
         let type: Type
         if let t = node.attributes["type"] {
-            // element外部の型
-            type = .atomic(t)
+            // types external to element
+            type = .atomic(replaceTargetNameSpace(t, prefix: prefix).components(separatedBy: ":").last ?? t) // ignore namespace
         } else {
-            // element内部で定義される型
-            let complexType = node["xs:complexType"]
+            // types internal to element
+            let complexType = node["complexType"]
             complexType.attributes["name"] = name
             guard let t = XSDType.deserialize(complexType, prefix: prefix) else {
                 return nil
