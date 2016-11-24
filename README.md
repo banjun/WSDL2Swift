@@ -4,6 +4,20 @@ WSDL2Swift
 Swift alternative to WSDL2ObjC making a SOAP request & parsing its response as defined in WSDL.
 Objective-C free and libxml free.
 
+## Input & Output
+
+Input
+
+* WSDL 1.1 xmls
+* XSD xmls
+
+Output
+
+* a Swift file which works as SOAP client
+	* Swift 3.0.1 (Xcode 8.1)
+	* NSURLSession for connection
+	* [BrightFutures](https://github.com/Thomvis/BrightFutures) for returning asynchronous requests
+
 ## Usage
 
 generate WSDL.swift from WSDL and XSD xmls:
@@ -21,6 +35,13 @@ let login = auth.request(AuthenticationServiceService_login(arg0: "alice@example
 login.onComplete { r in
     NSLog("%@", "result = \(r)")
 }
+```
+
+with dependencies:
+
+```ruby
+pod 'AEXML'
+pod 'BrightFutures'
 ```
 
 ## Build
