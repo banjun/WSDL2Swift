@@ -93,7 +93,11 @@ struct WSDL {
     var prefix: String { return service.name + "_" }
 
     init?(path: String) {
-        guard let wsdl = try? AEXMLDocument(xml: Data(contentsOf: URL(fileURLWithPath: path))) else { return nil }
+        var options = AEXMLOptions()
+        options.parserSettings.shouldProcessNamespaces = true // ignore namespace
+        options.parserSettings.shouldReportNamespacePrefixes = false // ignore namespace
+        guard let wsdl = try? AEXMLDocument(xml: Data(contentsOf: URL(fileURLWithPath: path)), options: options) else { return nil }
+
         guard wsdl.root.name == "definitions" else { return nil }
         targetNamespace = wsdl.root.attributes["targetNamespace"]!
         messages = (wsdl.root["message"].all ?? []).flatMap(WSDLMessage.deserialize)
@@ -196,7 +200,7 @@ struct WSDLServicePort {
     static func deserialize(_ node: AEXMLElement) -> WSDLServicePort? {
         guard let name = node.attributes["name"],
             let binding = node.attributes["binding"],
-            let location = node["soap:address"].first?.attributes["location"] else {
+            let location = node["address"].first?.attributes["location"] else {
             NSLog("%@", "cannot deserialize \(self) from node \(node.xmlCompact)")
             return nil
         }
