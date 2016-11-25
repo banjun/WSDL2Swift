@@ -77,8 +77,16 @@ extension XSDType {
         let body = envelope.addChild(name: "S:Body")
         let request = body.addChild(name: "tns:" + action) // assumes "tns:" prefixed for all actions. JAX-WS requires prefixed or xmlns specification on this node.
         for case let (k, v?, ns) in xmlParams {
+// TODO: recursively generate AEXMLElement and set xmlns
             let name = ns.isEmpty ? k : (ns + ":" + k)
-            request.addChild(name: name, value: String(describing: v).xmlEscaped)
+            switch v {
+            case let values as [SOAPParamConvertible]:
+                values.map { value in
+                    request.addChild(name: name, value: String(describing: value).xmlEscaped) // FIXME: recursive generation
+                }
+            default:
+                request.addChild(name: name, value: String(describing: v).xmlEscaped)
+            }
         }
 
         return soapRequest
