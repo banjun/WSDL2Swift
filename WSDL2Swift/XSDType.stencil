@@ -13,8 +13,8 @@ public init({% for e in elements %}{{ e.name }}: {{ e.type }}{% ifnot forloop.la
 {% endfor %}
     }
 
-    public var xmlParams: [(String, Any?)] {return [{% for p in xmlParams %}
-        ("{{ p.name }}", {{ p.swiftName }}),
+    public var xmlParams: [(String, Any?, String)] {return [{% for p in xmlParams %}
+        ("{{ p.name }}", {{ p.swiftName }}, "{{ p.xmlns }}"),
 {% endfor %}    ]}
 
     public init?(soapMessage message: SOAPMessage) {

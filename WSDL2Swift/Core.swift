@@ -264,10 +264,19 @@ struct XSDType {
         let base: String?
 
         func parseChildElements(_ sequence: AEXMLElement) {
+            func definedByRootElement(_ parent: AEXMLElement?) -> Bool {
+                guard let parent = parent else { return false }
+                if parent.parent?.name == "schema" && parent.name == "element" { // root is <schema>
+                    return true
+                }
+                return definedByRootElement(parent.parent)
+            }
+            let byRoot = definedByRootElement(sequence.parent)
+
             for sn in sequence.children {
                 switch sn.name {
                 case "element":
-                    if let e = XSDElement.deserialize(sn, prefix: prefix) {
+                    if let e = XSDElement.deserialize(sn, prefix: prefix, definedByRootElement: byRoot) {
                         elements.append(e)
                     }
                 default:
@@ -316,7 +325,7 @@ struct XSDType {
             "bareName": bareName,
             "elements": elements,
             "base": bases,
-            "xmlParams": (self.elements + (baseType?.elements ?? [])).map {["name": $0.name, "swiftName": $0.swiftName]},
+            "xmlParams": (self.elements + (baseType?.elements ?? [])).map {["name": $0.name, "swiftName": $0.swiftName, "xmlns": $0.xmlns]},
             "conformances": "XSDType",
             "innerTypes": self.elements.flatMap { e -> String? in
                 if case let .inner(t) = e.type { return t.swift(env, prefix: prefix, indentLevel: indentLevel + 1) } else { return nil }
@@ -338,6 +347,7 @@ struct XSDElement {
     let type: Type
     let minOccurs: UInt
     let maxOccurs: UInt
+    let xmlns: String
 
     enum `Type` {
         case atomic(String)
@@ -351,7 +361,7 @@ struct XSDElement {
         }
     }
 
-    static func deserialize(_ node: AEXMLElement, prefix: String = "") -> XSDElement? {
+    static func deserialize(_ node: AEXMLElement, prefix: String = "", definedByRootElement: Bool) -> XSDElement? {
         guard let name = node.attributes["name"] else {
             NSLog("%@", "cannot deserialize \(self) from node \(node.xmlCompact)")
             return nil
@@ -378,7 +388,8 @@ struct XSDElement {
             name: name,
             type: type,
             minOccurs: minOccurs.flatMap {UInt($0)} ?? 1, // XSD default = 1
-            maxOccurs: maxOCcurs.flatMap {$0 == "unbounded" ? UInt.max : UInt($0)} ?? 1) // XSD default = 1
+            maxOccurs: maxOCcurs.flatMap {$0 == "unbounded" ? UInt.max : UInt($0)} ?? 1, // XSD default = 1
+            xmlns: definedByRootElement ? "tns" : "")
     }
 
     func dictionary(_ prefix: String) -> [String: Any] {

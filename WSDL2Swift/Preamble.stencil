@@ -62,7 +62,8 @@ extension Data: SOAPParamConvertible {
 
 
 public protocol XSDType: SOAPParamConvertible {
-    var xmlParams: [(String, Any?)] { get }
+    // name, swiftName, xmlns
+    var xmlParams: [(String, Any?, String)] { get }
 }
 extension XSDType {
     public func soapRequest(_ tns: String) -> AEXMLDocument {
@@ -70,15 +71,14 @@ extension XSDType {
         let soapRequest = AEXMLDocument()
         let envelope = soapRequest.addChild(name: "S:Envelope", attributes: [
             "xmlns:S": "http://schemas.xmlsoap.org/soap/envelope/",
-            // "xmlns:tns": tns, // FIXME: JAX-WS requires prefixed name, but www.w3schools.com/webservices requires non-prefixed name
-            "xmlns": tns, // ^
+            "xmlns:tns": tns,
             ])
         let _ = envelope.addChild(name: "S:Header")
         let body = envelope.addChild(name: "S:Body")
-        let request = body.addChild(name: "" + action) // FIXME: JAX-WS requires prefixed name, but www.w3schools.com/webservices requires
-        // let request = body.addChild(name: "tns:" + action) // ^
-        for case let (k, v?) in xmlParams {
-            request.addChild(name: k, value: String(describing: v).xmlEscaped)
+        let request = body.addChild(name: "tns:" + action) // assumes "tns:" prefixed for all actions. JAX-WS requires prefixed or xmlns specification on this node.
+        for case let (k, v?, ns) in xmlParams {
+            let name = ns.isEmpty ? k : (ns + ":" + k)
+            request.addChild(name: name, value: String(describing: v).xmlEscaped)
         }
 
         return soapRequest
