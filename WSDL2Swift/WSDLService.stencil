@@ -6,10 +6,9 @@ public struct {{ name }}: WSDLService {
     public init(endpoint: String) {
         self.endpoint = endpoint
     }
-{% for op in operations %}
 
-    public func request(_ parameters: {{ op.inParam }}) -> Future<{{ op.outParam }}, WSDLOperationError> {
-        let promise = Promise<{{ op.outParam }}, WSDLOperationError>()
+    private func requestGeneric<I: XSDType, O>(_ parameters: I) -> Future<O, WSDLOperationError> where O: XSDType, O: ExpressibleByXML {
+        let promise = Promise<O, WSDLOperationError>()
 
         let soapRequest = parameters.soapRequest(targetNamespace)
 //        print("request to \(endpoint + path) using: \(soapRequest.xml)")
@@ -41,7 +40,7 @@ public struct {{ name }}: WSDLService {
                 return
             }
 
-            guard let out = {{ op.outParam }}(soapMessage: soapMessage) else {
+            guard let out = O(soapMessage: soapMessage) else {
                 if let fault = soapMessage.body.fault {
                     promise.failure(.soapFault(fault))
                 } else {
@@ -54,5 +53,9 @@ public struct {{ name }}: WSDLService {
         }
         task.resume()
         return promise.future
+    }
+{% for op in operations %}
+    public func request(_ parameters: {{ op.inParam }}) -> Future<{{ op.outParam }}, WSDLOperationError> {
+        return requestGeneric(parameters)
     }{% endfor %}
 }
