@@ -21,6 +21,8 @@
 		EA1F09D51DE43C0700414030 /* exampleWSDLs in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09D41DE43C0700414030 /* exampleWSDLs */; };
 		EA1F09DC1DE43D6000414030 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09DA1DE43D6000414030 /* .gitkeep */; };
 		EA1F09DD1DE43D6000414030 /* WSDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09DB1DE43D6000414030 /* WSDL.swift */; };
+		EA2D7D4A1DEBED7900EA13B8 /* ExpressibleByXML.stencil in Resources */ = {isa = PBXBuildFile; fileRef = EA2D7D491DEBED7900EA13B8 /* ExpressibleByXML.stencil */; };
+		EA2D7D4B1DEBEF1600EA13B8 /* ExpressibleByXML.stencil in Copy Resources */ = {isa = PBXBuildFile; fileRef = EA2D7D491DEBED7900EA13B8 /* ExpressibleByXML.stencil */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,7 @@
 			dstPath = Stencils;
 			dstSubfolderSpec = 16;
 			files = (
+				EA2D7D4B1DEBEF1600EA13B8 /* ExpressibleByXML.stencil in Copy Resources */,
 				EA1F09BA1DE4394C00414030 /* Preamble.stencil in Copy Resources */,
 				EA1F09BB1DE4394C00414030 /* WSDLService.stencil in Copy Resources */,
 				EA1F09BC1DE4394C00414030 /* XSDType.stencil in Copy Resources */,
@@ -71,6 +74,7 @@
 		EA1F09D41DE43C0700414030 /* exampleWSDLs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = exampleWSDLs; sourceTree = "<group>"; };
 		EA1F09DA1DE43D6000414030 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		EA1F09DB1DE43D6000414030 /* WSDL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSDL.swift; sourceTree = "<group>"; };
+		EA2D7D491DEBED7900EA13B8 /* ExpressibleByXML.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ExpressibleByXML.stencil; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = "<none>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +145,7 @@
 				EA1F09B21DE438EE00414030 /* Preamble.stencil */,
 				EA1F09B31DE438EE00414030 /* WSDLService.stencil */,
 				EA1F09B41DE438EE00414030 /* XSDType.stencil */,
+				EA2D7D491DEBED7900EA13B8 /* ExpressibleByXML.stencil */,
 			);
 			path = WSDL2Swift;
 			sourceTree = "<group>";
@@ -260,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA1F09CF1DE43B3900414030 /* LaunchScreen.storyboard in Resources */,
+				EA2D7D4A1DEBED7900EA13B8 /* ExpressibleByXML.stencil in Resources */,
 				EA1F09D51DE43C0700414030 /* exampleWSDLs in Resources */,
 				EA1F09CC1DE43B3900414030 /* Assets.xcassets in Resources */,
 				EA1F09DC1DE43D6000414030 /* .gitkeep in Resources */,

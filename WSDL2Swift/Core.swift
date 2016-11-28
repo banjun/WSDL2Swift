@@ -71,11 +71,15 @@ struct Core {
             print("error: no WSDLs found in: \(files)")
             return
         }
+
+        let extensions = types.map {$0.type.dictionariesForExpressibleByXMLProtocol(types.map {$0.type}, typeQualifier: [])}.joined()
+        let expressibleByXMLExtensions: [String] = extensions.map {try! template(named: "ExpressibleByXML").render(Context(dictionary: $0))}
         
         try (preamble
             + types.map {compact($0.type.swift(types.map {$0.type}, prefix: $0.prefix))}.joined(separator: "\n\n")
             + "\n\n"
-            + wsdls.map {$0.swift()}.joined())
+            + wsdls.map {$0.swift()}.joined()
+            + expressibleByXMLExtensions.joined())
             .write(to: out, atomically: true, encoding: .utf8)
     }
 
@@ -305,18 +309,20 @@ struct XSDType {
         return self.init(prefix: prefix, bareName: name, elements: elements, base: base.map {prefix + $0})
     }
 
-    func dictionary(_ env: [XSDType], prefix: String, indentLevel: Int = 0) -> [String: Any] {
-        let baseType: XSDType?
+    func baseType(_ env: [XSDType]) -> XSDType? {
         if let base = self.base {
             guard let bt = env.filter({$0.name == base}).first else {
-                NSLog("%@", "Cannot resolve base type for \(name): \(base)")
-                return [:]
+                NSLog("%@", "error: Cannot resolve base type for \(name): \(base)")
+                return nil
             }
-            baseType = bt
+            return bt
         } else {
-            baseType = nil
+            return nil
         }
+    }
 
+    func dictionary(_ env: [XSDType], prefix: String, typeQualifier: [String] = []) -> [String: Any] {
+        let baseType = self.baseType(env)
         let elements = self.elements.map {$0.dictionary(prefix)}
         let bases = baseType.map {$0.dictionary(env, prefix: prefix)}
 
@@ -326,15 +332,32 @@ struct XSDType {
             "elements": elements,
             "base": bases ?? [:],
             "xmlParams": (self.elements + (baseType?.elements ?? [])).map {["name": $0.name, "swiftName": $0.swiftName, "xmlns": $0.xmlns]},
-            "conformances": "XSDType, ExpressibleByXML",
             "innerTypes": self.elements.flatMap { e -> String? in
-                if case let .inner(t) = e.type { return t.swift(env, prefix: prefix, indentLevel: indentLevel + 1) } else { return nil }
+                if case let .inner(t) = e.type { return t.swift(env, prefix: prefix, typeQualifier: typeQualifier + [name]) } else { return nil }
             },
         ]
     }
 
-    func swift(_ env: [XSDType], prefix: String, indentLevel: Int = 0) -> String {
-        return try! template(named: "XSDType").render(Context(dictionary: dictionary(env, prefix: prefix)))
+    func dictionariesForExpressibleByXMLProtocol(_ env: [XSDType], typeQualifier: [String] = []) -> [[String: Any]] {
+        var ds: [[String: Any]] = []
+        let fqn = typeQualifier + [name]
+        ds.append(["fqn": fqn.joined(separator: "."),
+                   "xmlParams": (self.elements + (baseType(env)?.elements ?? [])).map {["name": $0.name, "swiftName": $0.swiftName, "xmlns": $0.xmlns]},
+                   ])
+        for case let .inner(t) in (elements.map {$0.type}) {
+            ds.append(contentsOf: t.dictionariesForExpressibleByXMLProtocol(env, typeQualifier: fqn))
+        }
+        return ds
+    }
+
+    func swift(_ env: [XSDType], prefix: String, typeQualifier: [String] = []) -> String {
+        let d = dictionary(env, prefix: prefix)
+        let indentLevel = typeQualifier.count
+        return try! template(named: "XSDType").render(Context(dictionary: d))
+//            + template(named: "ExpressibleByXML").render(Context(dictionary: [
+//                "fqn": (typeQualifier + [name]).joined(separator: "."),
+//                "xmlParams": d["xmlParams"] ?? [:],
+//                ]))
             .replacingOccurrences(of: "\n\n", with: "\n")
             .components(separatedBy: "\n")
             .joined(separator: "\n" + [String](repeating: "    ", count: indentLevel).joined(separator: ""))

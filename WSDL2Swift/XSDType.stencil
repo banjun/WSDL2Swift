@@ -1,29 +1,13 @@
-public struct {{ name }}: {{ conformances }} {
+public struct {{ name }}: XSDType {
 {% for e in elements %}    public var {{ e.name }}: {{ e.type }}
 {% endfor %}{% if base.elements %}    // inherited from {{ base.name }}
 {% for e in base.elements %}    public var {{ e.name }}: {{ e.type }}
 {% endfor %}
-    //{% endif %}{% for t in innerTypes %}    {{ t }}{% endfor %}
-
-    // memberwise init
-    public init({% for e in elements %}{{ e.name }}: {{ e.type }}{% ifnot forloop.last %}, {% endif %}{% endfor %}{% if base.elements %}{% if elements %}, {% endif %}{% for e in base.elements %}{{ e.name }}: {{ e.type }}{% if forloop.last %}{% else %}, {% endif %}{% endfor %}{% endif %}) {
-{% for e in elements %}        self.{{ e.name }} = {{ e.name }}
-{% endfor %}
-{% for e in base.elements %}        self.{{ e.name }} = {{ e.name }}
-{% endfor %}
-    }
+    //
+    {% endif %}{% for t in innerTypes %}
+    {{ t }}{% endfor %}
 
     public var xmlParams: [(String, SOAPParamConvertible?, String)] {return [{% for p in xmlParams %}
         ("{{ p.name }}", {{ p.swiftName }}, "{{ p.xmlns }}"),
 {% endfor %}    ]}
-
-    public init?(xml: AEXMLElement) {
-        do {
-{% for p in xmlParams %}
-            self.{{ p.swiftName }} = try parseXSDType(xml["{{ p.name }}"])
-{% endfor %}
-        } catch _ {
-            return nil
-        }
-    }
 }
