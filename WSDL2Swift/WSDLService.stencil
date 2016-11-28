@@ -2,58 +2,6 @@ public struct {{ name }}: WSDLService {
     public let targetNamespace = "{{ targetNamespace }}"
     public var endpoint: String
     public let path = "{{ path }}"
-
-    public init(endpoint: String) {
-        self.endpoint = endpoint
-    }
-
-    private func requestGeneric<I: XSDType, O>(_ parameters: I) -> Future<O, WSDLOperationError> where O: XSDType, O: ExpressibleByXML {
-        let promise = Promise<O, WSDLOperationError>()
-
-        let soapRequest = parameters.soapRequest(targetNamespace)
-//        print("request to \(endpoint + path) using: \(soapRequest.xml)")
-
-        var request = URLRequest(url: URL(string: endpoint + path)!)
-        request.httpMethod = "POST"
-        request.addValue("text/xml", forHTTPHeaderField: "Content-Type")
-        request.addValue("WSDL2Swift", forHTTPHeaderField: "User-Agent")
-        if let data = soapRequest.xml.data(using: .utf8) {
-//            request.addValue(String(data.length), forHTTPHeaderField: "Content-Length")
-            request.httpBody = data
-        }
-//        NSLog("%@", "headers: \(request.allHTTPHeaderFields)")
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            NSLog("%@", "\((response, error))")
-
-            if let error = error {
-                promise.failure(.urlSession(error))
-                return
-            }
-
-            guard let data = data, let xml = try? AEXMLDocument(xml: data) else {
-                promise.failure(.invalidXML)
-                return
-            }
-
-            guard let soapMessage = SOAPMessage(xml: xml, targetNamespace: self.targetNamespace) else {
-                promise.failure(.invalidXMLContent)
-                return
-            }
-
-            guard let out = O(soapMessage: soapMessage) else {
-                if let fault = soapMessage.body.fault {
-                    promise.failure(.soapFault(fault))
-                } else {
-                    promise.failure(.invalidXMLContent)
-                }
-                return
-            }
-
-            promise.success(out)
-        }
-        task.resume()
-        return promise.future
-    }
 {% for op in operations %}
     public func request(_ parameters: {{ op.inParam }}) -> Future<{{ op.outParam }}, WSDLOperationError> {
         return requestGeneric(parameters)

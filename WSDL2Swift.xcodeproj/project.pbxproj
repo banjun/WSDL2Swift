@@ -59,9 +59,9 @@
 		EA1F09A71DE4376C00414030 /* WSDL2Swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WSDL2Swift; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1F09AA1DE4376C00414030 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		EA1F09B11DE438EE00414030 /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
-		EA1F09B21DE438EE00414030 /* Preamble.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Preamble.stencil; sourceTree = "<group>"; };
-		EA1F09B31DE438EE00414030 /* WSDLService.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WSDLService.stencil; sourceTree = "<group>"; };
-		EA1F09B41DE438EE00414030 /* XSDType.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = XSDType.stencil; sourceTree = "<group>"; };
+		EA1F09B21DE438EE00414030 /* Preamble.stencil */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = Preamble.stencil; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		EA1F09B31DE438EE00414030 /* WSDLService.stencil */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = WSDLService.stencil; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		EA1F09B41DE438EE00414030 /* XSDType.stencil */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = XSDType.stencil; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		EA1F09C21DE43B3900414030 /* iOSWSDL2Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSWSDL2Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1F09C41DE43B3900414030 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA1F09C61DE43B3900414030 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
