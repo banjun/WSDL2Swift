@@ -1,4 +1,4 @@
-public struct {{ name }}: XSDType {
+public struct {{ name }} {
 {% for e in elements %}    public var {{ e.name }}: {{ e.type }}
 {% endfor %}{% if base.elements %}    // inherited from {{ base.name }}
 {% for e in base.elements %}    public var {{ e.name }}: {{ e.type }}
@@ -6,8 +6,4 @@ public struct {{ name }}: XSDType {
     //
     {% endif %}{% for t in innerTypes %}
     {{ t }}{% endfor %}
-
-    public var xmlParams: [(String, SOAPParamConvertible?, String)] {return [{% for p in xmlParams %}
-        ("{{ p.name }}", {{ p.swiftName }}, "{{ p.xmlns }}"),
-{% endfor %}    ]}
 }

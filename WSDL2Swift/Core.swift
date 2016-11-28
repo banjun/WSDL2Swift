@@ -73,10 +73,10 @@ struct Core {
         }
 
         let extensions = types.map {$0.type.dictionariesForExpressibleByXMLProtocol(types.map {$0.type}, typeQualifier: [])}.joined()
-        let expressibleByXMLExtensions: [String] = extensions.map {try! template(named: "ExpressibleByXML").render(Context(dictionary: $0))}
+        let expressibleByXMLExtensions: [String] = extensions.map {try! compact(template(named: "ExpressibleByXML").render(Context(dictionary: $0)))}
         
         try (preamble
-            + types.map {compact($0.type.swift(types.map {$0.type}, prefix: $0.prefix))}.joined(separator: "\n\n")
+            + types.map {compact($0.type.swift(types.map {$0.type}, prefix: $0.prefix))}.joined(separator: "\n")
             + "\n\n"
             + wsdls.map {$0.swift()}.joined()
             + expressibleByXMLExtensions.joined())
@@ -361,7 +361,7 @@ struct XSDType {
             .replacingOccurrences(of: "\n\n", with: "\n")
             .components(separatedBy: "\n")
             .joined(separator: "\n" + [String](repeating: "    ", count: indentLevel).joined(separator: ""))
-            .replacingOccurrences(of: "\n\n", with: "\n")
+            .replacingOccurrences(of: "\\s*\n\\s*\n", with: "\n", options: [.regularExpression])
     }
 }
 
