@@ -95,14 +95,14 @@ extension Array: SOAPParamConvertible { // Swift 3 does not yet support conditio
 
 public protocol XSDType: SOAPParamConvertible {
     // name, swiftName, xmlns
-    var xmlParams: [(String, Any?, String)] { get }
+    var xmlParams: [(String, SOAPParamConvertible?, String)] { get }
 }
 extension XSDType {
     public func xmlElements(name: String) -> [AEXMLElement] {
         let typeElement = AEXMLElement(name: name)
         for case let (k, v?, ns) in xmlParams {
             let name = ns.isEmpty ? k : (ns + ":" + k)
-            guard let children = (v as? SOAPParamConvertible)?.xmlElements(name: name) else { continue }
+            let children = v.xmlElements(name: name)
             children.forEach {typeElement.addChild($0)}
         }
         return [typeElement]

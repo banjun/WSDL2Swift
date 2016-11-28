@@ -324,7 +324,7 @@ struct XSDType {
             "name": name,
             "bareName": bareName,
             "elements": elements,
-            "base": bases,
+            "base": bases ?? [:],
             "xmlParams": (self.elements + (baseType?.elements ?? [])).map {["name": $0.name, "swiftName": $0.swiftName, "xmlns": $0.xmlns]},
             "conformances": "XSDType, ExpressibleByXML",
             "innerTypes": self.elements.flatMap { e -> String? in

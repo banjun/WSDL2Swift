@@ -13,7 +13,7 @@ public struct {{ name }}: {{ conformances }} {
 {% endfor %}
     }
 
-    public var xmlParams: [(String, Any?, String)] {return [{% for p in xmlParams %}
+    public var xmlParams: [(String, SOAPParamConvertible?, String)] {return [{% for p in xmlParams %}
         ("{{ p.name }}", {{ p.swiftName }}, "{{ p.xmlns }}"),
 {% endfor %}    ]}
 
