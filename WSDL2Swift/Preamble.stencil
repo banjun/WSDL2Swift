@@ -4,7 +4,7 @@ import Result
 import BrightFutures
 
 
-public protocol SOAPParamConvertible {
+public protocol ExpressibleByXML {
     // returns:
     //  * Self: parse succeeded to an value
     //  * nil: parse succeeded to nil
@@ -13,7 +13,7 @@ public protocol SOAPParamConvertible {
     init?(xmlValue: String) throws // SOAPParamError
 }
 
-extension SOAPParamConvertible {
+extension ExpressibleByXML {
     // default implementation for primitive values
     // element nil check and text value empty check
     public init?(xml: AEXMLElement) throws {
@@ -23,12 +23,20 @@ extension SOAPParamConvertible {
     }
 }
 
-extension String: SOAPParamConvertible {
+public protocol SOAPParamConvertible {
+    func xmlElements(name: String) -> [AEXMLElement]
+}
+
+extension String: ExpressibleByXML, SOAPParamConvertible {
     public init?(xmlValue: String) {
         self.init(xmlValue)
     }
+
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: xmlEscaped)]
+    }
 }
-extension Bool: SOAPParamConvertible {
+extension Bool: ExpressibleByXML, SOAPParamConvertible {
     public init?(xmlValue: String) throws {
         switch xmlValue.lowercased() {
         case "true": self = true
@@ -36,34 +44,72 @@ extension Bool: SOAPParamConvertible {
         default: throw SOAPParamError.unknown
         }
     }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: self ? "true" : "false")]
+    }
 }
-extension Int32: SOAPParamConvertible {
+extension Int32: ExpressibleByXML, SOAPParamConvertible {
     public init?(xmlValue: String) throws {
         guard let v = Int32(xmlValue) else { throw SOAPParamError.unknown }
         self = v
     }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: String(self))]
+    }
 }
-extension Int64: SOAPParamConvertible {
+extension Int64: ExpressibleByXML, SOAPParamConvertible {
     public init?(xmlValue: String) throws {
         guard let v = Int64(xmlValue) else { throw SOAPParamError.unknown }
         self = v
     }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: String(self))]
+    }
 }
-extension Date: SOAPParamConvertible {
+extension Date: ExpressibleByXML, SOAPParamConvertible {
     public init?(xmlValue: String) {
         return nil // TODO: self.init(value)
     }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: String(describing: self))] // TODO: deterministic format
+    }
 }
-extension Data: SOAPParamConvertible {
+extension Data: ExpressibleByXML, SOAPParamConvertible {
     public init?(xmlValue: String) {
         return nil // TODO: self.init(value)
     }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: String(describing: self))]  // TODO: baes64
+    }
 }
-
+extension Array: SOAPParamConvertible { // Swift 3 does not yet support conditional protocol conformance (where Element: SOAPParamConvertible)
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        var a: [AEXMLElement] = []
+        forEach { e in
+            guard let children = (e as? SOAPParamConvertible)?.xmlElements(name: name) else { return }
+            a.append(contentsOf: children)
+        }
+        return a
+    }
+}
 
 public protocol XSDType: SOAPParamConvertible {
     // name, swiftName, xmlns
     var xmlParams: [(String, Any?, String)] { get }
+}
+extension XSDType {
+    public init?(xmlValue: String) {
+        return nil // TODO: self.init(value)
+    }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        let typeElement = AEXMLElement(name: name)
+        for case let (k, v?, ns) in xmlParams {
+            let name = ns.isEmpty ? k : (ns + ":" + k)
+            guard let children = (v as? SOAPParamConvertible)?.xmlElements(name: name) else { continue }
+            children.forEach {typeElement.addChild($0)}
+        }
+        return [typeElement]
+    }
 }
 extension XSDType {
     public func soapRequest(_ tns: String) -> AEXMLDocument {
@@ -75,25 +121,8 @@ extension XSDType {
             ])
         let _ = envelope.addChild(name: "S:Header")
         let body = envelope.addChild(name: "S:Body")
-        let request = body.addChild(name: "tns:" + action) // assumes "tns:" prefixed for all actions. JAX-WS requires prefixed or xmlns specification on this node.
-        for case let (k, v?, ns) in xmlParams {
-// TODO: recursively generate AEXMLElement and set xmlns
-            let name = ns.isEmpty ? k : (ns + ":" + k)
-            switch v {
-            case let values as [SOAPParamConvertible]:
-                values.map { value in
-                    request.addChild(name: name, value: String(describing: value).xmlEscaped) // FIXME: recursive generation
-                }
-            default:
-                request.addChild(name: name, value: String(describing: v).xmlEscaped)
-            }
-        }
-
+        xmlElements(name: "tns:" + action).forEach {body.addChild($0)} // assumes "tns:" prefixed for all actions. JAX-WS requires prefixed or xmlns specification on this node.
         return soapRequest
-    }
-
-    public init?(xmlValue: String) {
-        return nil // TODO: self.init(value)
     }
 }
 
@@ -180,18 +209,17 @@ public struct SOAPMessage {
 enum SOAPParamError: Error { case unknown }
 
 // ex. let x: Bool = parseXSDType(v), success only if T(v) is succeeded
-func parseXSDType<T: SOAPParamConvertible>(_ element: AEXMLElement) throws -> T {
+func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws -> T {
     guard let v = try T(xml: element) else { throw SOAPParamError.unknown }
     return v
 }
 
 // ex. let x: Bool? = parseXSDType(v), failure only if T(v) is failed
-func parseXSDType<T: SOAPParamConvertible>(_ element: AEXMLElement) throws -> T? {
+func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws -> T? {
     return try T(xml: element)
 }
 
 // ex. let x: [String] = parseXSDType(v), failure only if any T(v.children) is failed
-func parseXSDType<T: SOAPParamConvertible>(_ element: AEXMLElement) throws -> [T] {
+func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws -> [T] {
     return try (element.all ?? []).map(parseXSDType)
 }
-

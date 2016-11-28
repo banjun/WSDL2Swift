@@ -326,7 +326,7 @@ struct XSDType {
             "elements": elements,
             "base": bases,
             "xmlParams": (self.elements + (baseType?.elements ?? [])).map {["name": $0.name, "swiftName": $0.swiftName, "xmlns": $0.xmlns]},
-            "conformances": "XSDType",
+            "conformances": "XSDType, ExpressibleByXML",
             "innerTypes": self.elements.flatMap { e -> String? in
                 if case let .inner(t) = e.type { return t.swift(env, prefix: prefix, indentLevel: indentLevel + 1) } else { return nil }
             },
