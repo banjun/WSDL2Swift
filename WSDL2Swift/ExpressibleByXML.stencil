@@ -1,6 +1,6 @@
 {# extension declarations are only available in file scope #}
 extension {{ fqn }}: ExpressibleByXML, XSDType {
-    public init?(xml: AEXMLElement) {
+    fileprivate init?(xml: AEXMLElement) {
         do {
 {% for p in xmlParams %}            self.{{ p.swiftName }} = try parseXSDType(xml["{{ p.name }}"])
 {% endfor %}        } catch _ {
@@ -8,7 +8,7 @@ extension {{ fqn }}: ExpressibleByXML, XSDType {
         }
     }
 
-    public var xmlParams: [(String, SOAPParamConvertible?, String)] {return [{% for p in xmlParams %}
+    fileprivate var xmlParams: [(String, SOAPParamConvertible?, String)] {return [{% for p in xmlParams %}
         ("{{ p.name }}", {{ p.swiftName }}, "{{ p.xmlns }}"),
 {% endfor %}    ]}
 }
