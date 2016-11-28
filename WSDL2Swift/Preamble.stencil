@@ -98,9 +98,6 @@ public protocol XSDType: SOAPParamConvertible {
     var xmlParams: [(String, Any?, String)] { get }
 }
 extension XSDType {
-    public init?(xmlValue: String) {
-        return nil // TODO: self.init(value)
-    }
     public func xmlElements(name: String) -> [AEXMLElement] {
         let typeElement = AEXMLElement(name: name)
         for case let (k, v?, ns) in xmlParams {
@@ -109,6 +106,15 @@ extension XSDType {
             children.forEach {typeElement.addChild($0)}
         }
         return [typeElement]
+    }
+}
+extension XSDType where Self: ExpressibleByXML {
+    public init?(xmlValue: String) {
+        return nil // TODO: self.init(value)
+    }
+    public init?(soapMessage message: SOAPMessage) {
+        guard let xml = message.body.output else { return nil }
+        try? self.init(xml: xml)
     }
 }
 extension XSDType {

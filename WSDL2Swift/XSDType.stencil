@@ -6,7 +6,7 @@ public struct {{ name }}: {{ conformances }} {
     //{% endif %}{% for t in innerTypes %}    {{ t }}{% endfor %}
 
     // memberwise init
-public init({% for e in elements %}{{ e.name }}: {{ e.type }}{% ifnot forloop.last %}, {% endif %}{% endfor %}{% if base.elements %}{% if elements %}, {% endif %}{% for e in base.elements %}{{ e.name }}: {{ e.type }}{% if forloop.last %}{% else %}, {% endif %}{% endfor %}{% endif %}) {
+    public init({% for e in elements %}{{ e.name }}: {{ e.type }}{% ifnot forloop.last %}, {% endif %}{% endfor %}{% if base.elements %}{% if elements %}, {% endif %}{% for e in base.elements %}{{ e.name }}: {{ e.type }}{% if forloop.last %}{% else %}, {% endif %}{% endfor %}{% endif %}) {
 {% for e in elements %}        self.{{ e.name }} = {{ e.name }}
 {% endfor %}
 {% for e in base.elements %}        self.{{ e.name }} = {{ e.name }}
@@ -17,10 +17,6 @@ public init({% for e in elements %}{{ e.name }}: {{ e.type }}{% ifnot forloop.la
         ("{{ p.name }}", {{ p.swiftName }}, "{{ p.xmlns }}"),
 {% endfor %}    ]}
 
-    public init?(soapMessage message: SOAPMessage) {
-        guard let xml = message.body.output else { return nil }
-        self.init(xml: xml)
-    }
     public init?(xml: AEXMLElement) {
         do {
 {% for p in xmlParams %}
