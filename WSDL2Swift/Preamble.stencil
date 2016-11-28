@@ -188,11 +188,6 @@ extension WSDLService {
     }
 }
 
-public protocol WSDLOperation {
-    associatedtype Response
-    func request() -> Result<Response, WSDLOperationError>
-}
-
 public enum WSDLOperationError: Error {
     case unknown
     case urlSession(Error)
