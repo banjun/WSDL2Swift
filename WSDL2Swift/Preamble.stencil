@@ -145,7 +145,7 @@ extension WSDLService {
         let soapRequest = parameters.soapRequest(targetNamespace)
         //        print("request to \(endpoint + path) using: \(soapRequest.xml)")
 
-        var request = URLRequest(url: URL(string: endpoint + path)!)
+        var request = URLRequest(url: URL(string: endpoint)!.appendingPathComponent(path))
         request.httpMethod = "POST"
         request.addValue("text/xml", forHTTPHeaderField: "Content-Type")
         request.addValue("WSDL2Swift", forHTTPHeaderField: "User-Agent")

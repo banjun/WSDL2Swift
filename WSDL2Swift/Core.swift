@@ -138,7 +138,10 @@ struct WSDL {
         return try! template(named: "WSDLService").render(Context(dictionary: [
             "targetNamespace": targetNamespace,
             "name": service.name,
-            "path": URL(string: service.port.location)?.path ?? (service.port.location as NSString).lastPathComponent,
+            "path":  {
+                let p = URL(string: service.port.location)?.path ?? (service.port.location as NSString).lastPathComponent
+                return String(p.characters.dropFirst(p.characters.first == "/" ? 1 : 0))
+            }(),
             "operations": portType.operations.map { op -> [String: String] in
                 let inputMessage = messages.first {$0.name == replaceTargetNameSpace(op.inputMessage, prefix: "")}!
                 let outputMessage = messages.first {$0.name == replaceTargetNameSpace(op.outputMessage, prefix: "")}!
