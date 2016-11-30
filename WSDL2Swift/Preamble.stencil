@@ -76,10 +76,10 @@ extension Date: ExpressibleByXML, SOAPParamConvertible {
 }
 extension Data: ExpressibleByXML, SOAPParamConvertible {
     fileprivate init?(xmlValue: String) {
-        return nil // TODO: self.init(value)
+        self.init(base64Encoded: xmlValue)
     }
     fileprivate func xmlElements(name: String) -> [AEXMLElement] {
-        return [AEXMLElement(name: name, value: String(describing: self))]  // TODO: baes64
+        return [AEXMLElement(name: name, value: base64EncodedString())]
     }
 }
 extension Array: SOAPParamConvertible { // Swift 3 does not yet support conditional protocol conformance (where Element: SOAPParamConvertible)
