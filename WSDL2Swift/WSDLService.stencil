@@ -2,6 +2,11 @@ public struct {{ name }}: WSDLService {
     public let targetNamespace = "{{ targetNamespace }}"
     public var endpoint: String
     public let path = "{{ path }}"
+    public var interceptURLRequest: ((URLRequest) -> URLRequest)?
+    public var interceptResponse: ((Data?, URLResponse?, Error?) -> (Data?, URLResponse?, Error?))?
+    public init(endpoint: String) {
+        self.endpoint = endpoint
+    }
 {% for op in operations %}
     public func request(_ parameters: {{ op.inParam }}) -> Future<{{ op.outParam }}, WSDLOperationError> {
         return requestGeneric(parameters)

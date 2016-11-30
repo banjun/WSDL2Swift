@@ -137,8 +137,16 @@ public protocol WSDLService {
     var endpoint: String { get set }
     var path: String { get }
     var targetNamespace: String { get }
+    var interceptURLRequest: ((URLRequest) -> URLRequest)? { get set }
+    var interceptResponse: ((Data?, URLResponse?, Error?) -> (Data?, URLResponse?, Error?))? { get set }
+    init(endpoint: String)
 }
 extension WSDLService {
+    public init(endpoint: String, interceptURLRequest: ((URLRequest) -> URLRequest)? = nil, interceptResponse: ((Data?, URLResponse?, Error?) -> (Data?, URLResponse?, Error?))? = nil) {
+        self.init(endpoint: endpoint)
+        self.interceptURLRequest = interceptURLRequest
+        self.interceptResponse = interceptResponse
+    }
     fileprivate func requestGeneric<I: XSDType, O>(_ parameters: I) -> Future<O, WSDLOperationError> where O: XSDType, O: ExpressibleByXML {
         let promise = Promise<O, WSDLOperationError>()
 
@@ -154,7 +162,9 @@ extension WSDLService {
             request.httpBody = data
         }
         //        NSLog("%@", "headers: \(request.allHTTPHeaderFields)")
+        request = interceptURLRequest?(request) ?? request
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            let (data, _, error) = self.interceptResponse?(data, response, error) ?? (data, response, error)
             //            NSLog("%@", "\((response, error))")
 
             if let error = error {
@@ -162,7 +172,7 @@ extension WSDLService {
                 return
             }
 
-            guard let data = data, let xml = try? AEXMLDocument(xml: data) else {
+            guard let d = data, let xml = try? AEXMLDocument(xml: d) else {
                 promise.failure(.invalidXML)
                 return
             }
