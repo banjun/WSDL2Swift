@@ -42,6 +42,7 @@ with dependencies:
 ```ruby
 pod 'AEXML'
 pod 'BrightFutures'
+pod 'ISO8601'
 ```
 
 ## Build

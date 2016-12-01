@@ -9,5 +9,6 @@ end
 target 'iOSWSDL2Swift' do
   pod 'AEXML'
   pod 'BrightFutures'
+  pod 'ISO8601'
 end
 

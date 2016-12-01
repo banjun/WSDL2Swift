@@ -2,6 +2,7 @@ import Foundation
 import AEXML
 import Result
 import BrightFutures
+import ISO8601
 
 
 private protocol ExpressibleByXML {
@@ -67,11 +68,12 @@ extension Int64: ExpressibleByXML, SOAPParamConvertible {
     }
 }
 extension Date: ExpressibleByXML, SOAPParamConvertible {
-    fileprivate init?(xmlValue: String) {
-        return nil // TODO: self.init(value)
+    fileprivate init?(xmlValue: String) throws {
+        guard let v = NSDate(iso8601String: xmlValue) as Date? else { throw SOAPParamError.unknown }
+        self = v
     }
     fileprivate func xmlElements(name: String) -> [AEXMLElement] {
-        return [AEXMLElement(name: name, value: String(describing: self))] // TODO: deterministic format
+        return [AEXMLElement(name: name, value: (self as NSDate).iso8601String())]
     }
 }
 extension Data: ExpressibleByXML, SOAPParamConvertible {

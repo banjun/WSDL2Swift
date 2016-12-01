@@ -3,6 +3,7 @@ PODS:
   - BrightFutures (5.1.0):
     - Result (~> 3.0)
   - Commander (0.5.0)
+  - ISO8601 (0.6.0)
   - PathKit (0.7.0)
   - Result (3.0.0)
   - Stencil (0.6.0):
@@ -12,16 +13,18 @@ DEPENDENCIES:
   - AEXML
   - BrightFutures
   - Commander
+  - ISO8601
   - Stencil
 
 SPEC CHECKSUMS:
   AEXML: 905e50474c0a261d335aa8be4ee32d22d69b6fd5
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
   Commander: 632982cd24e742e08e530859b33a246c90062201
+  ISO8601: d3ea3ba9b752820cf92c6b47a9ee327e9f0e13fc
   PathKit: f8260c3e41bf4d552f3603853e32a5b325a176d4
   Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
   Stencil: c665353046bca0279f3503f88293f2eff5fc67a6
 
-PODFILE CHECKSUM: 9b66a7991fcdad7c4c74dc3f0b5434f03f697db9
+PODFILE CHECKSUM: fa24d919c40fdd98e37fc02dd5a8d6ee16f0daf6
 
 COCOAPODS: 1.1.1
