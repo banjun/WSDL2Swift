@@ -5,16 +5,23 @@ PODS:
   - Commander (0.5.0)
   - ISO8601 (0.6.0)
   - PathKit (0.7.0)
-  - Result (3.0.0)
+  - Result (3.1.0)
   - Stencil (0.6.0):
     - PathKit (~> 0.7.0)
+  - WSDL2Swift (0.1.0):
+    - AEXML
+    - BrightFutures
+    - ISO8601
 
 DEPENDENCIES:
   - AEXML
-  - BrightFutures
   - Commander
-  - ISO8601
   - Stencil
+  - WSDL2Swift (from `./`)
+
+EXTERNAL SOURCES:
+  WSDL2Swift:
+    :path: "./"
 
 SPEC CHECKSUMS:
   AEXML: 905e50474c0a261d335aa8be4ee32d22d69b6fd5
@@ -22,9 +29,10 @@ SPEC CHECKSUMS:
   Commander: 632982cd24e742e08e530859b33a246c90062201
   ISO8601: d3ea3ba9b752820cf92c6b47a9ee327e9f0e13fc
   PathKit: f8260c3e41bf4d552f3603853e32a5b325a176d4
-  Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
+  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
   Stencil: c665353046bca0279f3503f88293f2eff5fc67a6
+  WSDL2Swift: 52398a4fbc66ca5b643dc7e039c48b61f57f49c8
 
-PODFILE CHECKSUM: fa24d919c40fdd98e37fc02dd5a8d6ee16f0daf6
+PODFILE CHECKSUM: be85e3aea042541fd930ddb04a3f5897c48c6571
 
 COCOAPODS: 1.1.1
