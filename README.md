@@ -20,36 +20,74 @@ Output
 
 ## Usage
 
+### Build
+
+```sh
+bundle install
+bundle exec fastlane archive
+```
+
+you can build and debug with WSDL2Swift scheme of the xcodeproj. Archive build is not supported yet.
+
+product executable is portable, as long as shipped with ./Frameworks and ./Stencils.
+
+### Generate
+
 generate WSDL.swift from WSDL and XSD xmls:
 
 ```sh
-WSDL2Swift --out path/to/WSDL.swift path/to/service.wsdl.xml path/to/service.xsd.xml
+./build/Build/Products/Release/WSDL2Swift --out path/to/WSDL.swift path/to/service.wsdl.xml path/to/service.xsd.xml
 ```
+
+the order of input files is important.
+referenced XSDs should be placed immediately after referencing WSDL.
+
+### Use In App
 
 add WSDL.swift to your project and use:
 (note that service type name and requeest type name are vary, depending on source WSDL)
 
+generated code from example by w3schools temperature converter:
+
 ```swift
-let auth = AuthenticationServiceService(endpoint: "https://examle.com")
-let login = auth.request(AuthenticationServiceService_login(arg0: "alice@example.com", arg1: "password"))
-login.onComplete { r in
-    NSLog("%@", "result = \(r)")
+public struct TempConvert: WSDLService {
+	:
+    public func request(_ parameters: TempConvert_CelsiusToFahrenheit) -> Future<TempConvert_CelsiusToFahrenheitResponse, WSDLOperationError> {
+        return requestGeneric(parameters)
+    }
+    :
+}
+
+:
+
+public struct TempConvert_CelsiusToFahrenheit {
+    public var Celsius: String?
+}
+
+public struct TempConvert_CelsiusToFahrenheitResponse {
+    public var CelsiusToFahrenheitResult: String?
+}
+
+:
+(continued...)
+```
+
+code using the generated client:
+
+```swift
+let service = TempConvert(endpoint: "http://www.w3schools.com")
+service.request(TempConvert_CelsiusToFahrenheit(Celsius: "23.4")).onComplete { r in
+    NSLog("%@", "TempConvert_CelsiusToFahrenheit(Celsius: \"23.4\") = \(r)")
 }
 ```
 
 with dependencies:
 
 ```ruby
-pod 'AEXML'
-pod 'BrightFutures'
-pod 'ISO8601'
+pod 'WSDL2Swift'
 ```
 
-## Build
-
-build with WSDL2Swift scheme. Archive build is not supported yet.
-
-product executable is portable, as long as shipped with ./Frameworks and ./Stencils.
+note that pod WSDL2Swift just introduces runtime dependencies. it does not provide WSDL2Swift executable binary nor generated WSDL client Swift files.
 
 ## Example
 
