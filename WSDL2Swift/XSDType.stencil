@@ -6,4 +6,13 @@ public struct {{ name }} {
     //
     {% endif %}{% for t in innerTypes %}
     {{ t }}{% endfor %}
+{% if publicMemberwiseInit %}
+    // public memberwise init {# default synthesized memberwise init is internal in Swift 3 #}
+    public init({% for e in elements %}{{ e.name }}: {{ e.type }}{% ifnot forloop.last %}, {% endif %}{% endfor %}{% if base.elements %}{% if elements %}, {% endif %}{% for e in base.elements %}{{ e.name }}: {{ e.type }}{% if forloop.last %}{% else %}, {% endif %}{% endfor %}{% endif %}) {
+{% for e in elements %}        self.{{ e.name }} = {{ e.name }}
+{% endfor %}
+{% for e in base.elements %}        self.{{ e.name }} = {{ e.name }}
+{% endfor %}
+    }
+{% endif %}
 }

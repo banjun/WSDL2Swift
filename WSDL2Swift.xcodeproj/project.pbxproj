@@ -347,7 +347,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "${SYMROOT}/${CONFIGURATION}/WSDL2Swift --out ${SRCROOT}/iOSWSDL2Swift/exampleWSDLS/generated/WSDL.swift ${SRCROOT}/iOSWSDL2Swift/exampleWSDLS/*.xml || echo \"error: place wsdl and xsd xml files into exampleWSDLS.\"";
+			shellScript = "${SYMROOT}/${CONFIGURATION}/WSDL2Swift --public-memberwise-init --out ${SRCROOT}/iOSWSDL2Swift/exampleWSDLS/generated/WSDL.swift ${SRCROOT}/iOSWSDL2Swift/exampleWSDLS/*.xml || echo \"error: place wsdl and xsd xml files into exampleWSDLS.\"";
 			showEnvVarsInLog = 0;
 		};
 		F9C5B1F57D7EB7F49456204D /* [CP] Check Pods Manifest.lock */ = {

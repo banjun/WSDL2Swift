@@ -32,7 +32,7 @@ private func replaceTargetNameSpace(_ name: String, prefix: String) -> String {
 
 
 struct Core {
-    static func main(out: URL, in files: [String]) throws {
+    static func main(out: URL, in files: [String], publicMemberwiseInit: Bool) throws {
         let preamble = try template(named: "Preamble").render()
         var wsdls: [WSDL] = []
         var types: [(prefix: String, type: XSDType)] = []
@@ -76,7 +76,7 @@ struct Core {
         let expressibleByXMLExtensions: [String] = extensions.map {try! compact(template(named: "ExpressibleByXML").render(Context(dictionary: $0)))}
         
         try (wsdls.map {$0.swift()}.joined()
-            + types.map {compact($0.type.swift(types.map {$0.type}, prefix: $0.prefix))}.joined(separator: "\n")
+            + types.map {compact($0.type.swift(types.map {$0.type}, prefix: $0.prefix, publicMemberwiseInit: publicMemberwiseInit))}.joined(separator: "\n")
             + "\n\n"
             + preamble
             + expressibleByXMLExtensions.joined())
@@ -324,19 +324,20 @@ struct XSDType {
         }
     }
 
-    func dictionary(_ env: [XSDType], prefix: String, typeQualifier: [String] = []) -> [String: Any] {
+    func dictionary(_ env: [XSDType], prefix: String, publicMemberwiseInit: Bool, typeQualifier: [String] = []) -> [String: Any] {
         let baseType = self.baseType(env)
         let elements = self.elements.map {$0.dictionary(prefix)}
-        let bases = baseType.map {$0.dictionary(env, prefix: prefix)}
+        let bases = baseType.map {$0.dictionary(env, prefix: prefix, publicMemberwiseInit: publicMemberwiseInit)}
 
         return [
             "name": name,
             "bareName": bareName,
             "elements": elements,
             "base": bases ?? [:],
+            "publicMemberwiseInit": publicMemberwiseInit,
             "xmlParams": (self.elements + (baseType?.elements ?? [])).map {["name": $0.name, "swiftName": $0.swiftName, "xmlns": $0.xmlns]},
             "innerTypes": self.elements.flatMap { e -> String? in
-                if case let .inner(t) = e.type { return t.swift(env, prefix: prefix, typeQualifier: typeQualifier + [name]) } else { return nil }
+                if case let .inner(t) = e.type { return t.swift(env, prefix: prefix, publicMemberwiseInit: publicMemberwiseInit, typeQualifier: typeQualifier + [name]) } else { return nil }
             },
         ]
     }
@@ -353,8 +354,8 @@ struct XSDType {
         return ds
     }
 
-    func swift(_ env: [XSDType], prefix: String, typeQualifier: [String] = []) -> String {
-        let d = dictionary(env, prefix: prefix)
+    func swift(_ env: [XSDType], prefix: String, publicMemberwiseInit: Bool, typeQualifier: [String] = []) -> String {
+        let d = dictionary(env, prefix: prefix, publicMemberwiseInit: publicMemberwiseInit)
         let indentLevel = typeQualifier.count
         return try! template(named: "XSDType").render(Context(dictionary: d))
 //            + template(named: "ExpressibleByXML").render(Context(dictionary: [
