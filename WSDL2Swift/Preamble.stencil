@@ -111,8 +111,9 @@ extension XSDType {
     }
 }
 extension XSDType where Self: ExpressibleByXML {
-    fileprivate init?(xmlValue: String) {
-        return nil // TODO: self.init(value)
+    fileprivate init?(xmlValue: String) throws {
+        // compound type cannot be initialized with a text element
+        throw SOAPParamError.unknown
     }
     fileprivate init?(soapMessage message: SOAPMessage) {
         guard let xml = message.body.output else { return nil }
