@@ -8,7 +8,7 @@ PODS:
   - Result (3.1.0)
   - Stencil (0.6.0):
     - PathKit (~> 0.7.0)
-  - WSDL2Swift (0.1.0):
+  - WSDL2Swift (0.2.4):
     - AEXML
     - BrightFutures
     - ISO8601
@@ -31,7 +31,7 @@ SPEC CHECKSUMS:
   PathKit: f8260c3e41bf4d552f3603853e32a5b325a176d4
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
   Stencil: c665353046bca0279f3503f88293f2eff5fc67a6
-  WSDL2Swift: 52398a4fbc66ca5b643dc7e039c48b61f57f49c8
+  WSDL2Swift: 89b9abf6674a6d2e2685103e4077ca38c6b043f6
 
 PODFILE CHECKSUM: be85e3aea042541fd930ddb04a3f5897c48c6571
 
