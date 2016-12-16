@@ -74,6 +74,7 @@
 		EA1F062A1E03B6F7006A560D /* iOSWSDL2SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSWSDL2SwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1F062C1E03B6F7006A560D /* iOSWSDL2SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSWSDL2SwiftTests.swift; sourceTree = "<group>"; };
 		EA1F062E1E03B6F7006A560D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA1F06341E03E5B9006A560D /* WSDL2Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSDL2Swift.swift; sourceTree = "<group>"; };
 		EA1F09A71DE4376C00414030 /* WSDL2Swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WSDL2Swift; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1F09AA1DE4376C00414030 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		EA1F09B11DE438EE00414030 /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 		EA1F099E1DE4376C00414030 = {
 			isa = PBXGroup;
 			children = (
+				EA1F06341E03E5B9006A560D /* WSDL2Swift.swift */,
 				EA1F09A91DE4376C00414030 /* WSDL2Swift */,
 				EA1F09C31DE43B3900414030 /* iOSWSDL2Swift */,
 				EA1F062B1E03B6F7006A560D /* iOSWSDL2SwiftTests */,
@@ -754,6 +756,7 @@
 				EA1F06321E03B6F7006A560D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EA1F09A21DE4376C00414030 /* Build configuration list for PBXProject "WSDL2Swift" */ = {
 			isa = XCConfigurationList;

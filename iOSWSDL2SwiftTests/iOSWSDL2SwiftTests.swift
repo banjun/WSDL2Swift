@@ -1,9 +1,11 @@
 import XCTest
-@testable import iOSWSDL2Swift
+import WSDL2Swift
 import JetToTheFuture
 import Mockingjay
 import OHHTTPStubs
 import AEXML
+
+@testable import iOSWSDL2Swift
 
 extension XCTest {
     @discardableResult

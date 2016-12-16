@@ -1,152 +1,10 @@
+import WSDL2Swift
 import Foundation
 import AEXML
 import Result
 import BrightFutures
 import ISO8601
 
-
-private protocol ExpressibleByXML {
-    // returns:
-    //  * Self: parse succeeded to an value
-    //  * nil: parse succeeded to nil
-    //  * SOAPParamError.unknown: parse failed
-    init?(xml: AEXMLElement) throws // SOAPParamError
-    init?(xmlValue: String) throws // SOAPParamError
-}
-
-extension ExpressibleByXML {
-    // default implementation for primitive values
-    // element nil check and text value empty check
-    fileprivate init?(xml: AEXMLElement) throws {
-        guard let value = xml.value else { return nil }
-        guard !value.isEmpty else { return nil }
-        try self.init(xmlValue: value)
-    }
-}
-
-// accessible from @testable
-protocol SOAPParamConvertible {
-    func xmlElements(name: String) -> [AEXMLElement]
-}
-
-extension String: ExpressibleByXML, SOAPParamConvertible {
-    fileprivate init?(xmlValue: String) {
-        self.init(xmlValue)
-    }
-
-    func xmlElements(name: String) -> [AEXMLElement] {
-        return [AEXMLElement(name: name, value: xmlEscaped)]
-    }
-}
-extension Bool: ExpressibleByXML, SOAPParamConvertible {
-    fileprivate init?(xmlValue: String) throws {
-        switch xmlValue.lowercased() {
-        case "true": self = true
-        case "false": self = false
-        default: throw SOAPParamError.unknown
-        }
-    }
-    func xmlElements(name: String) -> [AEXMLElement] {
-        return [AEXMLElement(name: name, value: self ? "true" : "false")]
-    }
-}
-extension Int32: ExpressibleByXML, SOAPParamConvertible {
-    fileprivate init?(xmlValue: String) throws {
-        guard let v = Int32(xmlValue) else { throw SOAPParamError.unknown }
-        self = v
-    }
-    func xmlElements(name: String) -> [AEXMLElement] {
-        return [AEXMLElement(name: name, value: String(self))]
-    }
-}
-extension Int64: ExpressibleByXML, SOAPParamConvertible {
-    fileprivate init?(xmlValue: String) throws {
-        guard let v = Int64(xmlValue) else { throw SOAPParamError.unknown }
-        self = v
-    }
-    func xmlElements(name: String) -> [AEXMLElement] {
-        return [AEXMLElement(name: name, value: String(self))]
-    }
-}
-extension Date: ExpressibleByXML, SOAPParamConvertible {
-    fileprivate init?(xmlValue: String) throws {
-        guard let v = NSDate(iso8601String: xmlValue) as Date? else { throw SOAPParamError.unknown }
-        self = v
-    }
-    func xmlElements(name: String) -> [AEXMLElement] {
-        return [AEXMLElement(name: name, value: (self as NSDate).iso8601String())]
-    }
-}
-extension Data: ExpressibleByXML, SOAPParamConvertible {
-    fileprivate init?(xmlValue: String) {
-        self.init(base64Encoded: xmlValue)
-    }
-    func xmlElements(name: String) -> [AEXMLElement] {
-        return [AEXMLElement(name: name, value: base64EncodedString())]
-    }
-}
-extension Array: SOAPParamConvertible { // Swift 3 does not yet support conditional protocol conformance (where Element: SOAPParamConvertible)
-    func xmlElements(name: String) -> [AEXMLElement] {
-        var a: [AEXMLElement] = []
-        forEach { e in
-            guard let children = (e as? SOAPParamConvertible)?.xmlElements(name: name) else { return }
-            a.append(contentsOf: children)
-        }
-        return a
-    }
-}
-
-// accessible from @testable, adopted by _XSDType
-protocol XSDType: SOAPParamConvertible {}
-extension XSDType {
-    func soapRequest(_ tns: String) -> AEXMLDocument {
-        let action = "\(String(describing: type(of: self)))".components(separatedBy: "_").last!
-        let soapRequest = AEXMLDocument()
-        let envelope = soapRequest.addChild(name: "S:Envelope", attributes: [
-            "xmlns:S": "http://schemas.xmlsoap.org/soap/envelope/",
-            "xmlns:tns": tns,
-            ])
-        let _ = envelope.addChild(name: "S:Header")
-        let body = envelope.addChild(name: "S:Body")
-        xmlElements(name: "tns:" + action).forEach {body.addChild($0)} // assumes "tns:" prefixed for all actions. JAX-WS requires prefixed or xmlns specification on this node.
-        return soapRequest
-    }
-
-    func xmlElements(name: String) -> [AEXMLElement] {
-        let typeElement = AEXMLElement(name: name)
-        for case let (k, v?, ns) in (self as? _XSDType)?.xmlParams ?? [] {
-            let name = ns.isEmpty ? k : (ns + ":" + k)
-            let children = v.xmlElements(name: name)
-            children.forEach {typeElement.addChild($0)}
-        }
-        return [typeElement]
-    }
-}
-
-private protocol _XSDType: XSDType, SOAPParamConvertible {
-    // name, swiftName, xmlns
-    var xmlParams: [(String, SOAPParamConvertible?, String)] { get }
-}
-extension _XSDType where Self: ExpressibleByXML {
-    fileprivate init?(xmlValue: String) throws {
-        // compound type cannot be initialized with a text element
-        throw SOAPParamError.unknown
-    }
-    fileprivate init?(soapMessage message: SOAPMessage) {
-        guard let xml = message.body.output else { return nil }
-        try? self.init(xml: xml)
-    }
-}
-
-
-public protocol WSDLService {
-    var endpoint: String { get set }
-    var path: String { get }
-    var targetNamespace: String { get }
-    var interceptURLRequest: ((URLRequest) -> URLRequest)? { get set }
-    var interceptResponse: ((Data?, URLResponse?, Error?) -> (Data?, URLResponse?, Error?))? { get set }
-    init(endpoint: String)
-}
 extension WSDLService {
     public init(endpoint: String, interceptURLRequest: ((URLRequest) -> URLRequest)? = nil, interceptResponse: ((Data?, URLResponse?, Error?) -> (Data?, URLResponse?, Error?))? = nil) {
         self.init(endpoint: endpoint)
@@ -196,7 +54,7 @@ extension WSDLService {
                 }
                 return
             }
-            
+
             promise.success(out)
         }
         task.resume()
@@ -204,68 +62,129 @@ extension WSDLService {
     }
 }
 
-public enum WSDLOperationError: Error {
-    case unknown
-    case urlSession(Error)
-    case invalidXML
-    case invalidXMLContent
-    case soapFault(SOAPMessage.Fault)
+private protocol ExpressibleByXML {
+    // returns:
+    //  * Self: parse succeeded to an value
+    //  * nil: parse succeeded to nil
+    //  * SOAPParamError.unknown: parse failed
+    init?(xml: AEXMLElement) throws // SOAPParamError
+    init?(xmlValue: String) throws // SOAPParamError
 }
 
+extension ExpressibleByXML {
+    // default implementation for primitive values
+    // element nil check and text value empty check
+    fileprivate init?(xml: AEXMLElement) throws {
+        guard let value = xml.value else { return nil }
+        guard !value.isEmpty else { return nil }
+        try self.init(xmlValue: value)
+    }
+}
 
-public struct SOAPMessage {
-    var header: Header?
-    var body: Body
-
-    private let soapNameSpace: String
-    private let targetNamespace: String
-
-    public init?(xml: AEXMLDocument, targetNamespace: String) {
-        guard let soapNameSpace = (xml.root.attributes.first {$0.key.hasPrefix("xmlns:") && $0.value == "http://schemas.xmlsoap.org/soap/envelope/"}?.key.components(separatedBy: ":").last),
-            let body = Body(xml: xml[soapNameSpace + ":Envelope"][soapNameSpace + ":Body"], soapNameSpace: soapNameSpace, targetNamespace: targetNamespace) else {
-            return nil // invalid soap message
-        }
-        self.targetNamespace = targetNamespace
-        self.soapNameSpace = soapNameSpace
-        self.body = body
+extension String: ExpressibleByXML, SOAPParamConvertible {
+    fileprivate init?(xmlValue: String) {
+        self.init(xmlValue)
     }
 
-    public struct Header {
-        // TODO
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: xmlEscaped)]
     }
-
-    public struct Body {
-        var output: AEXMLElement? // first <(ns2):(name) xmlns:(ns2)="(targetNamespace)">...</...>
-        var fault: Fault?
-
-        public var xml: AEXMLElement // for now, raw XML
-
-        public init?(xml: AEXMLElement, soapNameSpace: String, targetNamespace: String) {
-            var options = AEXMLOptions()
-            options.parserSettings.shouldProcessNamespaces = true
-            options.parserSettings.shouldReportNamespacePrefixes = false
-            guard let namespaceRemovedXML = try? AEXMLDocument(xml: xml.xml, encoding: .utf8, options: options) else { return nil }
-            self.xml = namespaceRemovedXML
-            self.output = namespaceRemovedXML.root.children.first
-            self.fault = Fault(xml: xml[soapNameSpace + ":Fault"])
+}
+extension Bool: ExpressibleByXML, SOAPParamConvertible {
+    fileprivate init?(xmlValue: String) throws {
+        switch xmlValue.lowercased() {
+        case "true": self = true
+        case "false": self = false
+        default: throw SOAPParamError.unknown
         }
     }
-
-    public struct Fault {
-        // supports soap 1.1 (S:Fault xmlns:S="http://schemas.xmlsoap.org/soap/envelope/")
-        var faultCode: String
-        var faultString: String
-        var faultActor: String?
-        var detail: String?
-
-        public init?(xml: AEXMLElement) {
-            guard let faultCode = xml["faultcode"].value else { return nil } // faultcode MUST be present in a SOAP Fault element
-            guard let faultString = xml["faultstring"].value else { return nil } // faultString MUST be present in a SOAP Fault element
-            self.faultCode = faultCode
-            self.faultString = faultString
-            self.faultActor = xml["faultactor"].value
-            self.detail = xml["detail"].value
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: self ? "true" : "false")]
+    }
+}
+extension Int32: ExpressibleByXML, SOAPParamConvertible {
+    fileprivate init?(xmlValue: String) throws {
+        guard let v = Int32(xmlValue) else { throw SOAPParamError.unknown }
+        self = v
+    }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: String(self))]
+    }
+}
+extension Int64: ExpressibleByXML, SOAPParamConvertible {
+    fileprivate init?(xmlValue: String) throws {
+        guard let v = Int64(xmlValue) else { throw SOAPParamError.unknown }
+        self = v
+    }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: String(self))]
+    }
+}
+extension Date: ExpressibleByXML, SOAPParamConvertible {
+    fileprivate init?(xmlValue: String) throws {
+        guard let v = NSDate(iso8601String: xmlValue) as Date? else { throw SOAPParamError.unknown }
+        self = v
+    }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: (self as NSDate).iso8601String())]
+    }
+}
+extension Data: ExpressibleByXML, SOAPParamConvertible {
+    fileprivate init?(xmlValue: String) {
+        self.init(base64Encoded: xmlValue)
+    }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: base64EncodedString())]
+    }
+}
+extension Array: SOAPParamConvertible { // Swift 3 does not yet support conditional protocol conformance (where Element: SOAPParamConvertible)
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        var a: [AEXMLElement] = []
+        forEach { e in
+            guard let children = (e as? SOAPParamConvertible)?.xmlElements(name: name) else { return }
+            a.append(contentsOf: children)
         }
+        return a
+    }
+}
+
+extension XSDType {
+    func soapRequest(_ tns: String) -> AEXMLDocument {
+        let action = "\(String(describing: type(of: self)))".components(separatedBy: "_").last!
+        let soapRequest = AEXMLDocument()
+        let envelope = soapRequest.addChild(name: "S:Envelope", attributes: [
+            "xmlns:S": "http://schemas.xmlsoap.org/soap/envelope/",
+            "xmlns:tns": tns,
+            ])
+        let _ = envelope.addChild(name: "S:Header")
+        let body = envelope.addChild(name: "S:Body")
+        xmlElements(name: "tns:" + action).forEach {body.addChild($0)} // assumes "tns:" prefixed for all actions. JAX-WS requires prefixed or xmlns specification on this node.
+        return soapRequest
+    }
+
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        let typeElement = AEXMLElement(name: name)
+        for case let (k, v?, ns) in (self as? _XSDType)?.xmlParams ?? [] {
+            let name = ns.isEmpty ? k : (ns + ":" + k)
+            let children = v.xmlElements(name: name)
+            children.forEach {typeElement.addChild($0)}
+        }
+        return [typeElement]
+    }
+}
+
+private protocol _XSDType: XSDType, SOAPParamConvertible {
+    // name, swiftName, xmlns
+    var xmlParams: [(String, SOAPParamConvertible?, String)] { get }
+}
+extension _XSDType where Self: ExpressibleByXML {
+    fileprivate init?(xmlValue: String) throws {
+        // compound type cannot be initialized with a text element
+        throw SOAPParamError.unknown
+    }
+    fileprivate init?(soapMessage message: SOAPMessage) {
+        guard let xml = message.body.output else { return nil }
+        try? self.init(xml: xml)
     }
 }
 
