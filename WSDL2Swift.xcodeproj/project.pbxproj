@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6AA9B01661501F78A68771CC /* Pods_WSDL2Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */; };
 		B0637813C517C34A60F736B6 /* Pods_iOSWSDL2Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9B576430854A95CF84C2D9 /* Pods_iOSWSDL2Swift.framework */; };
+		B7D5169A48E98351426D9CAE /* Pods_iOSWSDL2SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66877D9A718AF5D3F01AE005 /* Pods_iOSWSDL2SwiftTests.framework */; };
+		EA1F062D1E03B6F7006A560D /* iOSWSDL2SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F062C1E03B6F7006A560D /* iOSWSDL2SwiftTests.swift */; };
 		EA1F09AB1DE4376C00414030 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09AA1DE4376C00414030 /* main.swift */; };
 		EA1F09B51DE438EE00414030 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09B11DE438EE00414030 /* Core.swift */; };
 		EA1F09BA1DE4394C00414030 /* Preamble.stencil in Copy Resources */ = {isa = PBXBuildFile; fileRef = EA1F09B21DE438EE00414030 /* Preamble.stencil */; };
@@ -26,6 +28,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		EA1F062F1E03B6F7006A560D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA1F099F1DE4376C00414030 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA1F09C11DE43B3900414030;
+			remoteInfo = iOSWSDL2Swift;
+		};
 		EA1F09D61DE43C6600414030 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA1F099F1DE4376C00414030 /* Project object */;
@@ -54,11 +63,17 @@
 
 /* Begin PBXFileReference section */
 		1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WSDL2Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FA3321285F2E95C157B03DA /* Pods-iOSWSDL2SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2SwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2SwiftTests/Pods-iOSWSDL2SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		245448084A01A8ECE465E13C /* Pods-iOSWSDL2Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2Swift/Pods-iOSWSDL2Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		54E07700FFB14F5BC9DE3247 /* Pods-WSDL2Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WSDL2Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift.release.xcconfig"; sourceTree = "<group>"; };
+		66877D9A718AF5D3F01AE005 /* Pods_iOSWSDL2SwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSWSDL2SwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C2849B258EEA5B658C2CD2E /* Pods-WSDL2Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WSDL2Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		7F9B576430854A95CF84C2D9 /* Pods_iOSWSDL2Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSWSDL2Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		80BB6D87374F9006AA53BBD0 /* Pods-iOSWSDL2Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2Swift/Pods-iOSWSDL2Swift.release.xcconfig"; sourceTree = "<group>"; };
+		E40BCAEFF7D62FD2A7AE10FE /* Pods-iOSWSDL2SwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2SwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2SwiftTests/Pods-iOSWSDL2SwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EA1F062A1E03B6F7006A560D /* iOSWSDL2SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSWSDL2SwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA1F062C1E03B6F7006A560D /* iOSWSDL2SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSWSDL2SwiftTests.swift; sourceTree = "<group>"; };
+		EA1F062E1E03B6F7006A560D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA1F09A71DE4376C00414030 /* WSDL2Swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WSDL2Swift; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1F09AA1DE4376C00414030 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		EA1F09B11DE438EE00414030 /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
@@ -78,6 +93,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		EA1F06271E03B6F7006A560D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7D5169A48E98351426D9CAE /* Pods_iOSWSDL2SwiftTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA1F09A41DE4376C00414030 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -102,6 +125,7 @@
 			children = (
 				1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */,
 				7F9B576430854A95CF84C2D9 /* Pods_iOSWSDL2Swift.framework */,
+				66877D9A718AF5D3F01AE005 /* Pods_iOSWSDL2SwiftTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -113,8 +137,19 @@
 				54E07700FFB14F5BC9DE3247 /* Pods-WSDL2Swift.release.xcconfig */,
 				245448084A01A8ECE465E13C /* Pods-iOSWSDL2Swift.debug.xcconfig */,
 				80BB6D87374F9006AA53BBD0 /* Pods-iOSWSDL2Swift.release.xcconfig */,
+				E40BCAEFF7D62FD2A7AE10FE /* Pods-iOSWSDL2SwiftTests.debug.xcconfig */,
+				1FA3321285F2E95C157B03DA /* Pods-iOSWSDL2SwiftTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		EA1F062B1E03B6F7006A560D /* iOSWSDL2SwiftTests */ = {
+			isa = PBXGroup;
+			children = (
+				EA1F062C1E03B6F7006A560D /* iOSWSDL2SwiftTests.swift */,
+				EA1F062E1E03B6F7006A560D /* Info.plist */,
+			);
+			path = iOSWSDL2SwiftTests;
 			sourceTree = "<group>";
 		};
 		EA1F099E1DE4376C00414030 = {
@@ -122,6 +157,7 @@
 			children = (
 				EA1F09A91DE4376C00414030 /* WSDL2Swift */,
 				EA1F09C31DE43B3900414030 /* iOSWSDL2Swift */,
+				EA1F062B1E03B6F7006A560D /* iOSWSDL2SwiftTests */,
 				EA1F09A81DE4376C00414030 /* Products */,
 				D9946EE807EAFF0EF0D0CEE5 /* Pods */,
 				45D177451753CA0314486137 /* Frameworks */,
@@ -133,6 +169,7 @@
 			children = (
 				EA1F09A71DE4376C00414030 /* WSDL2Swift */,
 				EA1F09C21DE43B3900414030 /* iOSWSDL2Swift.app */,
+				EA1F062A1E03B6F7006A560D /* iOSWSDL2SwiftTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,6 +214,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		EA1F06291E03B6F7006A560D /* iOSWSDL2SwiftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA1F06331E03B6F7006A560D /* Build configuration list for PBXNativeTarget "iOSWSDL2SwiftTests" */;
+			buildPhases = (
+				068B61F62899339FC316534B /* [CP] Check Pods Manifest.lock */,
+				EA1F06261E03B6F7006A560D /* Sources */,
+				EA1F06271E03B6F7006A560D /* Frameworks */,
+				EA1F06281E03B6F7006A560D /* Resources */,
+				F9B2A8776C296FAAD56904BE /* [CP] Embed Pods Frameworks */,
+				88AAC21702D8391CE91A88EA /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA1F06301E03B6F7006A560D /* PBXTargetDependency */,
+			);
+			name = iOSWSDL2SwiftTests;
+			productName = iOSWSDL2SwiftTests;
+			productReference = EA1F062A1E03B6F7006A560D /* iOSWSDL2SwiftTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		EA1F09A61DE4376C00414030 /* WSDL2Swift */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA1F09AE1DE4376C00414030 /* Build configuration list for PBXNativeTarget "WSDL2Swift" */;
@@ -225,9 +283,15 @@
 		EA1F099F1DE4376C00414030 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0810;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0820;
 				TargetAttributes = {
+					EA1F06291E03B6F7006A560D = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = FPZK4WRGW7;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EA1F09C11DE43B3900414030;
+					};
 					EA1F09A61DE4376C00414030 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = FPZK4WRGW7;
@@ -255,11 +319,19 @@
 			targets = (
 				EA1F09A61DE4376C00414030 /* WSDL2Swift */,
 				EA1F09C11DE43B3900414030 /* iOSWSDL2Swift */,
+				EA1F06291E03B6F7006A560D /* iOSWSDL2SwiftTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		EA1F06281E03B6F7006A560D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA1F09C01DE43B3900414030 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -275,6 +347,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		068B61F62899339FC316534B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		456A33790DC2010FE7DF03D2 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -303,6 +390,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		88AAC21702D8391CE91A88EA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2SwiftTests/Pods-iOSWSDL2SwiftTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D25BDD841BAE9DA09042A6D9 /* [CP] Copy Pods Resources */ = {
@@ -350,6 +452,21 @@
 			shellScript = "${SYMROOT}/${CONFIGURATION}/WSDL2Swift --public-memberwise-init --out ${SRCROOT}/iOSWSDL2Swift/exampleWSDLS/generated/WSDL.swift ${SRCROOT}/iOSWSDL2Swift/exampleWSDLS/*.xml || echo \"error: place wsdl and xsd xml files into exampleWSDLS.\"";
 			showEnvVarsInLog = 0;
 		};
+		F9B2A8776C296FAAD56904BE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2SwiftTests/Pods-iOSWSDL2SwiftTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F9C5B1F57D7EB7F49456204D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -383,6 +500,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		EA1F06261E03B6F7006A560D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA1F062D1E03B6F7006A560D /* iOSWSDL2SwiftTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA1F09A31DE4376C00414030 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -405,6 +530,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		EA1F06301E03B6F7006A560D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA1F09C11DE43B3900414030 /* iOSWSDL2Swift */;
+			targetProxy = EA1F062F1E03B6F7006A560D /* PBXContainerItemProxy */;
+		};
 		EA1F09D71DE43C6600414030 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EA1F09A61DE4376C00414030 /* WSDL2Swift */;
@@ -424,6 +554,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		EA1F06311E03B6F7006A560D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E40BCAEFF7D62FD2A7AE10FE /* Pods-iOSWSDL2SwiftTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = FPZK4WRGW7;
+				INFOPLIST_FILE = iOSWSDL2SwiftTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.iOSWSDL2SwiftTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOSWSDL2Swift.app/iOSWSDL2Swift";
+			};
+			name = Debug;
+		};
+		EA1F06321E03B6F7006A560D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FA3321285F2E95C157B03DA /* Pods-iOSWSDL2SwiftTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = FPZK4WRGW7;
+				INFOPLIST_FILE = iOSWSDL2SwiftTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.iOSWSDL2SwiftTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOSWSDL2Swift.app/iOSWSDL2Swift";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		EA1F09AC1DE4376C00414030 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -579,6 +747,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EA1F06331E03B6F7006A560D /* Build configuration list for PBXNativeTarget "iOSWSDL2SwiftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA1F06311E03B6F7006A560D /* Debug */,
+				EA1F06321E03B6F7006A560D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EA1F09A21DE4376C00414030 /* Build configuration list for PBXProject "WSDL2Swift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

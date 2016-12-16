@@ -4,10 +4,23 @@ PODS:
     - Result (~> 3.0)
   - Commander (0.5.0)
   - ISO8601 (0.6.0)
+  - JetToTheFuture (0.3.0):
+    - BrightFutures (~> 5.0)
+  - Mockingjay (2.0.0):
+    - Mockingjay/Core (= 2.0.0)
+    - Mockingjay/XCTest (= 2.0.0)
+  - Mockingjay/Core (2.0.0):
+    - URITemplate (~> 2.0)
+  - Mockingjay/XCTest (2.0.0):
+    - Mockingjay/Core
+  - OHHTTPStubs/Core (5.2.3)
+  - OHHTTPStubs/NSURLSession (5.2.3):
+    - OHHTTPStubs/Core
   - PathKit (0.7.0)
   - Result (3.1.0)
   - Stencil (0.6.0):
     - PathKit (~> 0.7.0)
+  - URITemplate (2.0.0)
   - WSDL2Swift (0.2.4):
     - AEXML
     - BrightFutures
@@ -16,6 +29,9 @@ PODS:
 DEPENDENCIES:
   - AEXML
   - Commander
+  - JetToTheFuture
+  - Mockingjay
+  - OHHTTPStubs/NSURLSession (~> 5.2)
   - Stencil
   - WSDL2Swift (from `./`)
 
@@ -28,11 +44,15 @@ SPEC CHECKSUMS:
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
   Commander: 632982cd24e742e08e530859b33a246c90062201
   ISO8601: d3ea3ba9b752820cf92c6b47a9ee327e9f0e13fc
+  JetToTheFuture: 0ef3cacbbf8d57314728bda2fe68c636ab4635c7
+  Mockingjay: 7122a3fc0597aa63438e4cd9b71b7bc8aac05b87
+  OHHTTPStubs: e238cd5b66d8efa51c861db45895de8fe079f4a7
   PathKit: f8260c3e41bf4d552f3603853e32a5b325a176d4
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
   Stencil: c665353046bca0279f3503f88293f2eff5fc67a6
+  URITemplate: a5acb3f76c6a2338116fde88b658d83f91bbac45
   WSDL2Swift: 89b9abf6674a6d2e2685103e4077ca38c6b043f6
 
-PODFILE CHECKSUM: be85e3aea042541fd930ddb04a3f5897c48c6571
+PODFILE CHECKSUM: a5a99e3dce8d7a607af2f2e527d66667152137ff
 
 COCOAPODS: 1.1.1
