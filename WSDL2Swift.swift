@@ -71,10 +71,10 @@ public struct SOAPMessage {
 
     public struct Fault {
         // supports soap 1.1 (S:Fault xmlns:S="http://schemas.xmlsoap.org/soap/envelope/")
-        var faultCode: String
-        var faultString: String
-        var faultActor: String?
-        var detail: String?
+        public var faultCode: String
+        public var faultString: String
+        public var faultActor: String?
+        public var detail: String?
 
         public init?(xml: AEXMLElement) {
             guard let faultCode = xml["faultcode"].value else { return nil } // faultcode MUST be present in a SOAP Fault element
