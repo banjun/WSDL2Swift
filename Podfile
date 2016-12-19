@@ -3,7 +3,7 @@ use_frameworks!
 target 'WSDL2Swift' do
   pod 'AEXML'
   pod 'Stencil'
-  pod 'Commander'
+  pod 'Commander', '0.5.0'
 end
 
 target 'iOSWSDL2Swift' do
@@ -13,8 +13,7 @@ target 'iOSWSDL2Swift' do
     inherit! :search_paths
 
     pod 'JetToTheFuture'
-    pod 'Mockingjay'
-    pod 'OHHTTPStubs/NSURLSession', '~> 5.2'
+    pod 'Toki', '>= 0.5'
   end
 end
 
