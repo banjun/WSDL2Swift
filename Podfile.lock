@@ -18,21 +18,25 @@ PODS:
     - OHHTTPStubs/Core
   - PathKit (0.7.0)
   - Result (3.1.0)
-  - Stencil (0.6.0):
+  - Stencil (0.7.2):
     - PathKit (~> 0.7.0)
+  - Toki (0.5.0):
+    - AEXML
+    - Mockingjay (~> 2.0)
+    - OHHTTPStubs/NSURLSession (~> 5.2)
+    - WSDL2Swift (>= 0.3)
   - URITemplate (2.0.0)
-  - WSDL2Swift (0.2.4):
+  - WSDL2Swift (0.3.0):
     - AEXML
     - BrightFutures
     - ISO8601
 
 DEPENDENCIES:
   - AEXML
-  - Commander
+  - Commander (= 0.5.0)
   - JetToTheFuture
-  - Mockingjay
-  - OHHTTPStubs/NSURLSession (~> 5.2)
   - Stencil
+  - Toki (>= 0.5)
   - WSDL2Swift (from `./`)
 
 EXTERNAL SOURCES:
@@ -49,10 +53,11 @@ SPEC CHECKSUMS:
   OHHTTPStubs: e238cd5b66d8efa51c861db45895de8fe079f4a7
   PathKit: f8260c3e41bf4d552f3603853e32a5b325a176d4
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
-  Stencil: c665353046bca0279f3503f88293f2eff5fc67a6
+  Stencil: 7eeda74c79617b2802fd2f1267ac75e7d42fe925
+  Toki: e53183c7dcf46e8f75d07fb8796afbd52c3837d4
   URITemplate: a5acb3f76c6a2338116fde88b658d83f91bbac45
-  WSDL2Swift: 89b9abf6674a6d2e2685103e4077ca38c6b043f6
+  WSDL2Swift: f7f73871d43c0b3b1866ad21711944c7b82b3294
 
-PODFILE CHECKSUM: a5a99e3dce8d7a607af2f2e527d66667152137ff
+PODFILE CHECKSUM: 2b521b6df72c2e414f24de1fc0fcabf446c2a1a8
 
 COCOAPODS: 1.1.1
