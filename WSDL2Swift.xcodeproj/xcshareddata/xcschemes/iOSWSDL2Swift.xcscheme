@@ -28,6 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EA1F06291E03B6F7006A560D"
+               BuildableName = "iOSWSDL2SwiftTests.xctest"
+               BlueprintName = "iOSWSDL2SwiftTests"
+               ReferencedContainer = "container:WSDL2Swift.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

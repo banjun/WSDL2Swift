@@ -1,5 +1,5 @@
 {# extension declarations are only available in file scope #}
-extension {{ fqn }}: ExpressibleByXML, XSDType {
+extension {{ fqn }}: ExpressibleByXML, _XSDType {
     fileprivate init?(xml: AEXMLElement) {
 {% if xmlParams %}
         do {
