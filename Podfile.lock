@@ -2,7 +2,7 @@ PODS:
   - AEXML (4.0.1)
   - BrightFutures (5.1.0):
     - Result (~> 3.0)
-  - Commander (0.5.0)
+  - Commander (0.6.0)
   - ISO8601 (0.6.0)
   - JetToTheFuture (0.3.0):
     - BrightFutures (~> 5.0)
@@ -33,7 +33,7 @@ PODS:
 
 DEPENDENCIES:
   - AEXML
-  - Commander (= 0.5.0)
+  - Commander
   - JetToTheFuture
   - Stencil
   - Toki (>= 0.5)
@@ -46,7 +46,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AEXML: 905e50474c0a261d335aa8be4ee32d22d69b6fd5
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
-  Commander: 632982cd24e742e08e530859b33a246c90062201
+  Commander: fba7c96c9e787ecc8ebe0737be875e1e18ef47ff
   ISO8601: d3ea3ba9b752820cf92c6b47a9ee327e9f0e13fc
   JetToTheFuture: 0ef3cacbbf8d57314728bda2fe68c636ab4635c7
   Mockingjay: 7122a3fc0597aa63438e4cd9b71b7bc8aac05b87
@@ -58,6 +58,6 @@ SPEC CHECKSUMS:
   URITemplate: a5acb3f76c6a2338116fde88b658d83f91bbac45
   WSDL2Swift: f7f73871d43c0b3b1866ad21711944c7b82b3294
 
-PODFILE CHECKSUM: 2b521b6df72c2e414f24de1fc0fcabf446c2a1a8
+PODFILE CHECKSUM: 06edc9b8d969cebdcad748901daa1e29e3c52ff2
 
 COCOAPODS: 1.1.1

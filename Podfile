@@ -3,7 +3,7 @@ use_frameworks!
 target 'WSDL2Swift' do
   pod 'AEXML'
   pod 'Stencil'
-  pod 'Commander', '0.5.0'
+  pod 'Commander'
 end
 
 target 'iOSWSDL2Swift' do
