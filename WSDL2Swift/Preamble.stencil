@@ -149,7 +149,7 @@ extension Array: SOAPParamConvertible { // Swift 3 does not yet support conditio
 }
 
 extension XSDType {
-    func soapRequest(_ tns: String) -> AEXMLDocument {
+    public func soapRequest(_ tns: String) -> AEXMLDocument {
         let action = "\(String(describing: type(of: self)))".components(separatedBy: "_").last!
         let soapRequest = AEXMLDocument()
         let envelope = soapRequest.addChild(name: "S:Envelope", attributes: [
