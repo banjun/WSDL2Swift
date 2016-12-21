@@ -87,7 +87,7 @@ extension String: ExpressibleByXML, SOAPParamConvertible {
     }
 
     public func xmlElements(name: String) -> [AEXMLElement] {
-        return [AEXMLElement(name: name, value: xmlEscaped)]
+        return [AEXMLElement(name: name, value: self)]
     }
 }
 extension Bool: ExpressibleByXML, SOAPParamConvertible {

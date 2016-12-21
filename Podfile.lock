@@ -26,7 +26,7 @@ PODS:
     - OHHTTPStubs/NSURLSession (~> 5.2)
     - WSDL2Swift (>= 0.3)
   - URITemplate (2.0.0)
-  - WSDL2Swift (0.3.0):
+  - WSDL2Swift (0.4.3):
     - AEXML
     - BrightFutures
     - ISO8601
@@ -56,7 +56,7 @@ SPEC CHECKSUMS:
   Stencil: 7eeda74c79617b2802fd2f1267ac75e7d42fe925
   Toki: e53183c7dcf46e8f75d07fb8796afbd52c3837d4
   URITemplate: a5acb3f76c6a2338116fde88b658d83f91bbac45
-  WSDL2Swift: f7f73871d43c0b3b1866ad21711944c7b82b3294
+  WSDL2Swift: 097c1e55401f1b15c2593cd9bc53e2cd00e04c0d
 
 PODFILE CHECKSUM: 06edc9b8d969cebdcad748901daa1e29e3c52ff2
 
