@@ -9,6 +9,6 @@ public struct {{ name }}: WSDLService {
     }
 {% for op in operations %}
     public func request(_ parameters: {{ op.inParam }}) -> Future<{{ op.outParam }}, WSDLOperationError> {
-        return requestGeneric(parameters)
+        return _requestGeneric(parameters)
     }{% endfor %}
 }

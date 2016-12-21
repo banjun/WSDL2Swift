@@ -72,31 +72,50 @@ struct Core {
             return
         }
 
-        let extensions = types.map {$0.type.dictionariesForExpressibleByXMLProtocol(types.map {$0.type}, typeQualifier: [])}.joined()
-        let expressibleByXMLExtensions: [String] = extensions.map {try! compact(template(named: "ExpressibleByXML").render(Context(dictionary: $0)))}
+//        let extensions = types.map {$0.type.dictionariesForExpressibleByXMLProtocol(types.map {$0.type}, typeQualifier: [])}.joined()
+//        let expressibleByXMLExtensions: [String] = extensions.map {try! compact(template(named: "ExpressibleByXML").render(Context(dictionary: $0)))}
 
-        let typesSwift: [String: String] = {
-            var d: [String: String] = [:]
+        let typesSwift: [String: (service: String, structs: String, extensions: String)] = {
+            var d: [String: (service: String, structs: String, extensions: String)] = [:]
+
+            wsdls.forEach { wsdl in
+                let prefix = wsdl.prefix
+                let swifts = d[prefix] ?? ("", "", "")
+                d[prefix] = (swifts.service + wsdl.swift(), swifts.structs, swifts.extensions)
+            }
 
             types.forEach { type in
                 let prefix = type.prefix
+
                 let structs = type.type.swift(types.map {$0.type}, prefix: prefix, publicMemberwiseInit: publicMemberwiseInit)
-                let swift = d[prefix] ?? ""
-                d[prefix] = swift + structs
+                let extensions = type.type.dictionariesForExpressibleByXMLProtocol(types.map {$0.type}, typeQualifier: []).map {
+                    try! compact(template(named: "ExpressibleByXML").render(Context(dictionary: $0)))
+                }.joined()
+
+                let swifts = d[prefix] ?? ("", "", "")
+                d[prefix] = (swifts.service, swifts.structs + structs, swifts.extensions + extensions)
             }
 
             return d
         }()
 
-        try typesSwift.forEach { prefix, swift in
+        try typesSwift.forEach { prefix, swifts in
             let purePrefix = prefix.components(separatedBy: "_").first ?? prefix
-            let structFile = out.deletingLastPathComponent().appendingPathComponent("WSDL+\(purePrefix)Types.swift")
-            try swift.write(to: structFile, atomically: true, encoding: .utf8)
-        }
 
-        try (wsdls.map {$0.swift()}.joined()
-            + preamble
-            + expressibleByXMLExtensions.joined())
+//            let file = out.deletingLastPathComponent().appendingPathComponent("WSDL\(purePrefix).swift")
+            let structFile = out.deletingLastPathComponent().appendingPathComponent("WSDL+\(purePrefix)Types.swift")
+//            let extFile = out.deletingLastPathComponent().appendingPathComponent("WSDL\(purePrefix)+Extensions.swift")
+
+//            try swifts.service.write(to: file, atomically: true, encoding: .utf8)
+            try ("import WSDL2Swift\nimport BrightFutures\nimport AEXML\n\n" + swifts.service + swifts.structs + swifts.extensions).write(to: structFile, atomically: true, encoding: .utf8)
+//            try ("import WSDL2Swift\nimport BrightFutures\nimport AEXML\n\n" + swifts.extensions).write(to: extFile, atomically: true, encoding: .utf8)
+        }
+        
+        try (""//wsdls.map {$0.swift()}.joined()
+//            + types.map {compact($0.type.swift(types.map {$0.type}, prefix: $0.prefix, publicMemberwiseInit: publicMemberwiseInit))}.joined(separator: "\n")
+//            + "\n\n"
+            + preamble)
+//            + expressibleByXMLExtensions.joined())
             .write(to: out, atomically: true, encoding: .utf8)
     }
 
