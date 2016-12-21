@@ -74,10 +74,27 @@ struct Core {
 
         let extensions = types.map {$0.type.dictionariesForExpressibleByXMLProtocol(types.map {$0.type}, typeQualifier: [])}.joined()
         let expressibleByXMLExtensions: [String] = extensions.map {try! compact(template(named: "ExpressibleByXML").render(Context(dictionary: $0)))}
-        
+
+        let typesSwift: [String: String] = {
+            var d: [String: String] = [:]
+
+            types.forEach { type in
+                let prefix = type.prefix
+                let structs = type.type.swift(types.map {$0.type}, prefix: prefix, publicMemberwiseInit: publicMemberwiseInit)
+                let swift = d[prefix] ?? ""
+                d[prefix] = swift + structs
+            }
+
+            return d
+        }()
+
+        try typesSwift.forEach { prefix, swift in
+            let purePrefix = prefix.components(separatedBy: "_").first ?? prefix
+            let structFile = out.deletingLastPathComponent().appendingPathComponent("WSDL+\(purePrefix)Types.swift")
+            try swift.write(to: structFile, atomically: true, encoding: .utf8)
+        }
+
         try (wsdls.map {$0.swift()}.joined()
-            + types.map {compact($0.type.swift(types.map {$0.type}, prefix: $0.prefix, publicMemberwiseInit: publicMemberwiseInit))}.joined(separator: "\n")
-            + "\n\n"
             + preamble
             + expressibleByXMLExtensions.joined())
             .write(to: out, atomically: true, encoding: .utf8)
