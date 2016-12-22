@@ -22,10 +22,9 @@
 		EA1F09CF1DE43B3900414030 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09CD1DE43B3900414030 /* LaunchScreen.storyboard */; };
 		EA1F09D51DE43C0700414030 /* exampleWSDLs in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09D41DE43C0700414030 /* exampleWSDLs */; };
 		EA1F09DC1DE43D6000414030 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = EA1F09DA1DE43D6000414030 /* .gitkeep */; };
-		EA1F09DD1DE43D6000414030 /* WSDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09DB1DE43D6000414030 /* WSDL.swift */; };
+		EA2B48D31E0B5746001D592A /* WSDL+TempConvert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2B48D21E0B5746001D592A /* WSDL+TempConvert.swift */; };
 		EA2D7D4A1DEBED7900EA13B8 /* ExpressibleByXML.stencil in Resources */ = {isa = PBXBuildFile; fileRef = EA2D7D491DEBED7900EA13B8 /* ExpressibleByXML.stencil */; };
 		EA2D7D4B1DEBEF1600EA13B8 /* ExpressibleByXML.stencil in Copy Resources */ = {isa = PBXBuildFile; fileRef = EA2D7D491DEBED7900EA13B8 /* ExpressibleByXML.stencil */; };
-		EABCFAE01E0A710D00B7FE51 /* WSDL+TempConvertTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABCFADF1E0A710D00B7FE51 /* WSDL+TempConvertTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,9 +89,8 @@
 		EA1F09D01DE43B3900414030 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA1F09D41DE43C0700414030 /* exampleWSDLs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = exampleWSDLs; sourceTree = "<group>"; };
 		EA1F09DA1DE43D6000414030 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		EA1F09DB1DE43D6000414030 /* WSDL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSDL.swift; sourceTree = "<group>"; };
+		EA2B48D21E0B5746001D592A /* WSDL+TempConvert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSDL+TempConvert.swift"; sourceTree = "<group>"; };
 		EA2D7D491DEBED7900EA13B8 /* ExpressibleByXML.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ExpressibleByXML.stencil; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = "<none>"; };
-		EABCFADF1E0A710D00B7FE51 /* WSDL+TempConvertTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSDL+TempConvertTypes.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,8 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				EA1F09DA1DE43D6000414030 /* .gitkeep */,
-				EA1F09DB1DE43D6000414030 /* WSDL.swift */,
-				EABCFADF1E0A710D00B7FE51 /* WSDL+TempConvertTypes.swift */,
+				EA2B48D21E0B5746001D592A /* WSDL+TempConvert.swift */,
 			);
 			name = generated;
 			path = exampleWSDLs/generated;
@@ -527,9 +524,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA1F09C71DE43B3900414030 /* ViewController.swift in Sources */,
-				EA1F09DD1DE43D6000414030 /* WSDL.swift in Sources */,
+				EA2B48D31E0B5746001D592A /* WSDL+TempConvert.swift in Sources */,
 				EA1F09C51DE43B3900414030 /* AppDelegate.swift in Sources */,
-				EABCFAE01E0A710D00B7FE51 /* WSDL+TempConvertTypes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

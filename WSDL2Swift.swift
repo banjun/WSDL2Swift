@@ -4,15 +4,38 @@ import Result
 import BrightFutures
 import ISO8601
 
-// accessible from @testable
 public protocol SOAPParamConvertible {
     func xmlElements(name: String) -> [AEXMLElement]
 }
 
-// accessible from @testable, adopted by _XSDType
 public protocol XSDType: SOAPParamConvertible {
     // name, swiftName, xmlns
     var xmlParams: [(String, SOAPParamConvertible?, String)] { get }
+}
+
+public extension XSDType {
+    func soapRequest(_ tns: String) -> AEXMLDocument {
+        let action = "\(String(describing: type(of: self)))".components(separatedBy: "_").last!
+        let soapRequest = AEXMLDocument()
+        let envelope = soapRequest.addChild(name: "S:Envelope", attributes: [
+            "xmlns:S": "http://schemas.xmlsoap.org/soap/envelope/",
+            "xmlns:tns": tns,
+            ])
+        let _ = envelope.addChild(name: "S:Header")
+        let body = envelope.addChild(name: "S:Body")
+        xmlElements(name: "tns:" + action).forEach {body.addChild($0)} // assumes "tns:" prefixed for all actions. JAX-WS requires prefixed or xmlns specification on this node.
+        return soapRequest
+    }
+
+    func xmlElements(name: String) -> [AEXMLElement] {
+        let typeElement = AEXMLElement(name: name)
+        for case let (k, v?, ns) in xmlParams {
+            let name = ns.isEmpty ? k : (ns + ":" + k)
+            let children = v.xmlElements(name: name)
+            children.forEach {typeElement.addChild($0)}
+        }
+        return [typeElement]
+    }
 }
 
 public protocol WSDLService {
@@ -22,6 +45,64 @@ public protocol WSDLService {
     var interceptURLRequest: ((URLRequest) -> URLRequest)? { get set }
     var interceptResponse: ((Data?, URLResponse?, Error?) -> (Data?, URLResponse?, Error?))? { get set }
     init(endpoint: String)
+}
+
+public extension WSDLService {
+    init(endpoint: String, interceptURLRequest: ((URLRequest) -> URLRequest)? = nil, interceptResponse: ((Data?, URLResponse?, Error?) -> (Data?, URLResponse?, Error?))? = nil) {
+        self.init(endpoint: endpoint)
+        self.interceptURLRequest = interceptURLRequest
+        self.interceptResponse = interceptResponse
+    }
+
+    func requestGeneric<I: XSDType, O: XSDType & ExpressibleByXML>(_ parameters: I) -> Future<O, WSDLOperationError> {
+        let promise = Promise<O, WSDLOperationError>()
+
+        let soapRequest = parameters.soapRequest(targetNamespace)
+        //        print("request to \(endpoint + path) using: \(soapRequest.xml)")
+
+        var request = URLRequest(url: URL(string: endpoint)!.appendingPathComponent(path))
+        request.httpMethod = "POST"
+        request.addValue("text/xml", forHTTPHeaderField: "Content-Type")
+        request.addValue("WSDL2Swift", forHTTPHeaderField: "User-Agent")
+        if let data = soapRequest.xml.data(using: .utf8) {
+            //            request.addValue(String(data.length), forHTTPHeaderField: "Content-Length")
+            request.httpBody = data
+        }
+        //        NSLog("%@", "headers: \(request.allHTTPHeaderFields)")
+        request = interceptURLRequest?(request) ?? request
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            let (data, _, error) = self.interceptResponse?(data, response, error) ?? (data, response, error)
+            //            NSLog("%@", "\((response, error))")
+
+            if let error = error {
+                promise.failure(.urlSession(error))
+                return
+            }
+
+            guard let d = data, let xml = try? AEXMLDocument(xml: d) else {
+                promise.failure(.invalidXML)
+                return
+            }
+
+            guard let soapMessage = SOAPMessage(xml: xml, targetNamespace: self.targetNamespace) else {
+                promise.failure(.invalidXMLContent)
+                return
+            }
+
+            guard let out = O(soapMessage: soapMessage) else {
+                if let fault = soapMessage.body.fault {
+                    promise.failure(.soapFault(fault))
+                } else {
+                    promise.failure(.invalidXMLContent)
+                }
+                return
+            }
+
+            promise.success(out)
+        }
+        task.resume()
+        return promise.future
+    }
 }
 
 public enum WSDLOperationError: Error {
@@ -98,13 +179,23 @@ public protocol ExpressibleByXML {
     init?(xmlValue: String) throws // SOAPParamError
 }
 
-extension ExpressibleByXML {
+public extension ExpressibleByXML {
     // default implementation for primitive values
     // element nil check and text value empty check
-    public init?(xml: AEXMLElement) throws {
+    init?(xml: AEXMLElement) throws {
         guard let value = xml.value else { return nil }
         guard !value.isEmpty else { return nil }
         try self.init(xmlValue: value)
+    }
+
+    init?(xmlValue: String) throws {
+        // compound type cannot be initialized with a text element
+        throw SOAPParamError.unknown
+    }
+    
+    init?(soapMessage message: SOAPMessage) {
+        guard let xml = message.body.output else { return nil }
+        try? self.init(xml: xml)
     }
 }
 

@@ -1,5 +1,4 @@
 import UIKit
-import BrightFutures
 
 class ViewController: UIViewController {
     override func viewDidLoad() {
@@ -14,7 +13,5 @@ class ViewController: UIViewController {
         service.request(TempConvert_CelsiusToFahrenheit(Celsius: "23.4")).onComplete { r in
             NSLog("%@", "TempConvert_CelsiusToFahrenheit(Celsius: \"23.4\") = \(r)")
         }
-
-        //        service.request(TempConvert_CelsiusToFahrenheit(
     }
 }
