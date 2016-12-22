@@ -72,15 +72,39 @@ struct Core {
             return
         }
 
-        let extensions = types.map {$0.type.dictionariesForExpressibleByXMLProtocol(types.map {$0.type}, typeQualifier: [])}.joined()
-        let expressibleByXMLExtensions: [String] = extensions.map {try! compact(template(named: "ExpressibleByXML").render(Context(dictionary: $0)))}
-        
-        try (wsdls.map {$0.swift()}.joined()
-            + types.map {compact($0.type.swift(types.map {$0.type}, prefix: $0.prefix, publicMemberwiseInit: publicMemberwiseInit))}.joined(separator: "\n")
-            + "\n\n"
-            + preamble
-            + expressibleByXMLExtensions.joined())
-            .write(to: out, atomically: true, encoding: .utf8)
+        let typesSwift: [String: (service: String, structs: String, extensions: String)] = {
+            var d: [String: (service: String, structs: String, extensions: String)] = [:]
+
+            wsdls.forEach { wsdl in
+                let prefix = wsdl.prefix
+                let swifts = d[prefix] ?? ("", "", "")
+                d[prefix] = (swifts.service + wsdl.swift(), swifts.structs, swifts.extensions)
+            }
+
+            types.forEach { type in
+                let prefix = type.prefix
+
+                let structs = type.type.swift(types.map {$0.type}, prefix: prefix, publicMemberwiseInit: publicMemberwiseInit)
+                let extensions = type.type.dictionariesForExpressibleByXMLProtocol(types.map {$0.type}, typeQualifier: []).map {
+                    try! compact(template(named: "ExpressibleByXML").render(Context(dictionary: $0)))
+                }.joined()
+
+                let swifts = d[prefix] ?? ("", "", "")
+                d[prefix] = (swifts.service, swifts.structs + "\n" + structs, swifts.extensions + extensions)
+            }
+
+            return d
+        }()
+
+        try typesSwift.forEach { prefix, swifts in
+            let purePrefix = prefix.components(separatedBy: "_").first ?? prefix
+            let file = out.deletingLastPathComponent().appendingPathComponent("WSDL+\(purePrefix).swift")
+
+            try (preamble
+                + swifts.service
+                + swifts.structs
+                + swifts.extensions).write(to: file, atomically: true, encoding: .utf8)
+        }
     }
 
     fileprivate static func parseXSD(_ path: String, prefix: String) -> [(prefix: String, type: XSDType)]? {
