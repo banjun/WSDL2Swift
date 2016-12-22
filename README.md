@@ -92,7 +92,7 @@ note that pod WSDL2Swift just introduces runtime dependencies. it does not provi
 ## Example
 
 iOSWSDL2Swift target in xcodeproj is an example using WSDL2Swift.
-it generates WSDL.swift at the first step of build and use it from ViewController.swift.
+it generates `WSDL+(ServiceName).swift` at the first step of build and use it from ViewController.swift.
 
 you need to place your WSDL and XSD xmls into exampleWSDLS folder.
 
@@ -101,7 +101,7 @@ you need to place your WSDL and XSD xmls into exampleWSDLS folder.
 
 usage point of view...
 
-* initialize Service with endpoint URL (endpoint URL can be changed after generating WSDL.swift)
+* initialize Service with endpoint URL (endpoint URL can be changed after generating `WSDL+(ServiceName).swift`)
 * initialize request parameter with `ServiceName_OperationName(...)`
 * `Service.request(param)` to get `Future` that will be completed by `NSURLSession` completion
 * parameters and models are typed by xsd definition (even with nullability)

@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
   s.name         = "WSDL2Swift"
-  s.version      = "0.4.3"
+  s.version      = "0.5.0"
   s.summary      = "Swift alternative to WSDL2ObjC making a SOAP request & parsing its response as defined in WSDL"
   s.description  = <<-DESC
   Swift alternative to WSDL2ObjC making a SOAP request & parsing its response as defined in WSDL.
-  generate WSDL.swift SOAP client by executing WSDL2Swift with WSDL and XSD xml files.
+  generate WSDL+(ServiceName).swift SOAP client by executing WSDL2Swift with WSDL and XSD xml files.
                    DESC
   s.homepage     = "https://github.com/banjun/WSDL2Swift"
   s.license      = "MIT"
