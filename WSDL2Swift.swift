@@ -147,8 +147,8 @@ public struct SOAPMessage {
             options.parserSettings.shouldReportNamespacePrefixes = false
             guard let namespaceRemovedXML = try? AEXMLDocument(xml: xml.xml, encoding: .utf8, options: options) else { return nil }
             self.xml = namespaceRemovedXML
-            self.output = namespaceRemovedXML.root.children.first
             self.fault = Fault(xml: xml[soapNameSpace + ":Fault"])
+            self.output = self.fault == nil ? namespaceRemovedXML.root.children.first : nil
         }
     }
 
