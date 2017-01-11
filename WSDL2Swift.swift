@@ -122,13 +122,12 @@ public struct SOAPMessage {
     private let targetNamespace: String
 
     public init?(xml: AEXMLDocument, targetNamespace: String) {
-        guard let soapNameSpace = (xml.root.attributes.first {$0.key.hasPrefix("xmlns:") && $0.value == "http://schemas.xmlsoap.org/soap/envelope/"}?.key.components(separatedBy: ":").last),
-            let body = Body(xml: xml[soapNameSpace + ":Envelope"][soapNameSpace + ":Body"], soapNameSpace: soapNameSpace, targetNamespace: targetNamespace) else {
-                return nil // invalid soap message
+        guard let soapNameSpace = (xml.root.attributes.first {$0.key.hasPrefix("xmlns:") && $0.value == "http://schemas.xmlsoap.org/soap/envelope/"}?.key.components(separatedBy: ":").last) else {
+            return nil // invalid soap message
         }
         self.targetNamespace = targetNamespace
         self.soapNameSpace = soapNameSpace
-        self.body = body
+        self.body = Body(xml: xml[soapNameSpace + ":Envelope"][soapNameSpace + ":Body"], soapNameSpace: soapNameSpace, targetNamespace: targetNamespace)
     }
 
     public struct Header {
@@ -141,11 +140,11 @@ public struct SOAPMessage {
 
         public var xml: AEXMLElement // for now, raw XML
 
-        public init?(xml: AEXMLElement, soapNameSpace: String, targetNamespace: String) {
+        public init(xml: AEXMLElement, soapNameSpace: String, targetNamespace: String) {
             var options = AEXMLOptions()
             options.parserSettings.shouldProcessNamespaces = true
             options.parserSettings.shouldReportNamespacePrefixes = false
-            guard let namespaceRemovedXML = try? AEXMLDocument(xml: xml.xml, encoding: .utf8, options: options) else { return nil }
+            let namespaceRemovedXML = AEXMLDocument(root: xml, options: options)
             self.xml = namespaceRemovedXML
             self.fault = Fault(xml: xml[soapNameSpace + ":Fault"])
             self.output = self.fault == nil ? namespaceRemovedXML.root.children.first : nil
