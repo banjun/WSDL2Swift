@@ -10,6 +10,17 @@ extension {{ fqn }}: ExpressibleByXML, XSDType {
 {% endif %}
     }
 
+    public init?(xml: XMLElement?) {
+{% if xmlParams %}
+        do {
+            guard let xml = xml else { return nil }
+{% for p in xmlParams %}            self.{{ p.swiftName }} = try parseXSDType(xml.children(tag: "{{ p.name }}"))
+{% endfor %}        } catch _ {
+            return nil
+        }
+{% endif %}
+    }
+
     public var xmlParams: [(String, SOAPParamConvertible?, String)] {return [{% for p in xmlParams %}
         ("{{ p.name }}", {{ p.swiftName }}, "{{ p.xmlns }}"),
 {% endfor %}    ]}
