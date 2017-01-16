@@ -91,6 +91,8 @@
 		EA1F09DA1DE43D6000414030 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		EA2B48D21E0B5746001D592A /* WSDL+TempConvert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSDL+TempConvert.swift"; sourceTree = "<group>"; };
 		EA2D7D491DEBED7900EA13B8 /* ExpressibleByXML.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ExpressibleByXML.stencil; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = "<none>"; };
+		EA3CEF221E2C67B900B65520 /* XMLParserObjCSwiftBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMLParserObjCSwiftBridge.h; sourceTree = "<group>"; };
+		EA3CEF231E2C67B900B65520 /* XMLParserObjCSwiftBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMLParserObjCSwiftBridge.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,8 @@
 			isa = PBXGroup;
 			children = (
 				EA1F06341E03E5B9006A560D /* WSDL2Swift.swift */,
+				EA3CEF221E2C67B900B65520 /* XMLParserObjCSwiftBridge.h */,
+				EA3CEF231E2C67B900B65520 /* XMLParserObjCSwiftBridge.m */,
 				EA1F09A91DE4376C00414030 /* WSDL2Swift */,
 				EA1F09C31DE43B3900414030 /* iOSWSDL2Swift */,
 				EA1F062B1E03B6F7006A560D /* iOSWSDL2SwiftTests */,

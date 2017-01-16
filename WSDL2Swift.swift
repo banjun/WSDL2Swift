@@ -79,7 +79,7 @@ public extension WSDLService {
                 return
             }
 
-            guard let d = data, let xml = try? AEXMLDocument(xml: d) else {
+            guard let d = data, let xml = try? AEXMLDocument(usingObjCBridge: d) else {
                 promise.failure(.invalidXML)
                 return
             }
@@ -282,4 +282,106 @@ public func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws ->
 // ex. let x: [String] = parseXSDType(v), failure only if any T(v.children) is failed
 public func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws -> [T] {
     return try (element.all ?? []).map(parseXSDType)
+}
+
+
+// MARK: performance workaround, due to BridgeToObjectiveC()
+
+private extension AEXMLDocument {
+    convenience init(usingObjCBridge xml: Data, options: AEXMLOptions = AEXMLOptions()) throws {
+        self.init(options: options)
+        try loadXML(usingObjCBridge: xml)
+    }
+
+    func loadXML(usingObjCBridge data: Data) throws {
+        // children.removeAll(keepingCapacity: false)
+        let xmlParser = AEXMLParser(document: self, data: data)
+        try xmlParser.parse()
+    }
+}
+
+/// duplicate of the (internal) AEXML.AEXMLParser for performance. original is at https://github.com/tadija/AEXML/blob/master/Sources/Parser.swift
+private class AEXMLParser: NSObject, XMLParserObjCSwiftBridgeDelegate {
+
+    // MARK: - Properties
+
+    let document: AEXMLDocument
+    let data: Data
+
+    var currentParent: AEXMLElement?
+    var currentElement: AEXMLElement?
+
+    var parseError: Error?
+
+    // MARK: - Lifecycle
+
+    init(document: AEXMLDocument, data: Data) {
+        self.document = document
+        self.data = data
+        currentParent = document
+
+        super.init()
+    }
+
+    // MARK: - API
+
+    func parse() throws {
+        let parser = XMLParser(data: data)
+        // >>> changed by WSDL2Swift, injecting XMLParserObjCSwiftBridge
+        let objcBridge = XMLParserObjCSwiftBridge()
+        objcBridge.delegate = self
+        parser.delegate = objcBridge
+        // <<< changed by WSDL2Swift
+
+        parser.shouldProcessNamespaces = document.options.parserSettings.shouldProcessNamespaces
+        parser.shouldReportNamespacePrefixes = document.options.parserSettings.shouldReportNamespacePrefixes
+        parser.shouldResolveExternalEntities = document.options.parserSettings.shouldResolveExternalEntities
+
+        let success = parser.parse()
+
+        if !success {
+            guard let error = parseError else { throw AEXMLError.parsingFailed }
+            throw error
+        }
+    }
+
+    // MARK: - XMLParserDelegate
+
+    // added by WSDL2Swift.XMLParserObjCSwiftBridgeDelegate
+    @objc func parser(_ parser: XMLParser,
+                      didStartElement elementName: String,
+                      namespaceURI: String?,
+                      qualifiedName qName: String?)
+    {
+        self.parser(parser, didStartElement: elementName, namespaceURI: namespaceURI, qualifiedName: qName, attributes: [:])
+    }
+
+    @objc func parser(_ parser: XMLParser,
+                      didStartElement elementName: String,
+                      namespaceURI: String?,
+                      qualifiedName qName: String?,
+                      attributes attributeDict: [String : String])
+    {
+        currentElement = currentParent?.addChild(name: elementName, attributes: attributeDict)
+        currentParent = currentElement
+    }
+
+    // replaced by WSDL2Swift.XMLParserObjCSwiftBridgeDelegate
+    @objc func parser(_ parser: XMLParser, foundCharactersAccumulated string: String) {
+        currentElement?.value = string.isEmpty ? nil : string
+    }
+
+    @objc func parser(_ parser: XMLParser,
+                      didEndElement elementName: String,
+                      namespaceURI: String?,
+                      qualifiedName qName: String?)
+    {
+        currentParent = currentParent?.parent
+        currentElement = nil
+    }
+
+    @objc func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+        self.parseError = parseError
+    }
+    
 }
