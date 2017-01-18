@@ -1,6 +1,6 @@
 {# extension declarations are only available in file scope #}
 extension {{ fqn }}: ExpressibleByXML, XSDType {
-    public init?(xml: XMLElement) {
+    public init?(xml: Fuzi.XMLElement) {
 {% if xmlParams %}
         do {
 {% for p in xmlParams %}            self.{{ p.swiftName }} = try parseXSDType(xml.children(tag: "{{ p.name }}"))
