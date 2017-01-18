@@ -3,6 +3,7 @@ import AEXML
 import Result
 import BrightFutures
 import ISO8601
+import Fuzi
 
 public protocol SOAPParamConvertible {
     func xmlElements(name: String) -> [AEXMLElement]
@@ -79,10 +80,11 @@ public extension WSDLService {
                 return
             }
 
-            guard let d = data, let xml = try? AEXMLDocument(usingObjCBridge: d) else {
+            guard let d = data, let xml = try? XMLDocument(data: d) else {
                 promise.failure(.invalidXML)
                 return
             }
+//            NSLog("%@", "\(String(data: d, encoding: .utf8)!)")
 
             guard let soapMessage = SOAPMessage(xml: xml, targetNamespace: self.targetNamespace) else {
                 promise.failure(.invalidXMLContent)
@@ -121,13 +123,18 @@ public struct SOAPMessage {
     private let soapNameSpace: String
     private let targetNamespace: String
 
-    public init?(xml: AEXMLDocument, targetNamespace: String) {
-        guard let soapNameSpace = (xml.root.attributes.first {$0.key.hasPrefix("xmlns:") && $0.value == "http://schemas.xmlsoap.org/soap/envelope/"}?.key.components(separatedBy: ":").last) else {
-            return nil // invalid soap message
-        }
+    public init?(xml: Fuzi.XMLDocument, targetNamespace: String) {
+//        guard xml.root!.namespaceHref == "http://schemas.xmlsoap.org/soap/envelope/",
+//            let soapNameSpace = xml.root!.namespace else {
+//            return nil
+//        }
+//        guard let soapNameSpace = (xml.root!.attributes.first {$0.key.hasPrefix("xmlns:") && $0.value == "http://schemas.xmlsoap.org/soap/envelope/"}?.key.components(separatedBy: ":").last) else {
+//            return nil // invalid soap message
+//        }
         self.targetNamespace = targetNamespace
-        self.soapNameSpace = soapNameSpace
-        self.body = Body(xml: xml[soapNameSpace + ":Envelope"][soapNameSpace + ":Body"], soapNameSpace: soapNameSpace, targetNamespace: targetNamespace)
+        self.soapNameSpace = ""
+        guard let body = xml.root!.firstChild(tag: "Body") else { return nil }
+        self.body = Body(xml: body, soapNameSpace: soapNameSpace, targetNamespace: targetNamespace)
     }
 
     public struct Header {
@@ -135,19 +142,15 @@ public struct SOAPMessage {
     }
 
     public struct Body {
-        public var output: AEXMLElement? // first <(ns2):(name) xmlns:(ns2)="(targetNamespace)">...</...>
+        public var output: Fuzi.XMLElement? // first <(ns2):(name) xmlns:(ns2)="(targetNamespace)">...</...>
         public var fault: Fault?
 
-        public var xml: AEXMLElement // for now, raw XML
+        public var xml: Fuzi.XMLElement // for now, raw XML
 
-        public init(xml: AEXMLElement, soapNameSpace: String, targetNamespace: String) {
-            var options = AEXMLOptions()
-            options.parserSettings.shouldProcessNamespaces = true
-            options.parserSettings.shouldReportNamespacePrefixes = false
-            let namespaceRemovedXML = AEXMLDocument(root: xml, options: options)
-            self.xml = namespaceRemovedXML
-            self.fault = Fault(xml: xml[soapNameSpace + ":Fault"])
-            self.output = self.fault == nil ? namespaceRemovedXML.root.children.first : nil
+        public init(xml: Fuzi.XMLElement, soapNameSpace: String, targetNamespace: String) {
+            self.xml = xml
+            self.fault = xml.firstChild(tag: "Fault").flatMap {Fault(xml: $0)}
+            self.output = self.fault == nil ? xml.children.first : nil
         }
     }
 
@@ -158,13 +161,13 @@ public struct SOAPMessage {
         public var faultActor: String?
         public var detail: String?
 
-        public init?(xml: AEXMLElement) {
-            guard let faultCode = xml["faultcode"].value else { return nil } // faultcode MUST be present in a SOAP Fault element
-            guard let faultString = xml["faultstring"].value else { return nil } // faultString MUST be present in a SOAP Fault element
+        public init?(xml: Fuzi.XMLElement) {
+            guard let faultCode = xml.firstChild(tag: "faultcode")?.stringValue else { return nil } // faultcode MUST be present in a SOAP Fault element
+            guard let faultString = xml.firstChild(tag: "faultstring")?.stringValue else { return nil } // faultString MUST be present in a SOAP Fault element
             self.faultCode = faultCode
             self.faultString = faultString
-            self.faultActor = xml["faultactor"].value
-            self.detail = xml["detail"].value
+            self.faultActor = xml.firstChild(tag: "faultactor")?.stringValue
+            self.detail = xml.firstChild(tag: "detail")?.stringValue
         }
     }
 }
@@ -174,15 +177,15 @@ public protocol ExpressibleByXML {
     //  * Self: parse succeeded to an value
     //  * nil: parse succeeded to nil
     //  * SOAPParamError.unknown: parse failed
-    init?(xml: AEXMLElement) throws // SOAPParamError
+    init?(xml: Fuzi.XMLElement) throws // SOAPParamError
     init?(xmlValue: String) throws // SOAPParamError
 }
 
 public extension ExpressibleByXML {
     // default implementation for primitive values
     // element nil check and text value empty check
-    init?(xml: AEXMLElement) throws {
-        guard let value = xml.value else { return nil }
+    init?(xml: Fuzi.XMLElement) throws {
+      let value = xml.stringValue
         guard !value.isEmpty else { return nil }
         try self.init(xmlValue: value)
     }
@@ -265,123 +268,21 @@ extension Array: SOAPParamConvertible { // Swift 3 does not yet support conditio
     }
 }
 
-
 public enum SOAPParamError: Error { case unknown }
 
 // ex. let x: Bool = parseXSDType(v), success only if T(v) is succeeded
-public func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws -> T {
-    guard let v = try T(xml: element) else { throw SOAPParamError.unknown }
+public func parseXSDType<T: ExpressibleByXML>(_ elements: [Fuzi.XMLElement]) throws -> T {
+    guard let e = elements.first, let v = try T(xml: e) else { throw SOAPParamError.unknown }
     return v
 }
 
 // ex. let x: Bool? = parseXSDType(v), failure only if T(v) is failed
-public func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws -> T? {
-    return try T(xml: element)
+public func parseXSDType<T: ExpressibleByXML>(_ elements: [Fuzi.XMLElement]) throws -> T? {
+    guard let e = elements.first else { return nil }
+    return try T(xml: e)
 }
 
 // ex. let x: [String] = parseXSDType(v), failure only if any T(v.children) is failed
-public func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws -> [T] {
-    return try (element.all ?? []).map(parseXSDType)
-}
-
-
-// MARK: performance workaround, due to BridgeToObjectiveC()
-
-private extension AEXMLDocument {
-    convenience init(usingObjCBridge xml: Data, options: AEXMLOptions = AEXMLOptions()) throws {
-        self.init(options: options)
-        try loadXML(usingObjCBridge: xml)
-    }
-
-    func loadXML(usingObjCBridge data: Data) throws {
-        // children.removeAll(keepingCapacity: false)
-        let xmlParser = AEXMLParser(document: self, data: data)
-        try xmlParser.parse()
-    }
-}
-
-/// duplicate of the (internal) AEXML.AEXMLParser for performance. original is at https://github.com/tadija/AEXML/blob/master/Sources/Parser.swift
-private class AEXMLParser: NSObject, XMLParserObjCSwiftBridgeDelegate {
-
-    // MARK: - Properties
-
-    let document: AEXMLDocument
-    let data: Data
-
-    var currentParent: AEXMLElement?
-    var currentElement: AEXMLElement?
-
-    var parseError: Error?
-
-    // MARK: - Lifecycle
-
-    init(document: AEXMLDocument, data: Data) {
-        self.document = document
-        self.data = data
-        currentParent = document
-
-        super.init()
-    }
-
-    // MARK: - API
-
-    func parse() throws {
-        let parser = XMLParser(data: data)
-        // >>> changed by WSDL2Swift, injecting XMLParserObjCSwiftBridge
-        let objcBridge = XMLParserObjCSwiftBridge()
-        objcBridge.delegate = self
-        parser.delegate = objcBridge
-        // <<< changed by WSDL2Swift
-
-        parser.shouldProcessNamespaces = document.options.parserSettings.shouldProcessNamespaces
-        parser.shouldReportNamespacePrefixes = document.options.parserSettings.shouldReportNamespacePrefixes
-        parser.shouldResolveExternalEntities = document.options.parserSettings.shouldResolveExternalEntities
-
-        let success = parser.parse()
-
-        if !success {
-            guard let error = parseError else { throw AEXMLError.parsingFailed }
-            throw error
-        }
-    }
-
-    // MARK: - XMLParserDelegate
-
-    // added by WSDL2Swift.XMLParserObjCSwiftBridgeDelegate
-    @objc func parser(_ parser: XMLParser,
-                      didStartElement elementName: String,
-                      namespaceURI: String?,
-                      qualifiedName qName: String?)
-    {
-        self.parser(parser, didStartElement: elementName, namespaceURI: namespaceURI, qualifiedName: qName, attributes: [:])
-    }
-
-    @objc func parser(_ parser: XMLParser,
-                      didStartElement elementName: String,
-                      namespaceURI: String?,
-                      qualifiedName qName: String?,
-                      attributes attributeDict: [String : String])
-    {
-        currentElement = currentParent?.addChild(name: elementName, attributes: attributeDict)
-        currentParent = currentElement
-    }
-
-    // replaced by WSDL2Swift.XMLParserObjCSwiftBridgeDelegate
-    @objc func parser(_ parser: XMLParser, foundCharactersAccumulated string: String) {
-        currentElement?.value = string.isEmpty ? nil : string
-    }
-
-    @objc func parser(_ parser: XMLParser,
-                      didEndElement elementName: String,
-                      namespaceURI: String?,
-                      qualifiedName qName: String?)
-    {
-        currentParent = currentParent?.parent
-        currentElement = nil
-    }
-
-    @objc func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
-        self.parseError = parseError
-    }
-    
+public func parseXSDType<T: ExpressibleByXML>(_ elements: [Fuzi.XMLElement]) throws -> [T] {
+    return try elements.map { e -> T in try parseXSDType([e])}
 }
