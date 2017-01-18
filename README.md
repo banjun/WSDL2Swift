@@ -2,7 +2,7 @@ WSDL2Swift
 ==========
 
 Swift alternative to WSDL2ObjC making a SOAP request & parsing its response as defined in WSDL.
-Objective-C free and libxml free.
+Objective-C free.
 
 ## Input & Output
 
@@ -88,6 +88,8 @@ pod 'WSDL2Swift'
 ```
 
 note that pod WSDL2Swift just introduces runtime dependencies. it does not provide WSDL2Swift executable binary nor generated WSDL client Swift files.
+
+sometimes, somewhere in your dependencies chain (transitive framework dependencies or test bundle), header search paths for libxml2 is required. see podspec to add manually.
 
 ## Example
 
