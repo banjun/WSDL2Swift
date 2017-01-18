@@ -177,7 +177,6 @@ public protocol ExpressibleByXML {
     //  * Self: parse succeeded to an value
     //  * nil: parse succeeded to nil
     //  * SOAPParamError.unknown: parse failed
-    init?(xml: AEXMLElement) throws // SOAPParamError
     init?(xml: XMLElement?) throws // SOAPParamError
     init?(xmlValue: String) throws // SOAPParamError
 }
@@ -185,12 +184,6 @@ public protocol ExpressibleByXML {
 public extension ExpressibleByXML {
     // default implementation for primitive values
     // element nil check and text value empty check
-    init?(xml: AEXMLElement) throws {
-        guard let value = xml.value else { return nil }
-        guard !value.isEmpty else { return nil }
-        try self.init(xmlValue: value)
-    }
-
     init?(xml: XMLElement?) throws {
         guard let value = xml?.stringValue else { return nil }
         guard !value.isEmpty else { return nil }
@@ -275,33 +268,21 @@ extension Array: SOAPParamConvertible { // Swift 3 does not yet support conditio
     }
 }
 
-
 public enum SOAPParamError: Error { case unknown }
 
 // ex. let x: Bool = parseXSDType(v), success only if T(v) is succeeded
-public func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws -> T {
-    guard let v = try T(xml: element) else { throw SOAPParamError.unknown }
-    return v
-}
 public func parseXSDType<T: ExpressibleByXML>(_ elements: [XMLElement]) throws -> T {
     guard let e = elements.first, let v = try T(xml: e) else { throw SOAPParamError.unknown }
     return v
 }
 
 // ex. let x: Bool? = parseXSDType(v), failure only if T(v) is failed
-public func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws -> T? {
-    return try T(xml: element)
-}
 public func parseXSDType<T: ExpressibleByXML>(_ elements: [XMLElement]) throws -> T? {
     guard let e = elements.first else { return nil }
     return try T(xml: e)
 }
 
 // ex. let x: [String] = parseXSDType(v), failure only if any T(v.children) is failed
-public func parseXSDType<T: ExpressibleByXML>(_ element: AEXMLElement) throws -> [T] {
-    return try (element.all ?? []).map(parseXSDType)
-}
 public func parseXSDType<T: ExpressibleByXML>(_ elements: [XMLElement]) throws -> [T] {
     return try elements.map { e -> T in try parseXSDType([e])}
 }
-

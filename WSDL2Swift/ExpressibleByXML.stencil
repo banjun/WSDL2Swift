@@ -1,15 +1,5 @@
 {# extension declarations are only available in file scope #}
 extension {{ fqn }}: ExpressibleByXML, XSDType {
-    public init?(xml: AEXMLElement) {
-{% if xmlParams %}
-        do {
-{% for p in xmlParams %}            self.{{ p.swiftName }} = try parseXSDType(xml["{{ p.name }}"])
-{% endfor %}        } catch _ {
-            return nil
-        }
-{% endif %}
-    }
-
     public init?(xml: XMLElement?) {
 {% if xmlParams %}
         do {
