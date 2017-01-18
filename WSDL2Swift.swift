@@ -123,7 +123,7 @@ public struct SOAPMessage {
     private let soapNameSpace: String
     private let targetNamespace: String
 
-    public init?(xml: XMLDocument, targetNamespace: String) {
+    public init?(xml: Fuzi.XMLDocument, targetNamespace: String) {
 //        guard xml.root!.namespaceHref == "http://schemas.xmlsoap.org/soap/envelope/",
 //            let soapNameSpace = xml.root!.namespace else {
 //            return nil
@@ -142,12 +142,12 @@ public struct SOAPMessage {
     }
 
     public struct Body {
-        public var output: XMLElement? // first <(ns2):(name) xmlns:(ns2)="(targetNamespace)">...</...>
+        public var output: Fuzi.XMLElement? // first <(ns2):(name) xmlns:(ns2)="(targetNamespace)">...</...>
         public var fault: Fault?
 
-        public var xml: XMLElement // for now, raw XML
+        public var xml: Fuzi.XMLElement // for now, raw XML
 
-        public init(xml: XMLElement, soapNameSpace: String, targetNamespace: String) {
+        public init(xml: Fuzi.XMLElement, soapNameSpace: String, targetNamespace: String) {
             self.xml = xml
             self.fault = xml.firstChild(tag: "Fault").flatMap {Fault(xml: $0)}
             self.output = self.fault == nil ? xml.children.first : nil
@@ -161,7 +161,7 @@ public struct SOAPMessage {
         public var faultActor: String?
         public var detail: String?
 
-        public init?(xml: XMLElement) {
+        public init?(xml: Fuzi.XMLElement) {
             guard let faultCode = xml.firstChild(tag: "faultcode")?.stringValue else { return nil } // faultcode MUST be present in a SOAP Fault element
             guard let faultString = xml.firstChild(tag: "faultstring")?.stringValue else { return nil } // faultString MUST be present in a SOAP Fault element
             self.faultCode = faultCode
@@ -177,14 +177,14 @@ public protocol ExpressibleByXML {
     //  * Self: parse succeeded to an value
     //  * nil: parse succeeded to nil
     //  * SOAPParamError.unknown: parse failed
-    init?(xml: XMLElement) throws // SOAPParamError
+    init?(xml: Fuzi.XMLElement) throws // SOAPParamError
     init?(xmlValue: String) throws // SOAPParamError
 }
 
 public extension ExpressibleByXML {
     // default implementation for primitive values
     // element nil check and text value empty check
-    init?(xml: XMLElement) throws {
+    init?(xml: Fuzi.XMLElement) throws {
       let value = xml.stringValue
         guard !value.isEmpty else { return nil }
         try self.init(xmlValue: value)
@@ -271,18 +271,18 @@ extension Array: SOAPParamConvertible { // Swift 3 does not yet support conditio
 public enum SOAPParamError: Error { case unknown }
 
 // ex. let x: Bool = parseXSDType(v), success only if T(v) is succeeded
-public func parseXSDType<T: ExpressibleByXML>(_ elements: [XMLElement]) throws -> T {
+public func parseXSDType<T: ExpressibleByXML>(_ elements: [Fuzi.XMLElement]) throws -> T {
     guard let e = elements.first, let v = try T(xml: e) else { throw SOAPParamError.unknown }
     return v
 }
 
 // ex. let x: Bool? = parseXSDType(v), failure only if T(v) is failed
-public func parseXSDType<T: ExpressibleByXML>(_ elements: [XMLElement]) throws -> T? {
+public func parseXSDType<T: ExpressibleByXML>(_ elements: [Fuzi.XMLElement]) throws -> T? {
     guard let e = elements.first else { return nil }
     return try T(xml: e)
 }
 
 // ex. let x: [String] = parseXSDType(v), failure only if any T(v.children) is failed
-public func parseXSDType<T: ExpressibleByXML>(_ elements: [XMLElement]) throws -> [T] {
+public func parseXSDType<T: ExpressibleByXML>(_ elements: [Fuzi.XMLElement]) throws -> [T] {
     return try elements.map { e -> T in try parseXSDType([e])}
 }
