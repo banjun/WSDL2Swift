@@ -177,15 +177,15 @@ public protocol ExpressibleByXML {
     //  * Self: parse succeeded to an value
     //  * nil: parse succeeded to nil
     //  * SOAPParamError.unknown: parse failed
-    init?(xml: XMLElement?) throws // SOAPParamError
+    init?(xml: XMLElement) throws // SOAPParamError
     init?(xmlValue: String) throws // SOAPParamError
 }
 
 public extension ExpressibleByXML {
     // default implementation for primitive values
     // element nil check and text value empty check
-    init?(xml: XMLElement?) throws {
-        guard let value = xml?.stringValue else { return nil }
+    init?(xml: XMLElement) throws {
+      let value = xml.stringValue
         guard !value.isEmpty else { return nil }
         try self.init(xmlValue: value)
     }

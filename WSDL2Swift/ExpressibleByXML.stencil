@@ -1,9 +1,8 @@
 {# extension declarations are only available in file scope #}
 extension {{ fqn }}: ExpressibleByXML, XSDType {
-    public init?(xml: XMLElement?) {
+    public init?(xml: XMLElement) {
 {% if xmlParams %}
         do {
-            guard let xml = xml else { return nil }
 {% for p in xmlParams %}            self.{{ p.swiftName }} = try parseXSDType(xml.children(tag: "{{ p.name }}"))
 {% endfor %}        } catch _ {
             return nil
