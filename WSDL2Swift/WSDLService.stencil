@@ -8,7 +8,7 @@ public struct {{ name }}: WSDLService {
         self.endpoint = endpoint
     }
 {% for op in operations %}
-    public func request(_ parameters: {{ op.inParam }}) -> Future<{{ op.outParam }}, WSDLOperationError> {
+    public func request({{% if op.inParam %}}_ parameters: {{ op.inParam }}{{% endif %}}) -> Future<{{ op.outParam }}, WSDLOperationError> {
         return requestGeneric(parameters)
     }{% endfor %}
 }

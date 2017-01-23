@@ -13,6 +13,8 @@ private let typeMap: [String: String] = [
     "boolean": "\(Bool.self)", // xs:boolean
     "int": "\(Int32.self)",
     "long": "\(Int64.self)",
+    "float": "\(Float.self)",
+    "double": "\(Double.self)",
     "dateTime": "\(Date.self)",
     "base64Binary": "\(Data.self)",
 ]
@@ -28,6 +30,9 @@ private func swiftKeywordsAvoidedName(_ name: String) -> String {
 
 private func replaceTargetNameSpace(_ name: String, prefix: String) -> String {
     return name.replacingOccurrences(of: "tns:", with: prefix)
+        .replacingOccurrences(of: "ns0:", with: prefix)
+        .replacingOccurrences(of: "ns1:", with: prefix)
+        .replacingOccurrences(of: "ax21:", with: prefix)
 }
 
 
@@ -75,13 +80,19 @@ struct Core {
         let typesSwift: [String: (service: String, structs: String, extensions: String)] = {
             var d: [String: (service: String, structs: String, extensions: String)] = [:]
 
+            var fakeTypes: [(prefix: String, type: XSDType)] = []
+
             wsdls.forEach { wsdl in
                 let prefix = wsdl.prefix
                 let swifts = d[prefix] ?? ("", "", "")
                 d[prefix] = (swifts.service + wsdl.swift(), swifts.structs, swifts.extensions)
+
+                fakeTypes.append(contentsOf: wsdl.messages.filter {$0.part == nil}.map { message in
+                    (wsdl.prefix, XSDType(prefix: wsdl.prefix, bareName: message.name, elements: [], base: nil))
+                })
             }
 
-            types.forEach { type in
+            (types + fakeTypes).forEach { type in
                 let prefix = type.prefix
 
                 let structs = type.type.swift(types.map {$0.type}, prefix: prefix, publicMemberwiseInit: publicMemberwiseInit)
@@ -172,7 +183,7 @@ struct WSDL {
                 return [
                     "name": swiftKeywordsAvoidedName(op.name),
                     "inParam": replaceTargetNameSpace(inputMessage.parameterName, prefix: prefix),
-                    "outParam": replaceTargetNameSpace(outputMessage.parameterName, prefix: prefix),
+                    "outParam": replaceTargetNameSpace(outputMessage.parameterName, prefix: prefix)
                 ]}]))
     }
 }
@@ -180,15 +191,19 @@ struct WSDL {
 
 struct WSDLMessage {
     var name: String
-    var part: AEXMLElement
-    var parameterName: String {return part.attributes["element"]!}
+    var part: AEXMLElement?
+    var parameterName: String {return part?.attributes["element"]! ?? "tns:" + name}
 
     static func deserialize(_ node: AEXMLElement) -> WSDLMessage? {
         guard let name = node.attributes["name"] else {
             NSLog("%@", "cannot deserialize \(self) from node \(node.xmlCompact)")
             return nil
         }
-        return self.init(name: name, part: node["part"].first!)
+        let part = node["part"].first
+        if part == nil {
+            NSLog("%@", "Warning: using empty type for \(name) whose part is not defined")
+        }
+        return self.init(name: name, part: part)
     }
 }
 
@@ -457,7 +472,7 @@ struct XSDElement {
 
         return [
             "name": swiftName,
-            "type": swiftType.replacingOccurrences(of: "tns:", with: prefix),
+            "type": swiftType.replacingOccurrences(of: "tns:", with: prefix).replacingOccurrences(of: "ns1:", with: prefix),
         ]
     }
 

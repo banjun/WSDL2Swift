@@ -21,6 +21,7 @@ public extension XSDType {
         let envelope = soapRequest.addChild(name: "S:Envelope", attributes: [
             "xmlns:S": "http://schemas.xmlsoap.org/soap/envelope/",
             "xmlns:tns": tns,
+            "xmlns:tns2": "http://wsiv.ratp.fr/xsd"
             ])
         let _ = envelope.addChild(name: "S:Header")
         let body = envelope.addChild(name: "S:Body")
@@ -59,11 +60,12 @@ public extension WSDLService {
         let promise = Promise<O, WSDLOperationError>()
 
         let soapRequest = parameters.soapRequest(targetNamespace)
-        //        print("request to \(endpoint + path) using: \(soapRequest.xml)")
+                print("request to \(endpoint + path) using: \(soapRequest.xml)")
 
         var request = URLRequest(url: URL(string: endpoint)!.appendingPathComponent(path))
         request.httpMethod = "POST"
         request.addValue("text/xml", forHTTPHeaderField: "Content-Type")
+        request.addValue("\"\"", forHTTPHeaderField: "SOAPAction")
         request.addValue("WSDL2Swift", forHTTPHeaderField: "User-Agent")
         if let data = soapRequest.xml.data(using: .utf8) {
             //            request.addValue(String(data.length), forHTTPHeaderField: "Content-Length")
@@ -84,7 +86,7 @@ public extension WSDLService {
                 promise.failure(.invalidXML)
                 return
             }
-//            NSLog("%@", "\(String(data: d, encoding: .utf8)!)")
+            NSLog("%@", "\(String(data: d, encoding: .utf8)!)")
 
             guard let soapMessage = SOAPMessage(xml: xml, targetNamespace: self.targetNamespace) else {
                 promise.failure(.invalidXMLContent)
@@ -234,6 +236,24 @@ extension Int32: ExpressibleByXML, SOAPParamConvertible {
 extension Int64: ExpressibleByXML, SOAPParamConvertible {
     public init?(xmlValue: String) throws {
         guard let v = Int64(xmlValue) else { throw SOAPParamError.unknown }
+        self = v
+    }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: String(self))]
+    }
+}
+extension Float: ExpressibleByXML, SOAPParamConvertible {
+    public init?(xmlValue: String) throws {
+        guard let v = Float(xmlValue) else { throw SOAPParamError.unknown }
+        self = v
+    }
+    public func xmlElements(name: String) -> [AEXMLElement] {
+        return [AEXMLElement(name: name, value: String(self))]
+    }
+}
+extension Double: ExpressibleByXML, SOAPParamConvertible {
+    public init?(xmlValue: String) throws {
+        guard let v = Double(xmlValue) else { throw SOAPParamError.unknown }
         self = v
     }
     public func xmlElements(name: String) -> [AEXMLElement] {
