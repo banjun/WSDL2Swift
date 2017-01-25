@@ -183,10 +183,8 @@ public protocol ExpressibleByXML {
 
 public extension ExpressibleByXML {
     // default implementation for primitive values
-    // element nil check and text value empty check
     init?(xml: Fuzi.XMLElement) throws {
-      let value = xml.stringValue
-        guard !value.isEmpty else { return nil }
+        let value = xml.stringValue
         try self.init(xmlValue: value)
     }
 
