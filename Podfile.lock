@@ -1,12 +1,12 @@
 PODS:
-  - AEXML (4.0.1)
-  - BrightFutures (5.1.0):
-    - Result (~> 3.0)
+  - AEXML (4.1.0)
+  - BrightFutures (6.0.0-beta.1):
+    - Result (~> 3.2)
   - Commander (0.6.0)
-  - Fuzi (1.0.1)
+  - Fuzi (2.0.0)
   - ISO8601 (0.6.0)
-  - JetToTheFuture (0.3.0):
-    - BrightFutures (~> 5.0)
+  - JetToTheFuture (0.4.0-beta.1):
+    - BrightFutures (>= 6.0.0-beta.1)
   - Mockingjay (2.0.0):
     - Mockingjay/Core (= 2.0.0)
     - Mockingjay/XCTest (= 2.0.0)
@@ -18,49 +18,50 @@ PODS:
   - OHHTTPStubs/NSURLSession (5.2.3):
     - OHHTTPStubs/Core
   - PathKit (0.7.0)
-  - Result (3.1.0)
+  - Result (3.2.3)
   - Stencil (0.7.2):
     - PathKit (~> 0.7.0)
-  - Toki (0.5.0):
+  - Toki (0.10.0):
     - AEXML
+    - Fuzi
     - Mockingjay (~> 2.0)
     - OHHTTPStubs/NSURLSession (~> 5.2)
-    - WSDL2Swift (>= 0.3)
-  - URITemplate (2.0.0)
-  - WSDL2Swift (0.6.0):
+    - WSDL2Swift (>= 0.7)
+  - URITemplate (2.0.2)
+  - WSDL2Swift (0.7.2):
     - AEXML
     - BrightFutures
-    - Fuzi
+    - Fuzi (~> 2.0)
     - ISO8601
 
 DEPENDENCIES:
   - AEXML
   - Commander
-  - JetToTheFuture
-  - Stencil
+  - JetToTheFuture (>= 0.4.0-beta.1)
+  - Stencil (~> 0.7.2)
   - Toki (>= 0.5)
   - WSDL2Swift (from `./`)
 
 EXTERNAL SOURCES:
   WSDL2Swift:
-    :path: "./"
+    :path: ./
 
 SPEC CHECKSUMS:
-  AEXML: 905e50474c0a261d335aa8be4ee32d22d69b6fd5
-  BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
+  AEXML: 647fbb051280f3fb38a1a7caa62b0344055a851c
+  BrightFutures: 3cc2388beb3c86e9c7c47f2d9073577ed049d528
   Commander: fba7c96c9e787ecc8ebe0737be875e1e18ef47ff
-  Fuzi: 851403654bac55675aaeed815d0c8a1d3e3d3e8b
+  Fuzi: 7df3118e601c33e9f9b609cb2fabde55506f964e
   ISO8601: d3ea3ba9b752820cf92c6b47a9ee327e9f0e13fc
-  JetToTheFuture: 0ef3cacbbf8d57314728bda2fe68c636ab4635c7
+  JetToTheFuture: 00d78e21f3418bf80aefe8aa5ad316349858c2a6
   Mockingjay: 7122a3fc0597aa63438e4cd9b71b7bc8aac05b87
   OHHTTPStubs: e238cd5b66d8efa51c861db45895de8fe079f4a7
   PathKit: f8260c3e41bf4d552f3603853e32a5b325a176d4
-  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
   Stencil: 7eeda74c79617b2802fd2f1267ac75e7d42fe925
-  Toki: e53183c7dcf46e8f75d07fb8796afbd52c3837d4
-  URITemplate: a5acb3f76c6a2338116fde88b658d83f91bbac45
-  WSDL2Swift: c158869b0cfb15145afba8e03512ac526f857d74
+  Toki: 875a5ad7677db7f8223ef9efa8e8e11789f493a7
+  URITemplate: d822aaa2f8ec9dcffffd13baa58bf9ee007e96cb
+  WSDL2Swift: 5a48ba39f336cf2a06f7c9f415e734b5cb2f43ea
 
-PODFILE CHECKSUM: 06edc9b8d969cebdcad748901daa1e29e3c52ff2
+PODFILE CHECKSUM: 1172aa441e220ee3b1dc983af32682f1e289d816
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.3.1

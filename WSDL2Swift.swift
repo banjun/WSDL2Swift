@@ -133,7 +133,7 @@ public struct SOAPMessage {
 //        }
         self.targetNamespace = targetNamespace
         self.soapNameSpace = ""
-        guard let body = xml.root!.firstChild(tag: "Body") else { return nil }
+        guard let body = xml.root!.firstChild(staticTag: "Body") else { return nil }
         self.body = Body(xml: body, soapNameSpace: soapNameSpace, targetNamespace: targetNamespace)
     }
 
@@ -149,7 +149,7 @@ public struct SOAPMessage {
 
         public init(xml: Fuzi.XMLElement, soapNameSpace: String, targetNamespace: String) {
             self.xml = xml
-            self.fault = xml.firstChild(tag: "Fault").flatMap {Fault(xml: $0)}
+            self.fault = xml.firstChild(staticTag: "Fault").flatMap {Fault(xml: $0)}
             self.output = self.fault == nil ? xml.children.first : nil
         }
     }
@@ -162,12 +162,12 @@ public struct SOAPMessage {
         public var detail: String?
 
         public init?(xml: Fuzi.XMLElement) {
-            guard let faultCode = xml.firstChild(tag: "faultcode")?.stringValue else { return nil } // faultcode MUST be present in a SOAP Fault element
-            guard let faultString = xml.firstChild(tag: "faultstring")?.stringValue else { return nil } // faultString MUST be present in a SOAP Fault element
+            guard let faultCode = xml.firstChild(staticTag: "faultcode")?.stringValue else { return nil } // faultcode MUST be present in a SOAP Fault element
+            guard let faultString = xml.firstChild(staticTag: "faultstring")?.stringValue else { return nil } // faultString MUST be present in a SOAP Fault element
             self.faultCode = faultCode
             self.faultString = faultString
-            self.faultActor = xml.firstChild(tag: "faultactor")?.stringValue
-            self.detail = xml.firstChild(tag: "detail")?.stringValue
+            self.faultActor = xml.firstChild(staticTag: "faultactor")?.stringValue
+            self.detail = xml.firstChild(staticTag: "detail")?.stringValue
         }
     }
 }

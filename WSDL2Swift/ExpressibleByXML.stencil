@@ -3,7 +3,7 @@ extension {{ fqn }}: ExpressibleByXML, XSDType {
     public init?(xml: Fuzi.XMLElement) {
 {% if xmlParams %}
         do {
-{% for p in xmlParams %}            self.{{ p.swiftName }} = try parseXSDType(xml.children(tag: "{{ p.name }}"))
+{% for p in xmlParams %}            self.{{ p.swiftName }} = try parseXSDType(xml.children(staticTag: "{{ p.name }}"))
 {% endfor %}        } catch _ {
             return nil
         }

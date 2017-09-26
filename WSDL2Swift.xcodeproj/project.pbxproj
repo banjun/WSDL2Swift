@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6AA9B01661501F78A68771CC /* Pods_WSDL2Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */; };
+		A7A557BCF91F54D3C8BEC87F /* Pods_iOSWSDL2Swift_iOSWSDL2SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42544A8790F351CED5424C2E /* Pods_iOSWSDL2Swift_iOSWSDL2SwiftTests.framework */; };
 		B0637813C517C34A60F736B6 /* Pods_iOSWSDL2Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9B576430854A95CF84C2D9 /* Pods_iOSWSDL2Swift.framework */; };
-		B7D5169A48E98351426D9CAE /* Pods_iOSWSDL2SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66877D9A718AF5D3F01AE005 /* Pods_iOSWSDL2SwiftTests.framework */; };
 		EA1F062D1E03B6F7006A560D /* iOSWSDL2SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F062C1E03B6F7006A560D /* iOSWSDL2SwiftTests.swift */; };
 		EA1F09AB1DE4376C00414030 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09AA1DE4376C00414030 /* main.swift */; };
 		EA1F09B51DE438EE00414030 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F09B11DE438EE00414030 /* Core.swift */; };
@@ -63,14 +63,15 @@
 
 /* Begin PBXFileReference section */
 		1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WSDL2Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FA3321285F2E95C157B03DA /* Pods-iOSWSDL2SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2SwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2SwiftTests/Pods-iOSWSDL2SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		245448084A01A8ECE465E13C /* Pods-iOSWSDL2Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2Swift/Pods-iOSWSDL2Swift.debug.xcconfig"; sourceTree = "<group>"; };
+		42544A8790F351CED5424C2E /* Pods_iOSWSDL2Swift_iOSWSDL2SwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSWSDL2Swift_iOSWSDL2SwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		54E07700FFB14F5BC9DE3247 /* Pods-WSDL2Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WSDL2Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift.release.xcconfig"; sourceTree = "<group>"; };
 		66877D9A718AF5D3F01AE005 /* Pods_iOSWSDL2SwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSWSDL2SwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C2849B258EEA5B658C2CD2E /* Pods-WSDL2Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WSDL2Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift.debug.xcconfig"; sourceTree = "<group>"; };
 		7F9B576430854A95CF84C2D9 /* Pods_iOSWSDL2Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSWSDL2Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		80BB6D87374F9006AA53BBD0 /* Pods-iOSWSDL2Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2Swift/Pods-iOSWSDL2Swift.release.xcconfig"; sourceTree = "<group>"; };
-		E40BCAEFF7D62FD2A7AE10FE /* Pods-iOSWSDL2SwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2SwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2SwiftTests/Pods-iOSWSDL2SwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9A395CD326B3F086FB060842 /* Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests.release.xcconfig"; sourceTree = "<group>"; };
+		B09BDFB70CD278187C92F6D4 /* Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EA1F062A1E03B6F7006A560D /* iOSWSDL2SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSWSDL2SwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1F062C1E03B6F7006A560D /* iOSWSDL2SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSWSDL2SwiftTests.swift; sourceTree = "<group>"; };
 		EA1F062E1E03B6F7006A560D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -98,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7D5169A48E98351426D9CAE /* Pods_iOSWSDL2SwiftTests.framework in Frameworks */,
+				A7A557BCF91F54D3C8BEC87F /* Pods_iOSWSDL2Swift_iOSWSDL2SwiftTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +128,7 @@
 				1DF3B37F4AB3DED3FA72E5DC /* Pods_WSDL2Swift.framework */,
 				7F9B576430854A95CF84C2D9 /* Pods_iOSWSDL2Swift.framework */,
 				66877D9A718AF5D3F01AE005 /* Pods_iOSWSDL2SwiftTests.framework */,
+				42544A8790F351CED5424C2E /* Pods_iOSWSDL2Swift_iOSWSDL2SwiftTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -138,8 +140,8 @@
 				54E07700FFB14F5BC9DE3247 /* Pods-WSDL2Swift.release.xcconfig */,
 				245448084A01A8ECE465E13C /* Pods-iOSWSDL2Swift.debug.xcconfig */,
 				80BB6D87374F9006AA53BBD0 /* Pods-iOSWSDL2Swift.release.xcconfig */,
-				E40BCAEFF7D62FD2A7AE10FE /* Pods-iOSWSDL2SwiftTests.debug.xcconfig */,
-				1FA3321285F2E95C157B03DA /* Pods-iOSWSDL2SwiftTests.release.xcconfig */,
+				B09BDFB70CD278187C92F6D4 /* Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests.debug.xcconfig */,
+				9A395CD326B3F086FB060842 /* Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -286,7 +288,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				TargetAttributes = {
 					EA1F06291E03B6F7006A560D = {
 						CreatedOnToolsVersion = 8.2;
@@ -355,13 +357,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		456A33790DC2010FE7DF03D2 /* [CP] Copy Pods Resources */ = {
@@ -385,13 +390,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WSDL2Swift-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		88AAC21702D8391CE91A88EA /* [CP] Copy Pods Resources */ = {
@@ -406,7 +414,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2SwiftTests/Pods-iOSWSDL2SwiftTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D25BDD841BAE9DA09042A6D9 /* [CP] Copy Pods Resources */ = {
@@ -460,13 +468,36 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AEXML-iOS/AEXML.framework",
+				"${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/ISO8601/ISO8601.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/WSDL2Swift/WSDL2Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/JetToTheFuture/JetToTheFuture.framework",
+				"${BUILT_PRODUCTS_DIR}/Mockingjay/Mockingjay.framework",
+				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
+				"${BUILT_PRODUCTS_DIR}/Toki/Toki.framework",
+				"${BUILT_PRODUCTS_DIR}/URITemplate/URITemplate.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AEXML.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightFutures.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ISO8601.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WSDL2Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JetToTheFuture.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mockingjay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toki.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/URITemplate.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2SwiftTests/Pods-iOSWSDL2SwiftTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F9C5B1F57D7EB7F49456204D /* [CP] Check Pods Manifest.lock */ = {
@@ -475,13 +506,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iOSWSDL2Swift-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FF20626B390E120C89964A2C /* [CP] Embed Pods Frameworks */ = {
@@ -490,9 +524,22 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2Swift/Pods-iOSWSDL2Swift-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AEXML-iOS/AEXML.framework",
+				"${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/ISO8601/ISO8601.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/WSDL2Swift/WSDL2Swift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AEXML.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightFutures.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ISO8601.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WSDL2Swift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -558,7 +605,7 @@
 /* Begin XCBuildConfiguration section */
 		EA1F06311E03B6F7006A560D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E40BCAEFF7D62FD2A7AE10FE /* Pods-iOSWSDL2SwiftTests.debug.xcconfig */;
+			baseConfigurationReference = B09BDFB70CD278187C92F6D4 /* Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -570,14 +617,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOSWSDL2Swift.app/iOSWSDL2Swift";
 			};
 			name = Debug;
 		};
 		EA1F06321E03B6F7006A560D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FA3321285F2E95C157B03DA /* Pods-iOSWSDL2SwiftTests.release.xcconfig */;
+			baseConfigurationReference = 9A395CD326B3F086FB060842 /* Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -588,7 +635,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jp.banjun.iOSWSDL2SwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOSWSDL2Swift.app/iOSWSDL2Swift";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -603,7 +650,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -611,7 +660,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -652,7 +705,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -660,7 +715,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -721,7 +780,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -740,7 +799,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
