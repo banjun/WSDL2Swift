@@ -14,9 +14,11 @@ Input
 Output
 
 * a Swift file which works as SOAP client
-	* Swift 3.0.1 (Xcode 8.1)
+	* Swift 4 (Xcode 9)
 	* NSURLSession for connection
 	* [BrightFutures](https://github.com/Thomvis/BrightFutures) for returning asynchronous requests
+	* [Fuzi](https://github.com/cezheng/Fuzi) for fast parsing xmls
+	* [AEXML](https://github.com/tadija/AEXML) for generating xmls
 
 ## Usage
 
