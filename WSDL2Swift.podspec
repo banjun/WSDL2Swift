@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/banjun/WSDL2Swift.git", :tag => "#{s.version}" }
   s.source_files  = 'WSDL2Swift.swift'
   s.dependency "AEXML"
-  s.dependency "BrightFutures"
+  s.dependency "BrightFutures", '>= 6.0.0-beta.1', '< 7.0.0'
   s.dependency "ISO8601"
   s.dependency "Fuzi", "~> 2.0"
   s.pod_target_xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2' } # Fuzi requires this header search paths to each dependants (the dependants of this pod also affected  indirectly)
