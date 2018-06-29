@@ -6,7 +6,7 @@ lane :archive do |options|
     configuration: 'Release',
     clean: options[:clean],
     build: true,
-    destination: 'generic/platform=macOS',
+    destination: 'platform=macOS',
     derivedDataPath: 'build',
     build_settings: {
     })
