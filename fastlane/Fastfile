@@ -15,3 +15,9 @@ lane :archive do |options|
   sh "cp \"../Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift-acknowledgements.markdown\" #{CONFIGURATION_BUILD_DIR}/"
   sh "(cd #{CONFIGURATION_BUILD_DIR}; rm -f WSDL2Swift.zip; zip -r WSDL2Swift.zip WSDL2Swift Frameworks Stencils *.markdown) && mv #{CONFIGURATION_BUILD_DIR}/WSDL2Swift.zip #{BUILD_DIR}/"
 end
+
+lane :test do
+  cocoapods
+  scan(workspace: 'WSDL2Swift.xcworkspace',
+       scheme: 'iOSWSDL2Swift')
+end
