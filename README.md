@@ -1,6 +1,12 @@
 WSDL2Swift
 ==========
 
+
+[![Build Status](https://app.bitrise.io/app/b3e5e6ff40591613/status.svg?token=34E9CkQQZr8WZtfpdQVZTw&branch=master)](https://app.bitrise.io/app/b3e5e6ff40591613)
+[![Version](https://img.shields.io/cocoapods/v/WSDL2Swift.svg?style=flat)](https://cocoapods.org/pods/WSDL2Swift)
+[![License](https://img.shields.io/cocoapods/l/WSDL2Swift.svg?style=flat)](https://cocoapods.org/pods/WSDL2Swift)
+[![Platform](https://img.shields.io/cocoapods/p/WSDL2Swift.svg?style=flat)](https://cocoapods.org/pods/WSDL2Swift)
+
 Swift alternative to WSDL2ObjC making a SOAP request & parsing its response as defined in WSDL.
 Objective-C free.
 
