@@ -227,7 +227,6 @@
 				EA1F06271E03B6F7006A560D /* Frameworks */,
 				EA1F06281E03B6F7006A560D /* Resources */,
 				F9B2A8776C296FAAD56904BE /* [CP] Embed Pods Frameworks */,
-				88AAC21702D8391CE91A88EA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -246,7 +245,6 @@
 				7910F7EBD06772F6446C6560 /* [CP] Check Pods Manifest.lock */,
 				EA1F09A31DE4376C00414030 /* Sources */,
 				EA1F09A41DE4376C00414030 /* Frameworks */,
-				D25BDD841BAE9DA09042A6D9 /* [CP] Copy Pods Resources */,
 				EA1F09BD1DE43A7200414030 /* Link as dynamically linked executable */,
 				EA1F09B61DE4392100414030 /* Copy Resources */,
 			);
@@ -269,7 +267,6 @@
 				EA1F09BF1DE43B3900414030 /* Frameworks */,
 				EA1F09C01DE43B3900414030 /* Resources */,
 				FF20626B390E120C89964A2C /* [CP] Embed Pods Frameworks */,
-				456A33790DC2010FE7DF03D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -369,21 +366,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		456A33790DC2010FE7DF03D2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2Swift/Pods-iOSWSDL2Swift-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7910F7EBD06772F6446C6560 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -400,36 +382,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		88AAC21702D8391CE91A88EA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests/Pods-iOSWSDL2Swift-iOSWSDL2SwiftTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D25BDD841BAE9DA09042A6D9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WSDL2Swift/Pods-WSDL2Swift-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EA1F09BD1DE43A7200414030 /* Link as dynamically linked executable */ = {
@@ -748,6 +700,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7C2849B258EEA5B658C2CD2E /* Pods-WSDL2Swift.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				DEVELOPMENT_TEAM = FPZK4WRGW7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
@@ -759,6 +712,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 54E07700FFB14F5BC9DE3247 /* Pods-WSDL2Swift.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				DEVELOPMENT_TEAM = FPZK4WRGW7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;

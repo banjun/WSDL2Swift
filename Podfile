@@ -3,7 +3,7 @@ use_frameworks!
 target 'WSDL2Swift' do
   platform :osx, '10.11'
   pod 'AEXML'
-  pod 'Stencil', '~> 0.7.2'
+  pod 'Stencil'
   pod 'Commander'
 end
 
@@ -19,7 +19,7 @@ target 'iOSWSDL2Swift' do
   end
 end
 
-LEGACY_SWIFT_PODS = %w(Stencil PathKit Commander Mockingjay)
+LEGACY_SWIFT_PODS = %w(Stencil PathKit Commander)
 def set_legacy_swift(installer)
   UI.warn "#{LEGACY_SWIFT_PODS.count} pods are marked as legacy swift: #{LEGACY_SWIFT_PODS}"
 
@@ -37,7 +37,11 @@ def set_legacy_swift(installer)
     end
 
     target.build_configurations.each do |config|
-      config.build_settings['SWIFT_VERSION'] = '3.0'
+      if pushed_version == 4
+        config.build_settings['SWIFT_VERSION'] = '4.0' # Commander has swift version 4.0 that falls back to 3
+      else
+        config.build_settings['SWIFT_VERSION'] = '3.0'
+      end
     end
   end
 end

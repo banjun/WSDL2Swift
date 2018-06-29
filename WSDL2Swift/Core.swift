@@ -86,7 +86,7 @@ struct Core {
 
                 let structs = type.type.swift(types.map {$0.type}, prefix: prefix, publicMemberwiseInit: publicMemberwiseInit)
                 let extensions = type.type.dictionariesForExpressibleByXMLProtocol(types.map {$0.type}, typeQualifier: []).map {
-                    try! compact(template(named: "ExpressibleByXML").render(Context(dictionary: $0)))
+                    try! compact(template(named: "ExpressibleByXML").render($0))
                 }.joined()
 
                 let swifts = d[prefix] ?? ("", "", "")
@@ -159,7 +159,7 @@ struct WSDL {
     }
 
     func swift() -> String {
-        return try! template(named: "WSDLService").render(Context(dictionary: [
+        return try! template(named: "WSDLService").render([
             "targetNamespace": targetNamespace,
             "name": service.name,
             "path":  {
@@ -173,7 +173,7 @@ struct WSDL {
                     "name": swiftKeywordsAvoidedName(op.name),
                     "inParam": replaceTargetNameSpace(inputMessage.parameterName, prefix: prefix),
                     "outParam": replaceTargetNameSpace(outputMessage.parameterName, prefix: prefix),
-                ]}]))
+                ]}])
     }
 }
 
@@ -381,7 +381,7 @@ struct XSDType {
     func swift(_ env: [XSDType], prefix: String, publicMemberwiseInit: Bool, typeQualifier: [String] = []) -> String {
         let d = dictionary(env, prefix: prefix, publicMemberwiseInit: publicMemberwiseInit)
         let indentLevel = typeQualifier.count
-        return try! template(named: "XSDType").render(Context(dictionary: d))
+        return try! template(named: "XSDType").render(d)
 //            + template(named: "ExpressibleByXML").render(Context(dictionary: [
 //                "fqn": (typeQualifier + [name]).joined(separator: "."),
 //                "xmlParams": d["xmlParams"] ?? [:],
