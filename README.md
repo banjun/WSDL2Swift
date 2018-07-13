@@ -10,6 +10,8 @@ WSDL2Swift
 Swift alternative to WSDL2ObjC making a SOAP request & parsing its response as defined in WSDL.
 Objective-C free.
 
+Stubs for unit test can be implemented using [Toki](https://github.com/banjun/Toki).
+
 ## Input & Output
 
 Input
