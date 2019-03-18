@@ -63,7 +63,7 @@ public extension WSDLService {
 
         var request = URLRequest(url: URL(string: endpoint)!.appendingPathComponent(path))
         request.httpMethod = "POST"
-        request.addValue("text/xml", forHTTPHeaderField: "Content-Type")
+        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue("WSDL2Swift", forHTTPHeaderField: "User-Agent")
         if let data = soapRequest.xml.data(using: .utf8) {
             //            request.addValue(String(data.length), forHTTPHeaderField: "Content-Length")
