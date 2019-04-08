@@ -101,6 +101,20 @@ note that pod WSDL2Swift just introduces runtime dependencies. it does not provi
 
 sometimes, somewhere in your dependencies chain (transitive framework dependencies or test bundle), header search paths for libxml2 is required. see podspec to add manually.
 
+### Customize
+
+You can specify charset of SOAP request by editing the generated code.
+
+The following code is an example when you want to specify character code to be interpreted as utf-8.
+
+```swift
+public var characterSetInContentType: CharacterSetInContentType {
+    return .utf8
+}
+```
+
+By default, `unspecified` is set.
+
 ## Example
 
 iOSWSDL2Swift target in xcodeproj is an example using WSDL2Swift.

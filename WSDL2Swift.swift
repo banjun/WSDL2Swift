@@ -39,6 +39,20 @@ public extension XSDType {
     }
 }
 
+public enum CharacterSetInContentType {
+    case unspecified
+    case manual( String )
+    case utf8
+    
+    fileprivate var specifier: String?{
+        switch self{
+        case .unspecified: return nil
+        case .manual( let mimeName ): return "charset=\(mimeName)"
+        case .utf8: return "charset=utf-8"
+        }
+    }
+}
+
 public protocol WSDLService {
     var endpoint: String { get set }
     var path: String { get }
@@ -46,6 +60,9 @@ public protocol WSDLService {
     var interceptURLRequest: ((URLRequest) -> URLRequest)? { get set }
     var interceptResponse: ((Data?, URLResponse?, Error?) -> (Data?, URLResponse?, Error?))? { get set }
     init(endpoint: String)
+    
+    // Implement this property when you need to specify charset
+    var characterSetInContentType: CharacterSetInContentType { get }
 }
 
 public extension WSDLService {
@@ -63,7 +80,8 @@ public extension WSDLService {
 
         var request = URLRequest(url: URL(string: endpoint)!.appendingPathComponent(path))
         request.httpMethod = "POST"
-        request.addValue("text/xml", forHTTPHeaderField: "Content-Type")
+        let charset = characterSetInContentType
+        request.addValue("text/xml" + (charset.specifier == nil ? "" : ";\(charset.specifier!)") , forHTTPHeaderField: "Content-Type")
         request.addValue("WSDL2Swift", forHTTPHeaderField: "User-Agent")
         if let data = soapRequest.xml.data(using: .utf8) {
             //            request.addValue(String(data.length), forHTTPHeaderField: "Content-Length")
@@ -104,6 +122,11 @@ public extension WSDLService {
         }
         task.resume()
         return promise.future
+    }
+    
+    // Default charset is unspecified.
+    var characterSetInContentType: CharacterSetInContentType {
+        return .unspecified
     }
 }
 
