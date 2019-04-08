@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "WSDL2Swift"
-  s.version      = "0.8.1"
+  s.version      = "0.9.0"
   s.summary      = "Swift alternative to WSDL2ObjC making a SOAP request & parsing its response as defined in WSDL"
   s.description  = <<-DESC
   Swift alternative to WSDL2ObjC making a SOAP request & parsing its response as defined in WSDL.
